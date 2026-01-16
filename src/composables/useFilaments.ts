@@ -207,15 +207,18 @@ export const useFilaments = () => {
     try {
       const baseUrl = resolvedBaseUrl.value;
 
+      // Only load external data sources if not filtering for spoolman only
+      const shouldLoadExternal = filters.source !== "spoolman";
+
       const [filaments, materials, vendors, locations, spools, external, spoolmanDBFilaments, spoolmanDBMaterials] = await Promise.all([
         fetchSpoolmanFilaments(baseUrl).catch(() => [] as SpoolmanFilament[]),
         fetchSpoolmanMaterials(baseUrl).catch(() => [] as SpoolmanMaterial[]),
         fetchSpoolmanVendors(baseUrl).catch(() => [] as SpoolmanVendor[]),
         fetchSpoolmanLocations(baseUrl).catch(() => [] as string[]),
         fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]),
-        fetchExternalFilaments().catch(() => [] as ExternalFilament[]),
-        fetchSpoolmanDBFilaments().catch(() => [] as SpoolmanDBFilament[]),
-        fetchSpoolmanDBMaterials().catch(() => [] as SpoolmanDBMaterial[]),
+        shouldLoadExternal ? fetchExternalFilaments().catch(() => [] as ExternalFilament[]) : Promise.resolve([] as ExternalFilament[]),
+        shouldLoadExternal ? fetchSpoolmanDBFilaments().catch(() => [] as SpoolmanDBFilament[]) : Promise.resolve([] as SpoolmanDBFilament[]),
+        shouldLoadExternal ? fetchSpoolmanDBMaterials().catch(() => [] as SpoolmanDBMaterial[]) : Promise.resolve([] as SpoolmanDBMaterial[]),
       ]);
 
       spoolmanMaterials.value = materials;
