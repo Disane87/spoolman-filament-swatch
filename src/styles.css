@@ -107,6 +107,9 @@ body {
   will-change: auto;
   overflow-x: hidden;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
 }
 
 html,
@@ -116,20 +119,55 @@ body {
 }
 
 .control-grid {
-  display: flex;
+  display: none;
   gap: 14px;
   align-items: start;
 }
 
+@media (min-width: 768px) {
+  .control-grid {
+    display: flex;
+  }
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(var(--border), 0.2);
+  background: rgba(var(--surface), 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 4px 16px -4px rgba(var(--shadow), 0.15),
+    0 0 0 1px rgba(var(--border), 0.05);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .control-card {
-  border-radius: 20px;
-  padding: 14px 14px 16px;
   border: 1px solid rgba(var(--border), 0.35);
   background: rgba(var(--surface), 0.72);
   box-shadow: 0 18px 38px -34px rgba(var(--shadow), 0.55);
   backdrop-filter: blur(10px);
   flex: 1;
   width: 100%;
+}
+
+@media (min-width: 640px) {
+  .control-card {}
 }
 
 .summary-card {
@@ -186,14 +224,21 @@ body {
 
 .summary-palette {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .summary-palette {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
 }
 
 .summary-chip {
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 10px;
+  padding: 10px;
   text-align: left;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -204,9 +249,18 @@ body {
   contain: layout style paint;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  min-height: 70px;
+  gap: 3px;
+  min-height: 64px;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 640px) {
+  .summary-chip {
+    border-radius: 12px;
+    padding: 12px;
+    gap: 4px;
+    min-height: 70px;
+  }
 }
 
 .summary-chip:hover {
@@ -266,7 +320,7 @@ body {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(420px, 90vw);
+  width: min(420px, 100vw);
   max-width: 420px;
   height: 100vh;
   height: 100dvh;
@@ -275,15 +329,23 @@ body {
   box-shadow: -20px 0 60px -20px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   transform: translate3d(100%, 0, 0);
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
   contain: layout style paint;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .palette-panel {
+    width: min(420px, 90vw);
+    padding: 20px;
+    gap: 16px;
+  }
 }
 
 .palette-drawer.open .palette-panel {
@@ -478,5 +540,27 @@ a {
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    /* Verhindert Auto-Zoom auf iOS */
+  }
+
+  @media (min-width: 640px) {
+
+    input,
+    select,
+    textarea {
+      font-size: inherit;
+    }
   }
 }

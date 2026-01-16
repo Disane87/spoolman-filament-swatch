@@ -4,8 +4,8 @@
       <div class="board-title">{{ title }}</div>
       <div class="board-actions">
         <!-- Sort Controls -->
-        <Select v-model="filters.sortField" class="w-36">
-          <SelectTrigger class="h-9">
+        <Select v-model="filters.sortField" class="w-28 sm:w-36">
+          <SelectTrigger class="h-9 sm:h-10">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -18,19 +18,20 @@
             <SelectItem value="lightness">{{ sortLabels.lightness }}</SelectItem>
           </SelectContent>
         </Select>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'">
+        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-up" class="w-4 h-4" />
         </Toggle>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'">
+        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-down" class="w-4 h-4" />
         </Toggle>
         
         <!-- View Toggle -->
-        <div class="flex gap-1 ml-2">
+        <div class="flex gap-1 ml-1 sm:ml-2">
           <Button
             :variant="viewMode === 'carousel' ? 'default' : 'ghost'"
             size="sm"
             @click="$emit('changeView', 'carousel')"
+            class="h-9 w-9 sm:h-10 sm:w-10 p-0"
           >
             <Icon icon="lucide:gallery-horizontal" class="w-4 h-4" />
           </Button>
@@ -38,6 +39,7 @@
             :variant="viewMode === 'board' ? 'default' : 'ghost'"
             size="sm"
             @click="$emit('changeView', 'board')"
+            class="h-9 w-9 sm:h-10 sm:w-10 p-0"
           >
             <Icon icon="lucide:layout-grid" class="w-4 h-4" />
           </Button>
@@ -46,18 +48,19 @@
     </div>
 
     <div class="board-body">
-      <div class="minimap" aria-label="Color minimap">
+      <div class="minimap" aria-label="Color minimap" ref="minimapRef" @click.stop>
         <button
           v-for="filament in filaments"
           :key="filament.id"
           class="minimap-dot"
+          :class="{ active: activeCardId === filament.id }"
           :title="filament.name"
           :style="minimapStyle(filament)"
-          @click.stop="scrollToCard(filament.id)"
+          @click.stop.prevent="scrollToCard(filament.id)"
         />
       </div>
 
-      <div class="board-grid">
+      <div class="board-grid" ref="gridRef">
         <div
           v-for="filament in filaments"
           :key="filament.id"
@@ -99,6 +102,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from "vue";
 import type { FilamentCard as FilamentCardType } from "../composables/useFilaments";
 import { Icon } from '@iconify/vue';
 import { Button } from "@/components/ui/button";
@@ -143,6 +147,60 @@ defineEmits<{
   (e: "selectFilament", filament: FilamentCardType): void;
   (e: "changeView", view: "carousel" | "board"): void;
 }>();
+
+const gridRef = ref<HTMLElement | null>(null);
+const minimapRef = ref<HTMLElement | null>(null);
+const activeCardId = ref<string | null>(null);
+let scrollTimeout: number | null = null;
+
+const updateActiveCard = () => {
+  if (!gridRef.value) return;
+  
+  const gridRect = gridRef.value.getBoundingClientRect();
+  const centerY = gridRect.top + gridRect.height / 2;
+  
+  let closestCard: { id: string; distance: number } | null = null;
+  
+  props.filaments.forEach((filament) => {
+    const el = document.getElementById(cardId(filament.id));
+    if (!el) return;
+    
+    const rect = el.getBoundingClientRect();
+    const cardCenterY = rect.top + rect.height / 2;
+    const distance = Math.abs(cardCenterY - centerY);
+    
+    if (!closestCard || distance < closestCard.distance) {
+      closestCard = { id: filament.id, distance };
+    }
+  });
+  
+  if (closestCard) {
+    activeCardId.value = closestCard.id;
+  }
+};
+
+const onScroll = () => {
+  if (scrollTimeout) {
+    window.clearTimeout(scrollTimeout);
+  }
+  scrollTimeout = window.setTimeout(updateActiveCard, 50);
+};
+
+onMounted(() => {
+  if (gridRef.value) {
+    gridRef.value.addEventListener('scroll', onScroll);
+    updateActiveCard();
+  }
+});
+
+onUnmounted(() => {
+  if (gridRef.value) {
+    gridRef.value.removeEventListener('scroll', onScroll);
+  }
+  if (scrollTimeout) {
+    window.clearTimeout(scrollTimeout);
+  }
+});
 
 const isPinned = (id: string) => {
   if (Array.isArray(props.pinnedIds)) return props.pinnedIds.includes(id);
@@ -213,15 +271,19 @@ const ensureHex = (value: string | null | undefined): string => {
 <style scoped>
 .board-wrapper {
   border: 1px solid rgba(var(--border), 0.6);
-  border-radius: 18px;
   background: rgba(var(--surface), 0.8);
-  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   flex: 1;
   min-height: 0;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .board-wrapper {
+    gap: 12px;
+  }
 }
 
 .board-header {
@@ -229,18 +291,33 @@ const ensureHex = (value: string | null | undefined): string => {
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .board-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .board-title {
+    font-size: 15px;
+  }
 }
 
 .board-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 640px) {
+  .board-actions {
+    gap: 12px;
+  }
 }
 
 .legend {
@@ -261,37 +338,54 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   overflow: hidden;
   flex: 1;
   min-height: 0;
+}
+
+@media (min-width: 640px) {
+  .board-body {
+    gap: 12px;
+  }
 }
 
 .minimap {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px;
+  gap: 4px;
   border: 1px solid rgba(var(--border), 0.6);
-  border-radius: 14px;
   background: rgba(var(--surface-alt), 0.7);
   flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .minimap {
+    gap: 6px;
+  }
 }
 
 .board-grid {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 12px;
+  gap: 8px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 4px;
+  padding-right: 2px;
   flex: 1;
   justify-content: flex-start;
   min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--accent), 0.5) rgba(var(--surface-alt), 0.4);
+}
+
+@media (min-width: 640px) {
+  .board-grid {
+    gap: 12px;
+    padding-right: 4px;
+  }
 }
 
 /* Custom Scrollbar - WebKit (Chrome, Edge, Safari) */
@@ -320,34 +414,37 @@ const ensureHex = (value: string | null | undefined): string => {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(var(--border), 0.7);
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   background: rgba(var(--surface-alt), 0.9);
   box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.2);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-  flex: 1 1 calc((100% - 36px) / 4);
-  min-width: 200px;
-  max-width: calc((100% - 36px) / 4);
+  flex: 1 1 calc(50% - 4px);
+  min-width: 140px;
+  max-width: calc(50% - 4px);
 }
 
-@media (max-width: 1400px) {
+@media (min-width: 640px) {
   .board-card {
+    border-radius: 16px;
     flex: 1 1 calc((100% - 24px) / 3);
+    min-width: 180px;
     max-width: calc((100% - 24px) / 3);
   }
 }
 
-@media (max-width: 1000px) {
+@media (min-width: 1000px) {
   .board-card {
-    flex: 1 1 calc((100% - 12px) / 2);
-    max-width: calc((100% - 12px) / 2);
+    flex: 1 1 calc((100% - 24px) / 3);
+    min-width: 200px;
+    max-width: calc((100% - 24px) / 3);
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: 1400px) {
   .board-card {
-    flex: 1 1 100%;
-    max-width: 100%;
+    flex: 1 1 calc((100% - 36px) / 4);
+    max-width: calc((100% - 36px) / 4);
   }
 }
 
@@ -359,16 +456,29 @@ const ensureHex = (value: string | null | undefined): string => {
 
 .swatch {
   width: 100%;
-  height: 110px;
+  height: 90px;
   flex-shrink: 0;
 }
 
+@media (min-width: 640px) {
+  .swatch {
+    height: 110px;
+  }
+}
+
 .card-meta {
-  padding: 12px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
+}
+
+@media (min-width: 640px) {
+  .card-meta {
+    padding: 12px;
+    gap: 10px;
+  }
 }
 
 .card-top {
@@ -380,12 +490,26 @@ const ensureHex = (value: string | null | undefined): string => {
 
 .card-name {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .card-name {
+    font-size: 15px;
+  }
 }
 
 .card-sub {
-  font-size: 12px;
+  font-size: 11px;
   color: rgb(var(--text-muted));
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .card-sub {
+    font-size: 12px;
+  }
 }
 
 .card-bottom {
@@ -424,12 +548,25 @@ const ensureHex = (value: string | null | undefined): string => {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: 999px;
   border: 1px solid rgba(var(--border), 0.7);
   background: rgba(var(--surface-alt), 0.8);
   color: rgb(var(--text));
   transition: all 120ms ease;
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .pin-btn {
+    padding: 6px 10px;
+    min-width: auto;
+    min-height: auto;
+  }
 }
 
 .pin-btn:hover {
@@ -443,32 +580,37 @@ const ensureHex = (value: string | null | undefined): string => {
   color: rgb(var(--text));
 }
 
-.minimap {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px;
-  border: 1px solid rgba(var(--border), 0.6);
-  border-radius: 14px;
-  background: rgba(var(--surface-alt), 0.7);
-  flex-shrink: 0;
-}
-
 .minimap-dot {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 5px;
   border: 1px solid rgba(var(--border), 0.6);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: transform 120ms ease, border-color 120ms ease;
 }
 
+@media (min-width: 640px) {
+  .minimap-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+  }
+}
+
 .minimap-dot:hover {
   transform: translateY(-2px) scale(1.03);
   border-color: rgba(var(--accent), 0.7);
+}
+
+.minimap-dot.active {
+  transform: scale(1.15);
+  border-color: rgba(var(--accent-2), 0.9);
+  box-shadow: 
+    0 0 0 2px rgba(var(--accent-2), 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  z-index: 1;
 }
 
 @media (max-width: 900px) {

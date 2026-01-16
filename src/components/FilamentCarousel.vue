@@ -1,13 +1,13 @@
 <template>
   <div class="carousel-shell relative">
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <div class="text-sm text-[rgb(var(--text-muted))]">
+    <div class="mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+      <div class="text-xs sm:text-sm text-[rgb(var(--text-muted))]">
         {{ countLabel }}
       </div>
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-wrap items-center gap-1 sm:gap-2">
         <!-- Sort Controls -->
-        <Select v-model="filters.sortField" class="w-36">
-          <SelectTrigger class="h-9">
+        <Select v-model="filters.sortField" class="w-28 sm:w-36">
+          <SelectTrigger class="h-9 sm:h-10">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -20,19 +20,20 @@
             <SelectItem value="lightness">{{ sortLabels.lightness }}</SelectItem>
           </SelectContent>
         </Select>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'">
+        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-up" class="w-4 h-4" />
         </Toggle>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'">
+        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-down" class="w-4 h-4" />
         </Toggle>
         
         <!-- View Toggle -->
-        <div class="flex gap-1 ml-2">
+        <div class="flex gap-1">
           <Button
             :variant="viewMode === 'carousel' ? 'default' : 'ghost'"
             size="sm"
             @click="$emit('changeView', 'carousel')"
+            class="h-9 w-9 sm:h-10 sm:w-10 p-0"
           >
             <Icon icon="lucide:gallery-horizontal" class="w-4 h-4" />
           </Button>
@@ -40,28 +41,29 @@
             :variant="viewMode === 'board' ? 'default' : 'ghost'"
             size="sm"
             @click="$emit('changeView', 'board')"
+            class="h-9 w-9 sm:h-10 sm:w-10 p-0"
           >
             <Icon icon="lucide:layout-grid" class="w-4 h-4" />
           </Button>
         </div>
 
         <!-- Navigation -->
-        <div class="flex gap-1 ml-2">
-          <Button size="sm" variant="ghost" @click="goPrev">
+        <div class="flex gap-1">
+          <Button size="sm" variant="ghost" @click="goPrev" class="h-9 w-9 sm:h-10 sm:w-10 p-0">
             <Icon icon="lucide:chevron-left" class="w-5 h-5" />
           </Button>
-          <Button size="sm" variant="ghost" @click="goNext">
+          <Button size="sm" variant="ghost" @click="goNext" class="h-9 w-9 sm:h-10 sm:w-10 p-0">
             <Icon icon="lucide:chevron-right" class="w-5 h-5" />
           </Button>
         </div>
       </div>
     </div>
 
-    <div class="mb-4 flex flex-wrap items-center gap-2">
+    <div class="mb-3 sm:mb-4 flex flex-wrap items-center gap-1.5 sm:gap-2">
       <button
         v-for="(swatch, idx) in swatches"
         :key="swatch.id"
-        class="h-9 w-9 rounded-full border border-[rgba(var(--border),0.6)] shadow-sm transition hover:scale-[1.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-2),0.7)]"
+        class="h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-[rgba(var(--border),0.6)] shadow-sm transition hover:scale-[1.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-2),0.7)]"
         :style="{ background: swatch.hex }"
         :aria-label="swatch.name"
         @click="scrollTo(idx)"
@@ -71,12 +73,12 @@
     <div class="relative">
       <div
         ref="track"
-        class="carousel-track flex snap-x snap-mandatory gap-6 overflow-x-auto overflow-y-visible pt-8 pb-12 pr-6"
+        class="carousel-track flex snap-x snap-mandatory gap-4 sm:gap-6 overflow-x-auto overflow-y-visible pt-6 sm:pt-8 pb-8 sm:pb-12 pr-4 sm:pr-6"
       >
         <div
           v-for="(item, idx) in items"
           :key="item.id"
-          class="carousel-card relative min-w-[280px] max-w-[320px] flex-1 snap-center transition-transform"
+          class="carousel-card relative min-w-[240px] sm:min-w-[280px] max-w-[280px] sm:max-w-[320px] flex-1 snap-center transition-transform"
           :class="idx === currentIndex ? 'scale-[1.02]' : 'scale-100 opacity-90'"
           ref="cardRefs"
         >
@@ -242,7 +244,7 @@ onUnmounted(() => {
 
 <style scoped>
 .carousel-shell {
-  padding: 18px 0 28px;
+  padding: 0;
 }
 
 .carousel-track {

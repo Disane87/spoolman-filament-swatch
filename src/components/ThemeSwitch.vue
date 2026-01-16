@@ -1,12 +1,12 @@
 <template>
   <div class="flex items-center gap-2">
-    <Toggle variant="outline" size="sm" :pressed="mode === 'light'" @click="setMode('light')">
+    <Toggle variant="outline" size="sm" :pressed="mode === 'light'" @click="setMode('light')" class="h-9 sm:h-10">
       <Icon icon="lucide:sun" class="w-4 h-4" />
     </Toggle>
-    <Toggle variant="outline" size="sm" :pressed="mode === 'dark'" @click="setMode('dark')">
+    <Toggle variant="outline" size="sm" :pressed="mode === 'dark'" @click="setMode('dark')" class="h-9 sm:h-10">
       <Icon icon="lucide:moon" class="w-4 h-4" />
     </Toggle>
-    <Toggle variant="outline" size="sm" :pressed="mode === 'system'" @click="setMode('system')">
+    <Toggle variant="outline" size="sm" :pressed="mode === 'system'" @click="setMode('system')" class="h-9 sm:h-10">
       <Icon icon="lucide:monitor" class="w-4 h-4" />
     </Toggle>
   </div>

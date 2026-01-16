@@ -1,22 +1,27 @@
 <template>
   <div
-    class="card-container group relative flex h-full flex-col gap-4 rounded-3xl border border-[rgba(var(--border),0.6)] bg-[rgba(var(--surface),0.95)] p-5 shadow-2xl shadow-black/10 cursor-pointer transition-all hover:border-[rgba(var(--accent),0.6)]"
+    class="card-container group relative flex h-full flex-col gap-3 sm:gap-4 rounded-2xl sm:rounded-3xl border border-[rgba(var(--border),0.6)] bg-[rgba(var(--surface),0.95)] p-4 sm:p-5 shadow-2xl shadow-black/10 cursor-pointer transition-all hover:border-[rgba(var(--accent),0.6)]"
     @click="$emit('selectFilament', filament)"
   >
-    <div class="flex items-start justify-between gap-3">
+    <div class="flex items-start justify-between gap-2 sm:gap-3">
       <div>
-        <p class="text-lg font-semibold">{{ filament.name }}</p>
-        <p class="text-sm text-[rgb(var(--text-muted))]">
+        <p class="text-base sm:text-lg font-semibold">{{ filament.name }}</p>
+        <p class="text-xs sm:text-sm text-[rgb(var(--text-muted))]">
           {{ filament.vendor }} · {{ filament.material }}
         </p>
       </div>
-      <div class="flex flex-col items-end gap-2">
-        <Badge :variant="filament.source === 'spoolman' ? 'accent' : 'neutral'">
-          {{ filament.source === "spoolman" ? labels.sourceSpoolman : labels.sourceExternal }}
+      <div class="flex flex-col items-end gap-1.5 sm:gap-2">
+        <Badge 
+          :variant="filament.source === 'spoolman' ? 'accent' : 'neutral'" 
+          class="text-[10px] sm:text-xs whitespace-nowrap"
+          :class="getBadgeClass(filament.source)"
+        >
+          <Icon :icon="getSourceIcon(filament.source)" class="w-3 h-3 mr-1" />
+          {{ getSourceLabel(filament.source) }}
         </Badge>
         <button
           type="button"
-          class="pin-btn"
+          class="pin-btn h-8 w-8 sm:h-9 sm:w-9"
           :aria-pressed="pinned"
           @click.stop="$emit('togglePin', filament)"
           :title="pinned ? labels.unpin : labels.pin"
@@ -28,14 +33,14 @@
 
     <div class="flex flex-1 items-center justify-center">
       <div
-        class="h-40 w-40 rounded-full border border-white/40 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.6)]"
+        class="h-32 w-32 sm:h-40 sm:w-40 rounded-full border border-white/40 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.6)]"
         :style="swatchStyle"
         role="img"
         :aria-label="filament.colorName"
       />
     </div>
 
-    <div class="flex flex-col gap-2 text-sm text-[rgb(var(--text-muted))]">
+    <div class="flex flex-col gap-1.5 sm:gap-2 text-xs sm:text-sm text-[rgb(var(--text-muted))]">
       <div class="flex items-center justify-between">
         <span class="uppercase tracking-wide">{{ labels.vendor }}</span>
         <span class="text-[rgb(var(--text))]">{{ filament.vendor }}</span>
@@ -57,11 +62,11 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <div class="mono text-xs text-[rgb(var(--text-muted))]">
+      <div class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
         {{ filament.colorHex.toUpperCase() }}
-      </div>.stop
-      <Button size="sm" variant="secondary" @click="copyHex">
-        <Icon :icon="copied ? 'lucide:check' : 'lucide:copy'" class="w-4 h-4" />
+      </div>
+      <Button size="sm" variant="secondary" @click.stop="copyHex" class="h-8 w-8 sm:h-9 sm:w-9 p-0">
+        <Icon :icon="copied ? 'lucide:check' : 'lucide:copy'" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       </Button>
     </div>
   </div>
@@ -97,6 +102,30 @@ defineEmits<{
 }>();
 
 const copied = ref(false);
+
+const getSourceIcon = (source: string): string => {
+  switch (source) {
+    case 'spoolman': return 'lucide:server';
+    case 'external': return 'lucide:link';
+    default: return 'lucide:help-circle';
+  }
+};
+
+const getSourceLabel = (source: string): string => {
+  switch (source) {
+    case 'spoolman': return 'Spoolman';
+    case 'external': return 'Extern';
+    default: return 'Unbekannt';
+  }
+};
+
+const getBadgeClass = (source: string): string => {
+  switch (source) {
+    case 'spoolman': return 'badge-spoolman';
+    case 'external': return 'badge-external';
+    default: return '';
+  }
+};
 
 const swatchStyle = computed(() => {
   const filament = props.filament;
@@ -207,7 +236,16 @@ const copyHex = async () => {
 }
 .pin-btn[aria-pressed="true"] {
   border-color: rgba(var(--accent), 0.7);
-  background: rgba(var(--accent), 0.18);
-  color: rgb(var(--text));
+  background: rgba(var(--accent), 0.12);
+}
+
+.badge-spoolman {
+  background: rgba(100, 200, 100, 0.15);
+  color: rgb(80, 180, 80);
+}
+
+.badge-external {
+  background: rgba(150, 100, 255, 0.15);
+  color: rgb(150, 100, 255);
 }
 </style>

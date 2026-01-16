@@ -1,23 +1,23 @@
 <template>
   <div class="filters-container">
-    <!-- Search bar - always visible -->
-    <div class="flex gap-2 items-center">
-      <Input v-model="props.filters.search" type="search" :placeholder="searchPlaceholder" class="flex-1" />
+    <!-- Search bar - only visible on desktop (md+) -->
+    <div class="hidden md:flex gap-2 items-center">
+      <Input v-model="props.filters.search" type="search" :placeholder="searchPlaceholder" class="flex-1 h-10" />
       <Button variant="ghost" size="icon" @click="filtersVisible = !filtersVisible" aria-label="Toggle filters"
-        class="h-9 w-9 shrink-0" :class="{ 'bg-[rgb(var(--accent))]': filtersVisible }">
-        <Icon icon="lucide:filter" class="w-4 h-4" />
+        class="h-10 w-10 shrink-0" :class="{ 'bg-[rgb(var(--accent))]': filtersVisible }">
+        <Icon icon="lucide:filter" class="w-5 h-5" />
       </Button>
     </div>
 
     <!-- Collapsible filters section -->
     <div v-if="filtersVisible" class="filters-section">
       <!-- Row 1: Select filters -->
-      <div class="grid gap-3 grid-cols-1 md:grid-cols-5">
+      <div class="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         <!-- Vendors -->
         <div class="filter-group">
           <label class="filter-label">{{ labels.vendor }}</label>
           <Select v-model="props.filters.vendor">
-            <SelectTrigger class="h-9 w-full">
+            <SelectTrigger class="h-10 w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -33,7 +33,7 @@
         <div class="filter-group">
           <label class="filter-label">{{ labels.material }}</label>
           <Select v-model="props.filters.material">
-            <SelectTrigger class="h-9 w-full">
+            <SelectTrigger class="h-10 w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -49,7 +49,7 @@
         <div class="filter-group">
           <label class="filter-label">{{ labels.colorType }}</label>
           <Select v-model="props.filters.colorType">
-            <SelectTrigger class="h-9 w-full">
+            <SelectTrigger class="h-10 w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -64,7 +64,7 @@
         <div class="filter-group">
           <label class="filter-label">{{ labels.location }}</label>
           <Select v-model="props.filters.location">
-            <SelectTrigger class="h-9 w-full">
+            <SelectTrigger class="h-10 w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -80,7 +80,7 @@
         <div class="filter-group">
           <label class="filter-label">{{ labels.source }}</label>
           <Select v-model="props.filters.source">
-            <SelectTrigger class="h-9 w-full">
+            <SelectTrigger class="h-10 w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -187,6 +187,7 @@ const sortOptions = computed(() => [
   display: flex;
   flex-direction: column;
   gap: 6px;
+  align-items: stretch;
 }
 
 .filter-label {
@@ -195,5 +196,7 @@ const sortOptions = computed(() => [
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgb(var(--text-muted));
+  min-height: 16px;
+  line-height: 1.2;
 }
 </style>

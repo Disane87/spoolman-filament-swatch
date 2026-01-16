@@ -1,9 +1,9 @@
 <template>
   <div class="flex items-center gap-2">
-    <Toggle variant="outline" size="sm" :pressed="locale === 'de'" @click="setLocale('de')">
+    <Toggle variant="outline" size="sm" :pressed="locale === 'de'" @click="setLocale('de')" class="h-9 sm:h-10">
       <Icon icon="circle-flags:de" class="w-5 h-5" />
     </Toggle>
-    <Toggle variant="outline" size="sm" :pressed="locale === 'en'" @click="setLocale('en')">
+    <Toggle variant="outline" size="sm" :pressed="locale === 'en'" @click="setLocale('en')" class="h-9 sm:h-10">
       <Icon icon="circle-flags:us" class="w-5 h-5" />
     </Toggle>
   </div>

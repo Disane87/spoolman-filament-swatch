@@ -68,13 +68,22 @@
   "dialog": {
     "spoolmanUrlTitle": "Spoolman URL setzen",
     "spoolmanUrlDescription": "Die URL wird lokal im Browser gespeichert. Standard ist {defaultUrl}. Hinweis: Bei deployten Instanzen musst du SPOOLMAN_CORS_ORIGIN=disane87.github.io (ohne https://) auf deinem Spoolman-Server konfigurieren und neu starten.",
-    "spoolmanUrlRequired": "Bitte gib die URL deines Spoolman-Servers ein, um fortzufahren."
+    "spoolmanUrlRequired": "Bitte gib die URL deines Spoolman-Servers ein, um fortzufahren.",
+    "corsInfoTitle": "CORS-Konfiguration erforderlich",
+    "corsInfoDescription": "Wenn du die deployete Version (nicht localhost) verwendest, musst du CORS auf deinem Spoolman-Server konfigurieren.",
+    "corsConfigLabel": "Konfiguration",
+    "corsConfigHint": "Füge dies zu deiner Spoolman-Konfiguration hinzu (ohne https://):",
+    "corsRestartRequired": "Nach der Konfigurationsänderung musst du Spoolman neu starten (z.B. docker-compose restart).",
+    "useSpoolmanDB": "Alternativ: SpoolmanDB verwenden",
+    "useSpoolmanDBHint": "Du kannst auch die SpoolmanDB-Community-Datenbank verwenden, die keine CORS-Konfiguration erfordert."
   },
   "card": {
     "vendor": "Hersteller",
     "material": "Material",
     "spool": "Spule",
-    "weight": "Restgewicht"
+    "weight": "Restgewicht",
+    "sourceSpoolman": "Spoolman",
+    "sourceExternal": "Extern"
   },
   "detail": {
     "color": "Farbe",
@@ -94,7 +103,15 @@
     "coaxial": "Koaxial (radial)",
     "longitudinal": "Längs (linear)",
     "similarColors": "Ähnliche Farben",
-    "complementaryColors": "Komplementärfarben"
+    "complementaryColors": "Komplementärfarben",
+    "spools": "Spulen",
+    "archived": "Archiviert",
+    "remaining": "übrig",
+    "used": "verbraucht",
+    "colorHarmonies": "Farbharmonien",
+    "currentColor": "Aktuelle Farbe",
+    "complementary": "Komplementär",
+    "similar": "Ähnlich"
   },
   "theme": {
     "light": "Hell",

@@ -34,9 +34,20 @@ export type SpoolmanFilament = {
 
 export type SpoolmanSpool = {
   id: number;
-  filament_id?: number | null;
+  filament?: {
+    id: number;
+    name?: string;
+    vendor?: { id: number; name?: string } | null;
+    material?: string | null;
+  } | null;
   remaining_weight?: number | null;
+  used_weight?: number | null;
+  initial_weight?: number | null;
+  spool_weight?: number | null;
   location?: string | null;
+  archived?: boolean | null;
+  first_used?: string | null;
+  last_used?: string | null;
 };
 
 export type SpoolmanMaterial = {

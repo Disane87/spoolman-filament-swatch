@@ -14,6 +14,12 @@ import {
   fetchExternalFilaments,
   type ExternalFilament,
 } from "../api/external-filaments";
+import {
+  fetchSpoolmanDBFilaments,
+  fetchSpoolmanDBMaterials,
+  type SpoolmanDBFilament,
+  type SpoolmanDBMaterial,
+} from "../api/spoolmandb";
 import { useSpoolmanUrl } from "./useSpoolmanUrl";
 
 export type FilamentCard = {
@@ -38,6 +44,13 @@ export type FilamentCard = {
   locations?: string[];
   totalRemainingWeight?: number | null;
   spoolCount?: number;
+  spools?: Array<{
+    id: number;
+    location?: string | null;
+    remainingWeight?: number | null;
+    usedWeight?: number | null;
+    archived?: boolean | null;
+  }>;
 };
 
 type SortField = "name" | "vendor" | "material" | "source" | "hue" | "luminance" | "lightness";
@@ -137,6 +150,27 @@ const normalizeExternal = (filament: ExternalFilament): FilamentCard => ({
   source: "external",
 });
 
+const normalizeSpoolmanDB = (filament: SpoolmanDBFilament, index: number): FilamentCard => {
+  const name = filament.name || `Filament ${index + 1}`;
+  const vendor = filament.manufacturer || "Unknown";
+  const material = filament.material || "Unknown";
+  const colorHex = ensureHex(filament.color_hex);
+
+  return {
+    id: `spoolmandb-${filament.id || index}`,
+    name,
+    vendor,
+    material,
+    colorHex,
+    colorName: colorHex.toUpperCase(),
+    source: "external",
+    density: filament.density ?? null,
+    diameter: filament.diameters?.[0] ?? null,
+    extruderTemp: filament.extruder_temp ?? null,
+    bedTemp: filament.bed_temp ?? null,
+  };
+};
+
 export const useFilaments = () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
@@ -153,12 +187,13 @@ export const useFilaments = () => {
   const initialMaterial = urlParams.get('m')?.toLowerCase() || 'all';
   const initialColor = urlParams.get('c')?.toLowerCase() || 'all';
   const initialLocation = urlParams.get('l')?.toLowerCase() || 'all';
+  const initialSource = urlParams.get('s')?.toLowerCase() || 'all';
 
   const filters = reactive({
     search: initialSearch,
     vendor: initialVendor,
     material: initialMaterial,
-    source: "spoolman",
+    source: initialSource,
     sortField: "name" as SortField,
     sortDir: "asc" as SortDir,
     color: initialColor as string,
@@ -172,13 +207,15 @@ export const useFilaments = () => {
     try {
       const baseUrl = resolvedBaseUrl.value;
 
-      const [filaments, materials, vendors, locations, spools, external] = await Promise.all([
+      const [filaments, materials, vendors, locations, spools, external, spoolmanDBFilaments, spoolmanDBMaterials] = await Promise.all([
         fetchSpoolmanFilaments(baseUrl).catch(() => [] as SpoolmanFilament[]),
         fetchSpoolmanMaterials(baseUrl).catch(() => [] as SpoolmanMaterial[]),
         fetchSpoolmanVendors(baseUrl).catch(() => [] as SpoolmanVendor[]),
         fetchSpoolmanLocations(baseUrl).catch(() => [] as string[]),
         fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]),
         fetchExternalFilaments().catch(() => [] as ExternalFilament[]),
+        fetchSpoolmanDBFilaments().catch(() => [] as SpoolmanDBFilament[]),
+        fetchSpoolmanDBMaterials().catch(() => [] as SpoolmanDBMaterial[]),
       ]);
 
       spoolmanMaterials.value = materials;
@@ -186,10 +223,29 @@ export const useFilaments = () => {
       spoolmanLocations.value = locations;
 
       // Create a map of filament_id -> spool data
-      const filamentSpoolsMap = new Map<number, { locations: string[], totalWeight: number, count: number }>();
+      const filamentSpoolsMap = new Map<number, {
+        locations: string[],
+        totalWeight: number,
+        count: number,
+        spools: Array<{
+          id: number;
+          location?: string | null;
+          remainingWeight?: number | null;
+          usedWeight?: number | null;
+          archived?: boolean | null;
+        }>
+      }>();
+
       spools.forEach((spool) => {
-        if (spool.filament_id) {
-          const existing = filamentSpoolsMap.get(spool.filament_id) || { locations: [], totalWeight: 0, count: 0 };
+        if (spool.filament?.id) {
+          const filamentId = spool.filament.id;
+          const existing = filamentSpoolsMap.get(filamentId) || {
+            locations: [],
+            totalWeight: 0,
+            count: 0,
+            spools: []
+          };
+
           if (spool.location && !existing.locations.includes(spool.location)) {
             existing.locations.push(spool.location);
           }
@@ -197,7 +253,17 @@ export const useFilaments = () => {
             existing.totalWeight += spool.remaining_weight;
           }
           existing.count += 1;
-          filamentSpoolsMap.set(spool.filament_id, existing);
+
+          // Add full spool data
+          existing.spools.push({
+            id: spool.id,
+            location: spool.location,
+            remainingWeight: spool.remaining_weight ?? null,
+            usedWeight: spool.used_weight ?? null,
+            archived: spool.archived ?? false
+          });
+
+          filamentSpoolsMap.set(filamentId, existing);
         }
       });
 
@@ -209,10 +275,12 @@ export const useFilaments = () => {
             card.locations = spoolData.locations;
             card.totalRemainingWeight = spoolData.totalWeight > 0 ? spoolData.totalWeight : null;
             card.spoolCount = spoolData.count;
+            card.spools = spoolData.spools;
           }
           return card;
         }),
         ...external.map(normalizeExternal),
+        ...spoolmanDBFilaments.map((item, index) => normalizeSpoolmanDB(item, index)),
       ];
     } catch (err) {
       error.value = err instanceof Error ? err.message : "Unknown error";
@@ -239,6 +307,9 @@ export const useFilaments = () => {
     }
     if (newFilters.location && newFilters.location !== 'all') {
       params.set('l', newFilters.location);
+    }
+    if (newFilters.source && newFilters.source !== 'all') {
+      params.set('s', newFilters.source);
     }
 
     const newUrl = params.toString() ? `?${params.toString()}` : window.location.pathname;
@@ -281,6 +352,11 @@ export const useFilaments = () => {
     });
 
     const compare = (a: FilamentCard, b: FilamentCard) => {
+      // Prioritize spoolman source (always comes first)
+      if (a.source !== b.source) {
+        return a.source === "spoolman" ? -1 : 1;
+      }
+
       switch (filters.sortField) {
         case "vendor": {
           const cmp = a.vendor.localeCompare(b.vendor, undefined, { sensitivity: "base" });
@@ -324,12 +400,8 @@ export const useFilaments = () => {
 
   const vendorOptions = computed(() => {
     const values = new Set<string>();
-    // Vendors from API
-    spoolmanVendors.value.forEach((v) => {
-      if (v.name && v.name.trim()) values.add(v.name);
-    });
-    // Vendors from loaded filaments (includes external)
-    allFilaments.value.forEach((item) => {
+    // Use filtered results to respect active filters
+    filtered.value.forEach((item) => {
       if (item.vendor && item.vendor !== "Unknown") values.add(item.vendor);
     });
     return Array.from(values).sort();
@@ -337,12 +409,8 @@ export const useFilaments = () => {
 
   const materialOptions = computed(() => {
     const values = new Set<string>();
-    // Materials from API
-    spoolmanMaterials.value.forEach((m) => {
-      if (m.name && m.name.trim()) values.add(m.name);
-    });
-    // Materials from loaded filaments (includes external)
-    allFilaments.value.forEach((item) => {
+    // Use filtered results to respect active filters
+    filtered.value.forEach((item) => {
       if (item.material && item.material !== "Unknown") values.add(item.material);
     });
     return Array.from(values).sort();
@@ -350,7 +418,8 @@ export const useFilaments = () => {
 
   const colorOptions = computed(() => {
     const map = new Map<string, { hex: string; luminance: number }>();
-    allFilaments.value.forEach((item) => {
+    // Use filtered results to respect active filters
+    filtered.value.forEach((item) => {
       const hex = item.colorHex;
       if (!map.has(hex)) {
         map.set(hex, { hex, luminance: getColorMetrics(hex).luminance });
