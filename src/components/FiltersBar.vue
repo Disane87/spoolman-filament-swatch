@@ -1,103 +1,123 @@
 <template>
-  <div class="grid gap-4 md:grid-cols-[1.2fr,1fr,1fr]">
-    <Input
-      v-model="filters.search"
-      type="search"
-      :placeholder="searchPlaceholder"
-    />
-
-    <div class="pill-row pill-row--vendor">
-      <Toggle :active="filters.vendor === 'all'" @click="filters.vendor = 'all'">
-        {{ labels.all }} · {{ labels.vendor }}
-      </Toggle>
-      <Toggle
-        v-for="vendor in vendorOptions"
-        :key="vendor"
-        :active="filters.vendor === vendor"
-        @click="filters.vendor = vendor"
-      >
-        {{ vendor }}
-      </Toggle>
+  <div class="filters-container">
+    <!-- Search bar - always visible -->
+    <div class="flex gap-2 items-center">
+      <Input v-model="props.filters.search" type="search" :placeholder="searchPlaceholder" class="flex-1" />
+      <Button variant="ghost" size="icon" @click="filtersVisible = !filtersVisible" aria-label="Toggle filters"
+        class="h-9 w-9 shrink-0" :class="{ 'bg-[rgb(var(--accent))]': filtersVisible }">
+        <Icon icon="lucide:filter" class="w-4 h-4" />
+      </Button>
     </div>
 
-    <div class="pill-row pill-row--material">
-      <Toggle :active="filters.material === 'all'" @click="filters.material = 'all'">
-        {{ labels.all }} · {{ labels.material }}
-      </Toggle>
-      <Toggle
-        v-for="material in materialOptions"
-        :key="material"
-        :active="filters.material === material"
-        @click="filters.material = material"
-      >
-        {{ material }}
-      </Toggle>
-    </div>
-  </div>
+    <!-- Collapsible filters section -->
+    <div v-if="filtersVisible" class="filters-section">
+      <!-- Row 1: Select filters -->
+      <div class="grid gap-3 grid-cols-1 md:grid-cols-5">
+        <!-- Vendors -->
+        <div class="filter-group">
+          <label class="filter-label">{{ labels.vendor }}</label>
+          <Select v-model="props.filters.vendor">
+            <SelectTrigger class="h-9 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{{ labels.all }}</SelectItem>
+              <SelectItem v-for="vendor in props.vendorOptions" :key="vendor" :value="vendor">
+                {{ vendor }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-  <div class="mt-4 grid gap-4 md:grid-cols-[1.2fr,1fr]">
-    <div class="flex flex-col gap-2">
-      <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
-        {{ labels.color }}
-      </span>
-      <ColorMap
-        :options="colorOptions"
-        :active="filters.color"
-        @select="filters.color = $event"
-      />
-    </div>
+        <!-- Materials -->
+        <div class="filter-group">
+          <label class="filter-label">{{ labels.material }}</label>
+          <Select v-model="props.filters.material">
+            <SelectTrigger class="h-9 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{{ labels.all }}</SelectItem>
+              <SelectItem v-for="material in props.materialOptions" :key="material" :value="material">
+                {{ material }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-    <div class="flex flex-col gap-2">
-      <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
-        {{ labels.source }}
-      </span>
-      <div class="flex flex-wrap gap-2">
-        <Toggle :active="filters.source === 'all'" @click="filters.source = 'all'">
-          {{ labels.all }}
-        </Toggle>
-        <Toggle
-          :active="filters.source === 'spoolman'"
-          @click="filters.source = 'spoolman'"
-        >
-          {{ labels.onlySpoolman }}
-        </Toggle>
-        <Toggle
-          :active="filters.source === 'external'"
-          @click="filters.source = 'external'"
-        >
-          {{ labels.onlyExternal }}
-        </Toggle>
+        <!-- Color Type -->
+        <div class="filter-group">
+          <label class="filter-label">{{ labels.colorType }}</label>
+          <Select v-model="props.filters.colorType">
+            <SelectTrigger class="h-9 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{{ labels.all }}</SelectItem>
+              <SelectItem value="single">{{ labels.singleColor }}</SelectItem>
+              <SelectItem value="multi">{{ labels.multiColor }}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <!-- Location -->
+        <div class="filter-group">
+          <label class="filter-label">{{ labels.location }}</label>
+          <Select v-model="props.filters.location">
+            <SelectTrigger class="h-9 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{{ labels.all }}</SelectItem>
+              <SelectItem v-for="location in props.locationOptions" :key="location" :value="location">
+                {{ location }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <!-- Source -->
+        <div class="filter-group">
+          <label class="filter-label">{{ labels.source }}</label>
+          <Select v-model="props.filters.source">
+            <SelectTrigger class="h-9 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{{ labels.all }}</SelectItem>
+              <SelectItem value="spoolman">{{ labels.onlySpoolman }}</SelectItem>
+              <SelectItem value="external">{{ labels.onlyExternal }}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="mt-4 flex flex-wrap items-center gap-2">
-    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
-      {{ labels.sort }}
-    </span>
-    <Select v-model="filters.sortField" class="w-44">
-      <option value="name">{{ labels.sortNameAsc }}</option>
-      <option value="luminance">{{ labels.sortLuminanceAsc }}</option>
-      <option value="lightness">{{ labels.sortLightnessAsc }}</option>
-    </Select>
-    <div class="flex gap-2">
-      <Toggle :active="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'">
-        {{ labels.sortAsc }}
-      </Toggle>
-      <Toggle :active="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'">
-        {{ labels.sortDesc }}
-      </Toggle>
+      <!-- Row 2: Color Palette -->
+      <div class="filter-group">
+        <label class="filter-label">{{ labels.color }}</label>
+        <ColorMap :colors="props.colorOptions" :selected="props.filters.color" @select="props.filters.color = $event" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Input from "./ui/Input.vue";
-import Select from "./ui/Select.vue";
-import Toggle from "./ui/Toggle.vue";
+import { computed, ref } from "vue";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Icon } from '@iconify/vue';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import ColorMap from "./ColorMap.vue";
 
-defineProps<{
+const filtersVisible = ref(false);
+
+const props = defineProps<{
   filters: {
     search: string;
     vendor: string;
@@ -106,25 +126,74 @@ defineProps<{
     sortField: string;
     sortDir: string;
     color: string;
+    colorType: string;
+    location: string;
   };
   vendorOptions: string[];
   materialOptions: string[];
   colorOptions: string[];
+  locationOptions: string[];
   searchPlaceholder: string;
   labels: {
     vendor: string;
     material: string;
+    location: string;
     all: string;
     onlySpoolman: string;
     onlyExternal: string;
     color: string;
+    colorType: string;
+    singleColor: string;
+    multiColor: string;
     source: string;
     sort: string;
     sortAsc: string;
     sortDesc: string;
     sortNameAsc: string;
+    sortVendorAsc: string;
+    sortMaterialAsc: string;
+    sortSourceAsc: string;
+    sortHueAsc: string;
     sortLuminanceAsc: string;
     sortLightnessAsc: string;
   };
 }>();
+
+const sortOptions = computed(() => [
+  { value: "name", label: props.labels.sortNameAsc },
+  { value: "vendor", label: props.labels.sortVendorAsc },
+  { value: "material", label: props.labels.sortMaterialAsc },
+  { value: "source", label: props.labels.sortSourceAsc },
+  { value: "hue", label: props.labels.sortHueAsc },
+  { value: "luminance", label: props.labels.sortLuminanceAsc },
+  { value: "lightness", label: props.labels.sortLightnessAsc },
+]);
 </script>
+
+<style scoped>
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgb(var(--text-muted));
+}
+</style>

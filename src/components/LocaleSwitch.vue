@@ -1,13 +1,18 @@
 <template>
   <div class="flex items-center gap-2">
-    <Toggle :active="locale === 'de'" @click="setLocale('de')">DE</Toggle>
-    <Toggle :active="locale === 'en'" @click="setLocale('en')">EN</Toggle>
+    <Toggle variant="outline" size="sm" :pressed="locale === 'de'" @click="setLocale('de')">
+      <Icon icon="circle-flags:de" class="w-5 h-5" />
+    </Toggle>
+    <Toggle variant="outline" size="sm" :pressed="locale === 'en'" @click="setLocale('en')">
+      <Icon icon="circle-flags:us" class="w-5 h-5" />
+    </Toggle>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import Toggle from "./ui/Toggle.vue";
+import { Toggle } from "@/components/ui/toggle";
+import { Icon } from '@iconify/vue';
 
 const { locale } = useI18n();
 

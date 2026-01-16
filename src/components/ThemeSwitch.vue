@@ -1,13 +1,13 @@
 <template>
   <div class="flex items-center gap-2">
-    <Toggle :active="mode === 'light'" @click="setMode('light')">
-      {{ t("theme.light") }}
+    <Toggle variant="outline" size="sm" :pressed="mode === 'light'" @click="setMode('light')">
+      <Icon icon="lucide:sun" class="w-4 h-4" />
     </Toggle>
-    <Toggle :active="mode === 'dark'" @click="setMode('dark')">
-      {{ t("theme.dark") }}
+    <Toggle variant="outline" size="sm" :pressed="mode === 'dark'" @click="setMode('dark')">
+      <Icon icon="lucide:moon" class="w-4 h-4" />
     </Toggle>
-    <Toggle :active="mode === 'system'" @click="setMode('system')">
-      {{ t("theme.auto") }}
+    <Toggle variant="outline" size="sm" :pressed="mode === 'system'" @click="setMode('system')">
+      <Icon icon="lucide:monitor" class="w-4 h-4" />
     </Toggle>
   </div>
 </template>
@@ -15,7 +15,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useTheme } from "../composables/useTheme";
-import Toggle from "./ui/Toggle.vue";
+import { Toggle } from "@/components/ui/toggle";
+import { Icon } from '@iconify/vue';
 
 const { t } = useI18n();
 const { mode, setMode } = useTheme();

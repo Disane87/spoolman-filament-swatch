@@ -16,7 +16,10 @@
     "unpin": "Loesen",
     "viewCarousel": "Karussell",
     "viewBoard": "Board",
-    "clearPalette": "Palette leeren"
+    "clearPalette": "Palette leeren",
+    "openPalette": "Palette oeffnen",
+    "showFilters": "Filter anzeigen",
+    "hideFilters": "Filter ausblenden"
   },
   "search": {
     "placeholder": "Suche nach Name, Hersteller, Material, Farbe..."
@@ -29,10 +32,18 @@
     "onlySpoolman": "Nur Spoolman",
     "onlyExternal": "Nur externe DB",
     "color": "Farbe",
+    "colorType": "Farbtyp",
+    "singleColor": "Einfarbig",
+    "multiColor": "Mehrfarbig",
+    "location": "Standort",
     "sort": "Sortieren",
     "sortAsc": "Auf",
     "sortDesc": "Ab",
     "sortNameAsc": "Name",
+    "sortVendorAsc": "Hersteller",
+    "sortMaterialAsc": "Material",
+    "sortSourceAsc": "Quelle",
+    "sortHueAsc": "Farbwinkel",
     "sortLuminanceAsc": "Luminanz",
     "sortLightnessAsc": "Helligkeit"
   },
@@ -46,8 +57,11 @@
     "spoolman": "Spoolman",
     "external": "Externe Filamente",
     "count": "{count} Treffer",
+    "item": "Farbe",
+    "items": "Farben",
     "palette": "Gepinnte Palette",
     "paletteEmpty": "Mit Pins landen Farben hier",
+    "paletteHint": "Klicke auf den Pin-Button bei Filament-Karten, um sie hier zu sammeln",
     "legend": "Farblegende",
     "spoolmanUrl": "Spoolman URL"
   },
@@ -60,6 +74,26 @@
     "material": "Material",
     "spool": "Spule",
     "weight": "Restgewicht"
+  },
+  "detail": {
+    "color": "Farbe",
+    "details": "Details",
+    "spoolId": "Spulen-ID",
+    "remainingWeight": "Restgewicht",
+    "weight": "Filamentgewicht",
+    "spoolWeight": "Spulengewicht",
+    "price": "Preis",
+    "density": "Dichte",
+    "diameter": "Durchmesser",
+    "extruderTemp": "Extruder-Temp.",
+    "bedTemp": "Bett-Temp.",
+    "articleNumber": "Artikelnummer",
+    "comment": "Kommentar",
+    "multiColorType": "Mehrfarbig-Typ",
+    "coaxial": "Koaxial (radial)",
+    "longitudinal": "Längs (linear)",
+    "similarColors": "Ähnliche Farben",
+    "complementaryColors": "Komplementärfarben"
   },
   "theme": {
     "light": "Hell",

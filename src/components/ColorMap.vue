@@ -32,38 +32,45 @@ defineEmits<{ (e: "select", value: string): void }>();
 <style scoped>
 .color-map {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(22px, 1fr));
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 12px;
   border: 1px solid rgba(var(--border), 0.7);
   background: rgba(var(--surface), 0.85);
+  max-height: 80px;
+  overflow-y: auto;
 }
 .color-dot {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border-radius: 999px;
   border: 1px solid rgba(var(--border), 0.6);
-  box-shadow: 0 6px 14px -8px rgba(var(--shadow), 0.7);
+  box-shadow: 0 4px 10px -6px rgba(var(--shadow), 0.7);
   cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  transition: transform 100ms ease, box-shadow 100ms ease, border-color 100ms ease;
 }
 .color-dot--all {
   background: linear-gradient(120deg, #ff8a00, #8a2be2, #00c6ff);
   color: white;
   display: grid;
   place-items: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   border: 1px solid rgba(var(--accent-2), 0.7);
 }
 .color-dot:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 12px 24px -14px rgba(var(--shadow), 0.8);
+  transform: translateY(-1px) scale(1.08);
+  box-shadow: 0 8px 16px -10px rgba(var(--shadow), 0.8);
 }
 .color-dot.active {
-  outline: 2px solid rgba(var(--accent-2), 0.9);
+  outline: 2px solid rgb(var(--text));
   outline-offset: 2px;
   border-color: transparent;
+  transform: scale(1.05);
+}
+.color-dot--all.active {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
 }
 </style>

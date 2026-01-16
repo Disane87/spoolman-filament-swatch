@@ -1,11 +1,14 @@
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import {
   fetchSpoolmanFilaments,
-  fetchSpoolmanSpools,
   fetchSpoolmanMaterials,
+  fetchSpoolmanVendors,
+  fetchSpoolmanLocations,
+  fetchSpoolmanSpools,
   type SpoolmanFilament,
-  type SpoolmanSpool,
   type SpoolmanMaterial,
+  type SpoolmanVendor,
+  type SpoolmanSpool,
 } from "../api/spoolman";
 import {
   fetchExternalFilaments,
@@ -21,23 +24,33 @@ export type FilamentCard = {
   colorHex: string;
   colorName: string;
   source: "spoolman" | "external";
-  spoolId?: number;
-  remainingWeight?: number | null;
+  multiColorHexes?: string[];
+  multiColorDirection?: "coaxial" | "longitudinal";
+  price?: number | null;
+  density?: number | null;
+  diameter?: number | null;
+  weight?: number | null;
+  spoolWeight?: number | null;
+  extruderTemp?: number | null;
+  bedTemp?: number | null;
+  articleNumber?: string | null;
+  comment?: string | null;
+  locations?: string[];
+  totalRemainingWeight?: number | null;
+  spoolCount?: number;
 };
 
-type SortField = "name" | "luminance" | "lightness";
+type SortField = "name" | "vendor" | "material" | "source" | "hue" | "luminance" | "lightness";
 type SortDir = "asc" | "desc";
 
 const normalizeVendor = (value: SpoolmanFilament["vendor"]) => {
   if (!value) return "Unknown";
-  if (typeof value === "string") return value;
   return value.name || "Unknown";
 };
 
 const normalizeMaterial = (value: SpoolmanFilament["material"]) => {
   if (!value) return "Unknown";
-  if (typeof value === "string") return value;
-  return value.name || "Unknown";
+  return value;
 };
 
 const ensureHex = (value: string | null | undefined): string => {
@@ -69,23 +82,50 @@ const getColorMetrics = (hex: string) => {
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   const lightness = (max + min) / 510; // 0-1
-  return { luminance, lightness };
+  // hue in degrees (0-360), fallback 0 for grayscale
+  let hue = 0;
+  if (max !== min) {
+    if (max === r) hue = ((g - b) / (max - min)) * 60;
+    else if (max === g) hue = ((b - r) / (max - min)) * 60 + 120;
+    else hue = ((r - g) / (max - min)) * 60 + 240;
+    if (hue < 0) hue += 360;
+  }
+  return { luminance, lightness, hue };
 };
 
 const normalizeSpoolmanFilament = (
   filament: SpoolmanFilament,
-  spool?: SpoolmanSpool,
-): FilamentCard => ({
-  id: spool ? `spool-${spool.id}` : `filament-${filament.id}`,
-  name: filament.name || `Filament ${filament.id}`,
-  vendor: normalizeVendor(filament.vendor),
-  material: normalizeMaterial(filament.material),
-  colorHex: ensureHex(filament.color_hex),
-  colorName: filament.color_name || "Unknown",
-  source: "spoolman",
-  spoolId: spool?.id,
-  remainingWeight: spool?.remaining_weight ?? null,
-});
+): FilamentCard => {
+  const hasMultiColor = filament.multi_color_hexes && filament.multi_color_hexes.trim().length > 0;
+  const multiColorHexes = hasMultiColor
+    ? filament.multi_color_hexes!.split(',').map(h => ensureHex(h.trim()))
+    : undefined;
+
+  const colorHex = hasMultiColor ? multiColorHexes![0] : ensureHex(filament.color_hex);
+
+  return {
+    id: `filament-${filament.id}`,
+    name: filament.name || `Filament ${filament.id}`,
+    vendor: normalizeVendor(filament.vendor),
+    material: normalizeMaterial(filament.material),
+    colorHex,
+    colorName: colorHex.toUpperCase(),
+    source: "spoolman",
+    multiColorHexes,
+    multiColorDirection: filament.multi_color_direction ?? undefined,
+    price: filament.price ?? null,
+    density: filament.density ?? null,
+    diameter: filament.diameter ?? null,
+    weight: filament.weight ?? null,
+    spoolWeight: filament.spool_weight ?? null,
+    extruderTemp: filament.settings_extruder_temp ?? null,
+    bedTemp: filament.settings_bed_temp ?? null,
+    articleNumber: filament.article_number ?? null,
+    comment: filament.comment ?? null,
+  };
+};
+
+
 
 const normalizeExternal = (filament: ExternalFilament): FilamentCard => ({
   id: filament.id,
@@ -102,16 +142,28 @@ export const useFilaments = () => {
   const error = ref<string | null>(null);
   const allFilaments = ref<FilamentCard[]>([]);
   const spoolmanMaterials = ref<SpoolmanMaterial[]>([]);
+  const spoolmanVendors = ref<SpoolmanVendor[]>([]);
+  const spoolmanLocations = ref<string[]>([]);
   const { resolvedBaseUrl } = useSpoolmanUrl();
 
+  // Read query parameters from URL (case-insensitive)
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSearch = urlParams.get('q') || '';
+  const initialVendor = urlParams.get('v')?.toLowerCase() || 'all';
+  const initialMaterial = urlParams.get('m')?.toLowerCase() || 'all';
+  const initialColor = urlParams.get('c')?.toLowerCase() || 'all';
+  const initialLocation = urlParams.get('l')?.toLowerCase() || 'all';
+
   const filters = reactive({
-    search: "",
-    vendor: "all",
-    material: "all",
+    search: initialSearch,
+    vendor: initialVendor,
+    material: initialMaterial,
     source: "spoolman",
     sortField: "name" as SortField,
     sortDir: "asc" as SortDir,
-    color: "all" as string,
+    color: initialColor as string,
+    colorType: "all" as "all" | "single" | "multi",
+    location: initialLocation,
   });
 
   const load = async () => {
@@ -120,39 +172,46 @@ export const useFilaments = () => {
     try {
       const baseUrl = resolvedBaseUrl.value;
 
-      const includeExternal = filters.source !== "spoolman";
-
-      const [spools, filaments, materials, external] = await Promise.all([
-        fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]),
+      const [filaments, materials, vendors, locations, spools, external] = await Promise.all([
         fetchSpoolmanFilaments(baseUrl).catch(() => [] as SpoolmanFilament[]),
         fetchSpoolmanMaterials(baseUrl).catch(() => [] as SpoolmanMaterial[]),
-        includeExternal
-          ? fetchExternalFilaments().catch(() => [] as ExternalFilament[])
-          : Promise.resolve([] as ExternalFilament[]),
+        fetchSpoolmanVendors(baseUrl).catch(() => [] as SpoolmanVendor[]),
+        fetchSpoolmanLocations(baseUrl).catch(() => [] as string[]),
+        fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]),
+        fetchExternalFilaments().catch(() => [] as ExternalFilament[]),
       ]);
 
       spoolmanMaterials.value = materials;
+      spoolmanVendors.value = vendors;
+      spoolmanLocations.value = locations;
 
-      const spoolFilaments = spools
-        .map((spool) => {
-          const filament = filaments.find(
-            (item) => item.id === spool.filament_id,
-          );
-          return filament ? normalizeSpoolmanFilament(filament, spool) : null;
-        })
-        .filter((item): item is FilamentCard => item !== null);
-
-      const spoolFilamentIds = new Set(
-        spools.map((spool) => spool.filament_id).filter(Boolean),
-      );
-
-      const looseFilaments = filaments
-        .filter((item) => !spoolFilamentIds.has(item.id))
-        .map((item) => normalizeSpoolmanFilament(item));
+      // Create a map of filament_id -> spool data
+      const filamentSpoolsMap = new Map<number, { locations: string[], totalWeight: number, count: number }>();
+      spools.forEach((spool) => {
+        if (spool.filament_id) {
+          const existing = filamentSpoolsMap.get(spool.filament_id) || { locations: [], totalWeight: 0, count: 0 };
+          if (spool.location && !existing.locations.includes(spool.location)) {
+            existing.locations.push(spool.location);
+          }
+          if (spool.remaining_weight) {
+            existing.totalWeight += spool.remaining_weight;
+          }
+          existing.count += 1;
+          filamentSpoolsMap.set(spool.filament_id, existing);
+        }
+      });
 
       allFilaments.value = [
-        ...spoolFilaments,
-        ...looseFilaments,
+        ...filaments.map((item) => {
+          const card = normalizeSpoolmanFilament(item);
+          const spoolData = filamentSpoolsMap.get(item.id);
+          if (spoolData) {
+            card.locations = spoolData.locations;
+            card.totalRemainingWeight = spoolData.totalWeight > 0 ? spoolData.totalWeight : null;
+            card.spoolCount = spoolData.count;
+          }
+          return card;
+        }),
         ...external.map(normalizeExternal),
       ];
     } catch (err) {
@@ -162,20 +221,54 @@ export const useFilaments = () => {
     }
   };
 
+  // Sync filters to URL query string
+  watch(() => ({ ...filters }), (newFilters) => {
+    const params = new URLSearchParams();
+
+    if (newFilters.search) {
+      params.set('q', newFilters.search);
+    }
+    if (newFilters.vendor && newFilters.vendor !== 'all') {
+      params.set('v', newFilters.vendor);
+    }
+    if (newFilters.material && newFilters.material !== 'all') {
+      params.set('m', newFilters.material);
+    }
+    if (newFilters.color && newFilters.color !== 'all') {
+      params.set('c', newFilters.color);
+    }
+    if (newFilters.location && newFilters.location !== 'all') {
+      params.set('l', newFilters.location);
+    }
+
+    const newUrl = params.toString() ? `?${params.toString()}` : window.location.pathname;
+    window.history.replaceState({}, '', newUrl);
+  });
+
   const filtered = computed(() => {
     const search = filters.search.toLowerCase();
     const result = allFilaments.value.filter((item) => {
       if (filters.source !== "all" && item.source !== filters.source) {
         return false;
       }
-      if (filters.vendor !== "all" && item.vendor !== filters.vendor) {
+      if (filters.vendor !== "all" && item.vendor.toLowerCase() !== filters.vendor.toLowerCase()) {
         return false;
       }
-      if (filters.material !== "all" && item.material !== filters.material) {
+      if (filters.material !== "all" && item.material.toLowerCase() !== filters.material.toLowerCase()) {
         return false;
       }
-      if (filters.color !== "all" && item.colorHex !== filters.color) {
+      if (filters.color !== "all" && item.colorHex.toLowerCase() !== filters.color.toLowerCase()) {
         return false;
+      }
+      if (filters.location !== "all") {
+        if (!item.locations || !item.locations.some(loc => loc.toLowerCase() === filters.location.toLowerCase())) {
+          return false;
+        }
+      }
+      if (filters.colorType !== "all") {
+        const isMultiColor = item.multiColorHexes && item.multiColorHexes.length > 1;
+        if (filters.colorType === "multi" && !isMultiColor) return false;
+        if (filters.colorType === "single" && isMultiColor) return false;
       }
       if (!search) return true;
       return (
@@ -189,6 +282,23 @@ export const useFilaments = () => {
 
     const compare = (a: FilamentCard, b: FilamentCard) => {
       switch (filters.sortField) {
+        case "vendor": {
+          const cmp = a.vendor.localeCompare(b.vendor, undefined, { sensitivity: "base" });
+          return filters.sortDir === "asc" ? cmp : -cmp;
+        }
+        case "material": {
+          const cmp = a.material.localeCompare(b.material, undefined, { sensitivity: "base" });
+          return filters.sortDir === "asc" ? cmp : -cmp;
+        }
+        case "source": {
+          const cmp = a.source.localeCompare(b.source, undefined, { sensitivity: "base" });
+          return filters.sortDir === "asc" ? cmp : -cmp;
+        }
+        case "hue": {
+          const hA = getColorMetrics(a.colorHex).hue;
+          const hB = getColorMetrics(b.colorHex).hue;
+          return filters.sortDir === "asc" ? hA - hB : hB - hA;
+        }
         case "luminance": {
           const lA = getColorMetrics(a.colorHex).luminance;
           const lB = getColorMetrics(b.colorHex).luminance;
@@ -213,14 +323,28 @@ export const useFilaments = () => {
   });
 
   const vendorOptions = computed(() => {
-    const values = new Set(allFilaments.value.map((item) => item.vendor));
+    const values = new Set<string>();
+    // Vendors from API
+    spoolmanVendors.value.forEach((v) => {
+      if (v.name && v.name.trim()) values.add(v.name);
+    });
+    // Vendors from loaded filaments (includes external)
+    allFilaments.value.forEach((item) => {
+      if (item.vendor && item.vendor !== "Unknown") values.add(item.vendor);
+    });
     return Array.from(values).sort();
   });
 
   const materialOptions = computed(() => {
     const values = new Set<string>();
-    spoolmanMaterials.value.forEach((m) => m.name && values.add(m.name));
-    allFilaments.value.forEach((item) => values.add(item.material));
+    // Materials from API
+    spoolmanMaterials.value.forEach((m) => {
+      if (m.name && m.name.trim()) values.add(m.name);
+    });
+    // Materials from loaded filaments (includes external)
+    allFilaments.value.forEach((item) => {
+      if (item.material && item.material !== "Unknown") values.add(item.material);
+    });
     return Array.from(values).sort();
   });
 
@@ -237,6 +361,10 @@ export const useFilaments = () => {
       .map((v) => v.hex);
   });
 
+  const locationOptions = computed(() => {
+    return Array.from(spoolmanLocations.value).sort();
+  });
+
   return {
     loading,
     error,
@@ -246,6 +374,7 @@ export const useFilaments = () => {
     vendorOptions,
     materialOptions,
     colorOptions,
+    locationOptions,
     refresh: load,
   };
 };

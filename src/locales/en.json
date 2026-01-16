@@ -16,7 +16,10 @@
     "unpin": "Unpin",
     "viewCarousel": "Carousel",
     "viewBoard": "Board",
-    "clearPalette": "Clear palette"
+    "clearPalette": "Clear palette",
+    "openPalette": "Open palette",
+    "showFilters": "Show filters",
+    "hideFilters": "Hide filters"
   },
   "search": {
     "placeholder": "Search by name, vendor, material, color..."
@@ -29,10 +32,18 @@
     "onlySpoolman": "Spoolman only",
     "onlyExternal": "External DB only",
     "color": "Color",
+    "colorType": "Color Type",
+    "singleColor": "Single Color",
+    "multiColor": "Multi Color",
+    "location": "Location",
     "sort": "Sort",
     "sortAsc": "Asc",
     "sortDesc": "Desc",
     "sortNameAsc": "Name",
+    "sortVendorAsc": "Vendor",
+    "sortMaterialAsc": "Material",
+    "sortSourceAsc": "Source",
+    "sortHueAsc": "Hue",
     "sortLuminanceAsc": "Luminosity",
     "sortLightnessAsc": "Lightness"
   },
@@ -46,8 +57,11 @@
     "spoolman": "Spoolman",
     "external": "External filaments",
     "count": "{count} results",
+    "item": "color",
+    "items": "colors",
     "palette": "Pinned palette",
     "paletteEmpty": "Pin cards to collect them here",
+    "paletteHint": "Click the pin button on filament cards to add them to your palette",
     "legend": "Color guide",
     "spoolmanUrl": "Spoolman URL"
   },
@@ -60,6 +74,26 @@
     "material": "Material",
     "spool": "Spool",
     "weight": "Remaining weight"
+  },
+  "detail": {
+    "color": "Color",
+    "details": "Details",
+    "spoolId": "Spool ID",
+    "remainingWeight": "Remaining Weight",
+    "weight": "Filament Weight",
+    "spoolWeight": "Spool Weight",
+    "price": "Price",
+    "density": "Density",
+    "diameter": "Diameter",
+    "extruderTemp": "Extruder Temp.",
+    "bedTemp": "Bed Temp.",
+    "articleNumber": "Article Number",
+    "comment": "Comment",
+    "multiColorType": "Multi-Color Type",
+    "coaxial": "Coaxial (radial)",
+    "longitudinal": "Longitudinal (linear)",
+    "similarColors": "Similar Colors",
+    "complementaryColors": "Complementary Colors"
   },
   "theme": {
     "light": "Light",

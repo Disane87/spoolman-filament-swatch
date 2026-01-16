@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-8 px-6 py-10">
-    <header class="flex flex-col gap-6">
+  <div class="mx-auto flex min-h-screen h-screen max-w-6xl flex-col gap-2 px-6 py-10 overflow-hidden">
+    <header class="flex flex-col gap-6 flex-shrink-0">
       <div class="flex flex-wrap items-center justify-between gap-6">
         <div class="flex flex-col gap-2">
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[rgb(var(--text-muted))]">
@@ -14,109 +14,66 @@
           </p>
         </div>
         <div class="flex flex-col items-end gap-3">
-          <LocaleSwitch />
-          <ThemeSwitch />
+          <div class="flex items-center gap-2">
+            <LocaleSwitch />
+            <ThemeSwitch />
+            <Button
+              size="sm"
+              variant="ghost"
+              @click="paletteOpen = true"
+              class="relative"
+              :aria-label="t('actions.openPalette')"
+            >
+              <Icon icon="lucide:menu" class="w-5 h-5" />
+              <span
+                v-if="pinnedItems.length"
+                class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[rgb(var(--accent))] text-[10px] font-bold text-white"
+              >
+                {{ pinnedItems.length }}
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
 
       <div class="control-grid">
         <div class="control-card glass">
-          <div class="control-top">
-            <div class="control-url">
-              <span class="label">{{ t("info.spoolmanUrl") }}</span>
-              <span class="mono">{{ spoolmanUrl }}</span>
-              <Button size="sm" variant="ghost" @click="openUrlDialog">
-                {{ t("actions.editSpoolmanUrl") }}
-              </Button>
-            </div>
-            <Button variant="secondary" size="sm" @click="refresh">
-              {{ t("actions.refresh") }}
-            </Button>
-          </div>
           <FiltersBar
-            class="mt-4"
             :filters="filters"
             :vendor-options="vendorOptions"
             :material-options="materialOptions"
             :color-options="colorOptions"
+            :location-options="locationOptions"
             :search-placeholder="t('search.placeholder')"
             :labels="{
               vendor: t('filters.vendor'),
               material: t('filters.material'),
+              location: t('filters.location'),
               all: t('filters.all'),
               onlySpoolman: t('filters.onlySpoolman'),
               onlyExternal: t('filters.onlyExternal'),
               color: t('filters.color'),
+              colorType: t('filters.colorType'),
+              singleColor: t('filters.singleColor'),
+              multiColor: t('filters.multiColor'),
               source: t('filters.source'),
               sort: t('filters.sort'),
               sortAsc: t('filters.sortAsc'),
               sortDesc: t('filters.sortDesc'),
               sortNameAsc: t('filters.sortNameAsc'),
+              sortVendorAsc: t('filters.sortVendorAsc'),
+              sortMaterialAsc: t('filters.sortMaterialAsc'),
+              sortSourceAsc: t('filters.sortSourceAsc'),
+              sortHueAsc: t('filters.sortHueAsc'),
               sortLuminanceAsc: t('filters.sortLuminanceAsc'),
               sortLightnessAsc: t('filters.sortLightnessAsc')
             }"
           />
         </div>
-
-        <div class="summary-card glass">
-          <div class="summary-row">
-            <div class="summary-left">
-              <span class="label">{{ t("info.sourcing") }}</span>
-              <span class="mono">{{ countLabel }}</span>
-            </div>
-            <div class="view-toggle">
-              <Button
-                :variant="viewMode === 'carousel' ? 'primary' : 'ghost'"
-                size="sm"
-                @click="viewMode = 'carousel'"
-              >
-                {{ t('actions.viewCarousel') }}
-              </Button>
-              <Button
-                :variant="viewMode === 'board' ? 'primary' : 'ghost'"
-                size="sm"
-                @click="viewMode = 'board'"
-              >
-                {{ t('actions.viewBoard') }}
-              </Button>
-            </div>
-          </div>
-
-          <div class="summary-row">
-            <div class="summary-left">
-              <span class="label">{{ t('info.palette') }}</span>
-              <span class="mono">{{ pinnedItems.length }}</span>
-            </div>
-            <Button
-              v-if="pinnedIds.size"
-              size="sm"
-              variant="ghost"
-              @click="clearPalette"
-            >
-              {{ t('actions.clearPalette') }}
-            </Button>
-          </div>
-
-          <div v-if="pinnedItems.length" class="summary-palette">
-            <button
-              v-for="item in pinnedItems"
-              :key="item.id"
-              class="summary-chip"
-              :style="{ background: item.colorHex }"
-              @click="scrollToPinned(item.id)"
-            >
-              <span>{{ item.name }}</span>
-              <span class="mono">{{ item.colorHex.toUpperCase() }}</span>
-            </button>
-          </div>
-          <div v-else class="summary-empty">
-            {{ t('info.paletteEmpty') }}
-          </div>
-        </div>
       </div>
     </header>
 
-    <section class="flex flex-1 flex-col gap-6">
+    <section class="flex flex-1 flex-col gap-6 min-h-0">
       <div v-if="loading" class="text-sm text-[rgb(var(--text-muted))]">
         {{ t("status.loading") }}
       </div>
@@ -126,13 +83,18 @@
       <div v-else-if="filtered.length === 0" class="text-sm text-[rgb(var(--text-muted))]">
         {{ t("status.empty") }}
       </div>
-      <div v-else class="flex flex-col gap-4">
+      <div v-else class="flex flex-col flex-1 gap-4 min-h-0">
         <FilamentCarousel
           v-if="viewMode === 'carousel'"
           :items="filtered"
           :count-label="countLabel"
           :labels="cardLabels"
+          :filters="filters"
+          :sort-labels="sortLabels"
+          :view-mode="viewMode"
           @togglePin="togglePin"
+          @selectFilament="selectFilament"
+          @changeView="viewMode = $event"
           :pinned-ids="pinnedIds"
         />
 
@@ -141,23 +103,34 @@
           :filaments="filtered"
           :pinned-ids="pinnedIds"
           :labels="boardLabels"
+          :filters="filters"
+          :sort-labels="sortLabels"
+          :view-mode="viewMode"
+          @changeView="viewMode = $event"
           :title="countLabel"
           @togglePin="togglePin"
+          @selectFilament="selectFilament"
         />
       </div>
     </section>
 
+    <!-- Detail Panel -->
+    <FilamentDetailPanel
+      :filament="selectedFilament"
+      :all-filaments="allFilaments"
+      :labels="detailLabels"
+      @close="selectedFilament = null"
+      @selectFilament="selectFilament"
+    />
+
     <Dialog v-model:open="urlDialogOpen">
-      <div class="flex flex-col gap-3">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[rgb(var(--text-muted))]">
-          {{ t("info.spoolman") }}
-        </p>
-        <h3 class="text-2xl font-semibold">
-          {{ t("dialog.spoolmanUrlTitle") }}
-        </h3>
-        <p class="text-sm text-[rgb(var(--text-muted))]">
-          {{ t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL }) }}
-        </p>
+      <DialogContent class="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
+          <DialogDescription>
+            {{ t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL }) }}
+          </DialogDescription>
+        </DialogHeader>
         <form class="mt-2 flex flex-col gap-4" @submit.prevent>
           <label class="flex flex-col gap-2 text-sm font-semibold text-[rgb(var(--text))]">
             <span class="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
@@ -184,8 +157,61 @@
             </div>
           </div>
         </form>
-      </div>
+      </DialogContent>
     </Dialog>
+
+    <div class="palette-drawer" :class="{ open: paletteOpen }">
+      <div class="palette-overlay" @click="paletteOpen = false" />
+      <div class="palette-panel">
+        <div class="palette-panel__header">
+          <div>
+            <p class="label">{{ t('info.palette') }}</p>
+            <p class="mono text-[rgb(var(--text))]">{{ pinnedItems.length }} {{ pinnedItems.length === 1 ? t('info.item') : t('info.items') }}</p>
+          </div>
+          <div class="flex gap-2">
+            <Button v-if="pinnedItems.length" size="sm" variant="ghost" @click="clearPalette">
+              <Icon icon="lucide:trash-2" class="w-4 h-4 mr-1" />
+              {{ t('actions.clearPalette') }}
+            </Button>
+            <Button size="sm" variant="secondary" @click="paletteOpen = false">
+              <Icon icon="lucide:x" class="w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+        <div class="palette-panel__body">
+          <div v-if="pinnedItems.length" class="summary-palette">
+            <button
+              v-for="item in pinnedItems"
+              :key="item.id"
+              class="summary-chip"
+              :style="{ background: item.colorHex }"
+              @click="scrollToPinned(item.id)"
+            >
+              <span>{{ item.name }}</span>
+              <span class="mono">{{ item.colorHex.toUpperCase() }}</span>
+            </button>
+          </div>
+          <div v-else class="flex flex-col items-center justify-center gap-3 py-12 text-center">
+            <p class="text-sm text-[rgb(var(--text-muted))]">
+              {{ t('info.paletteEmpty') }}
+            </p>
+            <p class="text-xs text-[rgb(var(--text-muted))]">
+              {{ t('info.paletteHint') }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-auto pt-8 pb-4 text-center text-sm text-[rgb(var(--text-muted))]">
+      <div class="flex items-center justify-center gap-2">
+        <span>{{ t("info.spoolmanUrl") }}:</span>
+        <span class="mono font-semibold text-[rgb(var(--text))]">{{ spoolmanUrl }}</span>
+        <Button size="sm" variant="ghost" @click="openUrlDialog" class="h-7 px-2">
+          <Icon icon="lucide:edit" class="w-3 h-3" />
+        </Button>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -198,12 +224,30 @@ import { useSpoolmanUrl } from "./composables/useSpoolmanUrl";
 import FiltersBar from "./components/FiltersBar.vue";
 import FilamentCarousel from "./components/FilamentCarousel.vue";
 import FilamentBoard from "./components/FilamentBoard.vue";
+import FilamentDetailPanel from "./components/FilamentDetailPanel.vue";
 import LocaleSwitch from "./components/LocaleSwitch.vue";
 import ThemeSwitch from "./components/ThemeSwitch.vue";
-import Button from "./components/ui/Button.vue";
-import Dialog from "./components/ui/Dialog.vue";
-import Input from "./components/ui/Input.vue";
+import { Button } from "@/components/ui/button";
+import { Icon } from '@iconify/vue';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Toggle } from "@/components/ui/toggle";
 import { DEFAULT_SPOOLMAN_URL } from "./api/spoolman";
+import type { FilamentCard } from "./composables/useFilaments";
+import { watch } from "vue";
 
 const { t, locale } = useI18n();
 const {
@@ -212,14 +256,21 @@ const {
   vendorOptions,
   materialOptions,
   colorOptions,
+  locationOptions,
   loading,
   error,
   refresh,
   allFilaments,
 } = useFilaments();
 
-const viewMode = ref<"carousel" | "board">("carousel");
+const viewMode = ref<"carousel" | "board">("board");
 const pinnedIds = ref(new Set<string>());
+const paletteOpen = ref(false)
+const selectedFilament = ref<FilamentCard | null>(null);
+
+const selectFilament = (filament: FilamentCard) => {
+  selectedFilament.value = filament;
+};
 
 const countLabel = computed(() =>
   t("info.count", { count: filtered.value.length }),
@@ -244,6 +295,37 @@ const boardLabels = computed(() => ({
   sourceSpoolman: t("info.spoolman"),
   sourceExternal: t("info.external"),
   legend: t("info.legend"),
+}));
+
+const sortLabels = computed(() => ({
+  name: t('filters.sortNameAsc'),
+  vendor: t('filters.sortVendorAsc'),
+  material: t('filters.sortMaterialAsc'),
+  source: t('filters.sortSourceAsc'),
+  hue: t('filters.sortHueAsc'),
+  luminance: t('filters.sortLuminanceAsc'),
+  lightness: t('filters.sortLightnessAsc'),
+}));
+
+const detailLabels = computed(() => ({
+  color: t("detail.color"),
+  details: t("detail.details"),
+  spoolId: t("detail.spoolId"),
+  remainingWeight: t("detail.remainingWeight"),
+  weight: t("detail.weight"),
+  spoolWeight: t("detail.spoolWeight"),
+  price: t("detail.price"),
+  density: t("detail.density"),
+  diameter: t("detail.diameter"),
+  extruderTemp: t("detail.extruderTemp"),
+  bedTemp: t("detail.bedTemp"),
+  articleNumber: t("detail.articleNumber"),
+  comment: t("detail.comment"),
+  multiColorType: t("detail.multiColorType"),
+  coaxial: t("detail.coaxial"),
+  longitudinal: t("detail.longitudinal"),
+  similarColors: t("detail.similarColors"),
+  complementaryColors: t("detail.complementaryColors"),
 }));
 
 const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl } = useSpoolmanUrl();
@@ -289,6 +371,18 @@ const pinnedItems = computed(() => {
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
 });
 
+watch(
+  pinnedItems,
+  (items, prev) => {
+    if (!items.length) {
+      paletteOpen.value = false;
+    } else if ((prev?.length ?? 0) === 0 && items.length > 0) {
+      paletteOpen.value = true;
+    }
+  },
+  { immediate: true },
+);
+
 const scrollToPinned = (id: string) => {
   const el = document.getElementById(`board-card-${id}`);
   if (el) {
@@ -306,52 +400,3 @@ onMounted(() => {
   refresh();
 });
 </script>
-
-<style scoped>
-.palette {
-  border: 1px solid rgba(var(--border), 0.6);
-  border-radius: 18px;
-  padding: 12px;
-  background: rgba(var(--surface), 0.75);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.palette-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.palette-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 8px;
-}
-
-.palette-chip {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  border: 1px solid rgba(var(--border), 0.6);
-  border-radius: 12px;
-  padding: 10px;
-  color: #0f172a;
-  background-blend-mode: multiply;
-  box-shadow: 0 12px 20px -18px rgba(0, 0, 0, 0.45);
-  cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease;
-}
-
-.palette-chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 26px -18px rgba(0, 0, 0, 0.5);
-}
-
-.palette-chip .mono {
-  color: #0f172a;
-  font-size: 12px;
-}
-</style>
