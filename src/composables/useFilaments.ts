@@ -187,7 +187,7 @@ export const useFilaments = () => {
   const initialMaterial = urlParams.get('m')?.toLowerCase() || 'all';
   const initialColor = urlParams.get('c')?.toLowerCase() || 'all';
   const initialLocation = urlParams.get('l')?.toLowerCase() || 'all';
-  const initialSource = urlParams.get('s')?.toLowerCase() || 'all';
+  const initialSource = urlParams.get('s')?.toLowerCase() || 'spoolman';
 
   const filters = reactive({
     search: initialSearch,
