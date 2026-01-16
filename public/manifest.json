@@ -1,0 +1,20 @@
+{
+  "name": "Spoolman Filament Swatch",
+  "short_name": "Filament Swatch",
+  "description": "Beautiful color browser for your 3D printer filaments",
+  "start_url": "/spoolman-filament-swatch/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#15171f",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/spoolman-filament-swatch/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "screenshots": []
+}

@@ -1,4 +1,16 @@
+<div align="center">
+
+![Spoolman Filament Swatch Banner](public/readme-banner.svg)
+
 # 🎨 Spoolman Filament Swatch
+
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://disane87.github.io/spoolman-filament-swatch/)
+[![GitHub](https://img.shields.io/github/license/Disane87/spoolman-filament-swatch?style=for-the-badge)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Disane87/spoolman-filament-swatch?style=for-the-badge)](https://github.com/Disane87/spoolman-filament-swatch/stargazers)
+
+</div>
+
+---
 
 Hey there! 👋 This is a beautiful, interactive filament color browser for [Spoolman](https://github.com/Donkie/Spoolman/). Think of it as your personal filament showroom - browse colors, filter by material, vendor, location, and find that perfect filament for your next print! 🖨️✨
 
