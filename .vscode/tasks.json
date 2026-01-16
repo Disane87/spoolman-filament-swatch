@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "vite dev",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev"
+			],
+			"isBackground": true,
+			"problemMatcher": [
+				{
+					"owner": "vite-dev",
+					"fileLocation": "absolute",
+					"pattern": {
+						"regexp": "^(.+)$",
+						"message": 1
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "^\\s*(vite|VITE) v",
+						"endsPattern": "^\\s*Local:\\s+https?://localhost:[0-9]+/"
+					}
+				}
+			]
+		}
+	]
+}

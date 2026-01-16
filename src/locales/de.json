@@ -1,0 +1,73 @@
+{
+  "app": {
+    "title": "Spoolman Filament Swatch",
+    "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
+    "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches."
+  },
+  "actions": {
+    "refresh": "Neu laden",
+    "copy": "Hex kopieren",
+    "copied": "Kopiert",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "reset": "Zuruecksetzen",
+    "editSpoolmanUrl": "URL bearbeiten",
+    "pin": "Anheften",
+    "unpin": "Loesen",
+    "viewCarousel": "Karussell",
+    "viewBoard": "Board",
+    "clearPalette": "Palette leeren"
+  },
+  "search": {
+    "placeholder": "Suche nach Name, Hersteller, Material, Farbe..."
+  },
+  "filters": {
+    "vendor": "Hersteller",
+    "material": "Material",
+    "source": "Quelle",
+    "all": "Alle",
+    "onlySpoolman": "Nur Spoolman",
+    "onlyExternal": "Nur externe DB",
+    "color": "Farbe",
+    "sort": "Sortieren",
+    "sortAsc": "Auf",
+    "sortDesc": "Ab",
+    "sortNameAsc": "Name",
+    "sortLuminanceAsc": "Luminanz",
+    "sortLightnessAsc": "Helligkeit"
+  },
+  "status": {
+    "loading": "Lade Filamente...",
+    "error": "Fehler beim Laden der Daten.",
+    "empty": "Keine Filamente gefunden."
+  },
+  "info": {
+    "sourcing": "Datenquelle",
+    "spoolman": "Spoolman",
+    "external": "Externe Filamente",
+    "count": "{count} Treffer",
+    "palette": "Gepinnte Palette",
+    "paletteEmpty": "Mit Pins landen Farben hier",
+    "legend": "Farblegende",
+    "spoolmanUrl": "Spoolman URL"
+  },
+  "dialog": {
+    "spoolmanUrlTitle": "Spoolman URL setzen",
+    "spoolmanUrlDescription": "Die URL wird nur im Browser gespeichert. Standard ist {defaultUrl}."
+  },
+  "card": {
+    "vendor": "Hersteller",
+    "material": "Material",
+    "spool": "Spule",
+    "weight": "Restgewicht"
+  },
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "auto": "Auto"
+  },
+  "seo": {
+    "title": "Spoolman Filament Swatch",
+    "description": "Lokaler Farbpicker fuer Spoolman mit Spulen- und Filamentkarussell."
+  }
+}

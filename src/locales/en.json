@@ -1,0 +1,73 @@
+{
+  "app": {
+    "title": "Spoolman Filament Swatch",
+    "subtitle": "Local color picker for filaments and spools",
+    "tagline": "Swipe through colors, filter materials, and pick perfect matches."
+  },
+  "actions": {
+    "refresh": "Refresh",
+    "copy": "Copy hex",
+    "copied": "Copied",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "editSpoolmanUrl": "Edit URL",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "viewCarousel": "Carousel",
+    "viewBoard": "Board",
+    "clearPalette": "Clear palette"
+  },
+  "search": {
+    "placeholder": "Search by name, vendor, material, color..."
+  },
+  "filters": {
+    "vendor": "Vendor",
+    "material": "Material",
+    "source": "Source",
+    "all": "All",
+    "onlySpoolman": "Spoolman only",
+    "onlyExternal": "External DB only",
+    "color": "Color",
+    "sort": "Sort",
+    "sortAsc": "Asc",
+    "sortDesc": "Desc",
+    "sortNameAsc": "Name",
+    "sortLuminanceAsc": "Luminosity",
+    "sortLightnessAsc": "Lightness"
+  },
+  "status": {
+    "loading": "Loading filaments...",
+    "error": "Failed to load data.",
+    "empty": "No filaments found."
+  },
+  "info": {
+    "sourcing": "Data source",
+    "spoolman": "Spoolman",
+    "external": "External filaments",
+    "count": "{count} results",
+    "palette": "Pinned palette",
+    "paletteEmpty": "Pin cards to collect them here",
+    "legend": "Color guide",
+    "spoolmanUrl": "Spoolman URL"
+  },
+  "dialog": {
+    "spoolmanUrlTitle": "Set Spoolman URL",
+    "spoolmanUrlDescription": "The URL is stored in this browser. Default is {defaultUrl}."
+  },
+  "card": {
+    "vendor": "Vendor",
+    "material": "Material",
+    "spool": "Spool",
+    "weight": "Remaining weight"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
+  },
+  "seo": {
+    "title": "Spoolman Filament Swatch",
+    "description": "Local color picker for Spoolman with a filament carousel."
+  }
+}
