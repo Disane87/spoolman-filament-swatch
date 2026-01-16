@@ -67,7 +67,7 @@
   },
   "dialog": {
     "spoolmanUrlTitle": "Set Spoolman URL",
-    "spoolmanUrlDescription": "The URL is stored in this browser. Default is {defaultUrl}.",
+    "spoolmanUrlDescription": "The URL is stored locally in this browser. Default is {defaultUrl}. Note: For deployed instances, you must configure SPOOLMAN_CORS_ORIGIN=disane87.github.io (without https://) in your Spoolman server and restart.",
     "spoolmanUrlRequired": "Please enter the URL of your Spoolman server to continue."
   },
   "card": {

@@ -52,6 +52,53 @@ Using the live version is super easy:
 > [!TIP]
 > The URL is only stored in your browser's local storage. You can change it anytime by clicking the edit button in the footer.
 
+### ⚠️ CORS Configuration Required
+
+When using the deployed version (not localhost), you need to configure CORS on your Spoolman server to allow requests from `https://disane87.github.io`.
+
+**Add this to your Spoolman configuration:**
+
+```env
+SPOOLMAN_CORS_ORIGIN=disane87.github.io
+```
+
+For multiple origins (comma-separated, **NO SPACES**):
+
+```env
+SPOOLMAN_CORS_ORIGIN=disane87.github.io,localhost:5173
+```
+
+> [!IMPORTANT]
+> Do NOT include the protocol (`https://` or `http://`). Use only the domain: `disane87.github.io` NOT `https://disane87.github.io`
+
+**Where to add this:**
+- **Docker**: Add to your `docker-compose.yml` under `environment:` or in your `.env` file
+- **Direct installation**: Add to your `.env` file in the Spoolman directory
+
+**After changing the configuration, you MUST restart Spoolman:**
+- Docker: `docker-compose restart` or `docker restart spoolman`
+- Direct: Restart the Spoolman service
+
+> [!NOTE]
+> This is only required when accessing the app from a different domain than your Spoolman server. Local development automatically uses a proxy to avoid CORS issues.
+
+#### 🔧 Troubleshooting CORS Issues
+
+If you still get CORS errors after configuring `SPOOLMAN_CORS_ORIGIN`:
+
+1. **Verify Spoolman was restarted**: `docker logs spoolman | grep CORS` should show your origins
+2. **Check for typos**: No spaces, correct protocol (`https://` vs `http://`)
+3. **Verify the ENV variable is loaded**: `docker exec spoolman env | grep CORS`
+
+**Alternative Solutions:**
+
+- **Use the `surl` parameter**: Share links like `https://disane87.github.io/spoolman-filament-swatch/?surl=http://your-spoolman:7912`
+- **Self-host this app**: Clone and deploy it on the same domain as your Spoolman instance
+- **Use a reverse proxy**: Configure nginx/traefik to serve both Spoolman and this app from the same domain
+- **Browser extension**: Use a CORS unblock extension (not recommended for security reasons)
+
+**If CORS configuration doesn't work**, the most reliable solution is to self-host this app or use the local development version.
+
 ## 🏃‍♂️ Running Locally
 
 Want to run it on your own machine? No problem!
