@@ -199,6 +199,22 @@
             {{ hasUrl.value ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912' }) : t("dialog.spoolmanUrlRequired") }}
           </DialogDescription>
         </DialogHeader>
+        
+        <!-- CORS Warning Alert -->
+        <div class="mt-4 rounded-lg border border-yellow-500/40 bg-yellow-400/15 p-3">
+          <p class="text-xs font-semibold uppercase tracking-wide text-yellow-700">{{ t("dialog.corsInfoTitle") }}</p>
+          <p class="mt-2 text-xs text-yellow-700">{{ t("dialog.corsInfoDescription") }}</p>
+          <div class="mt-3 rounded bg-black/20 p-2">
+            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel") }}</code>
+          </div>
+          <p class="mt-2 text-xs text-yellow-700">
+            <span v-for="(part, idx) in parseMarkdownLink(t('dialog.corsRestartRequired'))" :key="idx">
+              <a v-if="part.isLink" :href="part.url" target="_blank" class="underline hover:text-yellow-600">{{ part.text }}</a>
+              <span v-else>{{ part.text }}</span>
+            </span>
+          </p>
+        </div>
+        
         <form class="mt-2 flex flex-col gap-4" @submit.prevent="applySpoolmanUrl">
           <label class="flex flex-col gap-2 text-sm font-semibold text-[rgb(var(--text))]">
             <span class="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
@@ -208,7 +224,7 @@
               v-model="spoolmanUrlInput"
               type="text"
               name="spoolman-url"
-              placeholder="http://localhost:7912"
+              placeholder="https://spoolman.your.tld"
               required
             />
           </label>
@@ -462,6 +478,27 @@ const scrollToPinned = (id: string) => {
   if (el) {
     el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
   }
+};
+
+const parseMarkdownLink = (text: string): Array<{ text: string; url?: string; isLink: boolean }> => {
+  const parts: Array<{ text: string; url?: string; isLink: boolean }> = [];
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ text: text.slice(lastIndex, match.index), isLink: false });
+    }
+    parts.push({ text: match[1], url: match[2], isLink: true });
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push({ text: text.slice(lastIndex), isLink: false });
+  }
+
+  return parts.length ? parts : [{ text, isLink: false }];
 };
 
 useSeo(
