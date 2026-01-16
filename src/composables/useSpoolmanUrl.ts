@@ -68,14 +68,16 @@ const resetSpoolmanUrl = () => {
 };
 
 const resolvedBaseUrl = computed(() => {
-    // If the target is spoolman.disane.dev, use the local dev proxy to avoid CORS.
-    try {
-        const url = new URL(spoolmanUrl.value);
-        if (url.hostname === "spoolman.disane.dev") {
-            return "/spoolman";
+    // If the target is spoolman.disane.dev, use the local dev proxy to avoid CORS (only in development).
+    if (import.meta.env.DEV) {
+        try {
+            const url = new URL(spoolmanUrl.value);
+            if (url.hostname === "spoolman.disane.dev") {
+                return "/spoolman";
+            }
+        } catch (err) {
+            // fall through to direct value
         }
-    } catch (err) {
-        // fall through to direct value
     }
     return spoolmanUrl.value;
 });
