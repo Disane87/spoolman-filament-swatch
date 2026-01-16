@@ -67,7 +67,8 @@
   },
   "dialog": {
     "spoolmanUrlTitle": "Spoolman URL setzen",
-    "spoolmanUrlDescription": "Die URL wird nur im Browser gespeichert. Standard ist {defaultUrl}."
+    "spoolmanUrlDescription": "Die URL wird nur im Browser gespeichert. Standard ist {defaultUrl}.",
+    "spoolmanUrlRequired": "Bitte gib die URL deines Spoolman-Servers ein, um fortzufahren."
   },
   "card": {
     "vendor": "Hersteller",

@@ -124,14 +124,14 @@
     />
 
     <Dialog v-model:open="urlDialogOpen">
-      <DialogContent class="sm:max-w-md">
+      <DialogContent class="sm:max-w-md" :onInteractOutside="(e) => { if (!hasUrl.value) e.preventDefault(); }">
         <DialogHeader>
           <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
           <DialogDescription>
-            {{ t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL }) }}
+            {{ hasUrl.value ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912' }) : t("dialog.spoolmanUrlRequired") }}
           </DialogDescription>
         </DialogHeader>
-        <form class="mt-2 flex flex-col gap-4" @submit.prevent>
+        <form class="mt-2 flex flex-col gap-4" @submit.prevent="applySpoolmanUrl">
           <label class="flex flex-col gap-2 text-sm font-semibold text-[rgb(var(--text))]">
             <span class="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
               {{ t("info.spoolmanUrl") }}
@@ -141,17 +141,19 @@
               type="text"
               name="spoolman-url"
               placeholder="http://localhost:7912"
+              required
             />
           </label>
           <div class="flex flex-wrap justify-between gap-3">
-            <Button type="button" variant="ghost" size="sm" @click="resetUrlToDefault">
+            <Button v-if="hasUrl.value" type="button" variant="ghost" size="sm" @click="resetUrlToDefault">
               {{ t("actions.reset") }}
             </Button>
+            <div v-else></div>
             <div class="flex gap-3">
-              <Button type="button" variant="secondary" size="sm" @click="urlDialogOpen = false">
+              <Button v-if="hasUrl.value" type="button" variant="secondary" size="sm" @click="urlDialogOpen = false">
                 {{ t("actions.cancel") }}
               </Button>
-              <Button type="button" size="sm" @click="applySpoolmanUrl">
+              <Button type="submit" size="sm">
                 {{ t("actions.save") }}
               </Button>
             </div>
@@ -328,7 +330,7 @@ const detailLabels = computed(() => ({
   complementaryColors: t("detail.complementaryColors"),
 }));
 
-const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl } = useSpoolmanUrl();
+const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
 const urlDialogOpen = ref(false);
 const spoolmanUrlInput = ref(spoolmanUrl.value);
 
@@ -338,6 +340,9 @@ const openUrlDialog = () => {
 };
 
 const applySpoolmanUrl = () => {
+  if (!spoolmanUrlInput.value.trim()) {
+    return; // Don't close if empty
+  }
   setSpoolmanUrl(spoolmanUrlInput.value);
   urlDialogOpen.value = false;
   refresh();
@@ -397,6 +402,11 @@ useSeo(
 );
 
 onMounted(() => {
-  refresh();
+  // Open URL dialog if no URL is set
+  if (!hasUrl.value) {
+    urlDialogOpen.value = true;
+  } else {
+    refresh();
+  }
 });
 </script>

@@ -1,4 +1,4 @@
-export const DEFAULT_SPOOLMAN_URL = "http://localhost:7912";
+export const DEFAULT_SPOOLMAN_URL = "";
 
 const fetchJson = async <T>(baseUrl: string, path: string): Promise<T> => {
   const res = await fetch(`${baseUrl}${path}`);

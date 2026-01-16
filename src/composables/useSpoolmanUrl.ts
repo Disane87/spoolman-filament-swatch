@@ -17,7 +17,7 @@ const readStored = () => {
 
 const normalizeUrl = (value: string) => {
     const trimmed = value.trim();
-    if (!trimmed) return DEFAULT_SPOOLMAN_URL;
+    if (!trimmed) return "";
     // If no scheme provided, assume http.
     if (!/^https?:\/\//i.test(trimmed)) {
         return `http://${trimmed}`;
@@ -63,9 +63,14 @@ const resolvedBaseUrl = computed(() => {
     return spoolmanUrl.value;
 });
 
+const hasUrl = computed(() => {
+    return spoolmanUrl.value.trim().length > 0;
+});
+
 export const useSpoolmanUrl = () => ({
     spoolmanUrl,
     resolvedBaseUrl,
+    hasUrl,
     setSpoolmanUrl,
     resetSpoolmanUrl,
 });
