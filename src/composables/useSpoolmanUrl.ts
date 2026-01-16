@@ -6,6 +6,23 @@ const hasWindow = typeof window !== "undefined";
 
 const readStored = () => {
     if (!hasWindow) return DEFAULT_SPOOLMAN_URL;
+    
+    // Check for URL in query string first (surl parameter)
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryUrl = urlParams.get('surl');
+        if (queryUrl && queryUrl.trim().length > 0) {
+            // Normalize and save the URL from query string
+            const normalized = normalizeUrl(queryUrl);
+            // Save it to localStorage so it persists
+            window.localStorage.setItem(STORAGE_KEY, normalized);
+            return normalized;
+        }
+    } catch (err) {
+        console.warn("Could not read URL from query string", err);
+    }
+    
+    // Fall back to localStorage
     try {
         const value = window.localStorage.getItem(STORAGE_KEY);
         return value && value.trim().length > 0 ? value : DEFAULT_SPOOLMAN_URL;

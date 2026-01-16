@@ -122,11 +122,15 @@ Share specific searches with these URL parameters:
 - `?m=material` - Pre-select material (e.g., `?m=petg`)
 - `?c=%23ff0000` - Pre-select color (URL-encoded hex)
 - `?l=location` - Pre-select location
+- `?surl=http://your-server:7912` - Set Spoolman URL (overrides saved URL)
 
 Combine multiple parameters:
 ```
-https://disane87.github.io/spoolman-filament-swatch/?v=prusament&m=petg
+https://disane87.github.io/spoolman-filament-swatch/?surl=http://spoolman.local:7912&v=prusament&m=petg
 ```
+
+> [!TIP]
+> Use the `surl` parameter to share direct links to your Spoolman instance with specific filters!
 
 ## 🛠️ Technology Stack
 
