@@ -6,7 +6,7 @@ const hasWindow = typeof window !== "undefined";
 
 const readStored = () => {
     if (!hasWindow) return DEFAULT_SPOOLMAN_URL;
-    
+
     // Check for URL in query string first (surl parameter)
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -21,7 +21,7 @@ const readStored = () => {
     } catch (err) {
         console.warn("Could not read URL from query string", err);
     }
-    
+
     // Fall back to localStorage
     try {
         const value = window.localStorage.getItem(STORAGE_KEY);
