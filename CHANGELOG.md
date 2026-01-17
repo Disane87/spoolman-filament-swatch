@@ -1,3 +1,14 @@
+## [1.3.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.2.0...v1.3.0) (2026-01-17)
+
+### docs
+
+* add contributing guidelines to the repository ([b016866](https://github.com/Disane87/spoolman-filament-swatch/commit/b0168662d9d1e3468716fc27dab9c1a1978f4861)) by @Marco Franke
+
+### feat
+
+* add GitHub username fetching for commits and update release configuration ([dec35d8](https://github.com/Disane87/spoolman-filament-swatch/commit/dec35d8c3f7da6297214a591c9d3a11dbb486be6)) by @Marco Franke
+* update package version to 1.2.0 and add @octokit/rest as a dev dependency ([0fc9810](https://github.com/Disane87/spoolman-filament-swatch/commit/0fc981070ea96e6fb38aad21fbd0762f3c7abc80)) by @Marco Franke
+
 ## [1.2.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.1.0...v1.2.0) (2026-01-17)
 
 ### feat
