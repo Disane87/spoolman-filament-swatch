@@ -9,29 +9,29 @@ async function getGitHubUsername(commit, context) {
     if (!octokit && context.env.GITHUB_TOKEN) {
         octokit = new Octokit({ auth: context.env.GITHUB_TOKEN });
     }
-    
+
     if (!octokit) {
         // Fallback to commit author name if no token
         return commit.author?.name || 'unknown';
     }
-    
+
     // Check cache first
     if (usernameCache.has(commit.hash)) {
         return usernameCache.get(commit.hash);
     }
-    
+
     try {
         const [owner, repo] = context.options.repositoryUrl
             .replace(/^.*github\.com[:/]/, '')
             .replace(/\.git$/, '')
             .split('/');
-        
+
         const { data } = await octokit.repos.getCommit({
             owner,
             repo,
             ref: commit.hash
         });
-        
+
         const username = data.author?.login || commit.author?.name || 'unknown';
         usernameCache.set(commit.hash, username);
         return username;
