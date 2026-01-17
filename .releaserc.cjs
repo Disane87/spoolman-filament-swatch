@@ -40,17 +40,26 @@ module.exports = {
                 },
                 writerOpts: {
                     transform: (commit, context) => {
+                        // Email to GitHub username mapping for contributors with private emails
+                        const emailToUsername = {
+                            'mfranke87@icloud.com': 'Disane87',
+                            'mfranke@thinkadesso.com': 'Disane87'
+                        };
+                        
                         // Shorten hash to 7 characters
                         const shortHash = commit.hash ? commit.hash.substring(0, 7) : commit.hash;
                         
-                        // Use git email to extract GitHub username
-                        // Git email format: "123456+username@users.noreply.github.com"
                         let authorLogin = commit.author?.name || 'unknown';
                         
                         if (commit.author?.email) {
-                            const emailMatch = commit.author.email.match(/\+([^@]+)@users\.noreply\.github\.com/);
-                            if (emailMatch) {
-                                authorLogin = emailMatch[1];
+                            // First try: Extract from GitHub noreply email
+                            const noreplyMatch = commit.author.email.match(/\+([^@]+)@users\.noreply\.github\.com/);
+                            if (noreplyMatch) {
+                                authorLogin = noreplyMatch[1];
+                            } 
+                            // Second try: Check email mapping for private emails
+                            else if (emailToUsername[commit.author.email]) {
+                                authorLogin = emailToUsername[commit.author.email];
                             }
                         }
                         
