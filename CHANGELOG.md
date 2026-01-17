@@ -14,9 +14,11 @@
 
 ### feat
 
-* display contributor avatars in changelog modal ([264ae69](https://github.com/Disane87/spoolman-filament-swatch/commit/264ae69a28f7178bfb0555a1e83e2d67b105074d)) by [@Marco Franke](https://github.com/Marco Franke)
+## 1.0.0 (2026-01-17)
 
+### ✨ Features
 ## [1.4.3](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.2...v1.4.3) (2026-01-17)
+* initial squashed state reset to 1.0.0 — all prior commits squashed into this single commit
 
 ### fix
 
