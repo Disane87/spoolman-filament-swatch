@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.1...v1.4.2) (2026-01-17)
+
+### test
+
+* verify changelog format ([fdbbd7b](https://github.com/Disane87/spoolman-filament-swatch/commit/fdbbd7b692599db977d1ad076e80ca5abdabe6aa)) by [@Marco Franke](https://github.com/Marco Franke)
+
 ## [1.4.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.0...v1.4.1) (2026-01-17)
 
 ### fix
