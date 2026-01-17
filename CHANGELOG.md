@@ -1,3 +1,13 @@
+## [1.4.3](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.2...v1.4.3) (2026-01-17)
+
+### fix
+
+* **ci:** update semantic-release config to use GitHub username from noreply email ([0c89210](https://github.com/Disane87/spoolman-filament-swatch/commit/0c89210f9e04c5b58cb75cec2c69778c17dade5e)) by [@Disane87](https://github.com/Disane87)
+
+### test
+
+* verify changelog username format ([b656835](https://github.com/Disane87/spoolman-filament-swatch/commit/b656835b241eb5d53bea55a2d9480517e16188e2)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.4.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.1...v1.4.2) (2026-01-17)
 
 ### test
