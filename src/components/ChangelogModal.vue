@@ -122,11 +122,27 @@ marked.setOptions({
 const formattedChangelog = computed(() => {
   if (!latestRelease.value?.body) return '';
   
-  // Simply parse markdown to HTML
-  const html = marked(latestRelease.value.body) as string;
+  // Parse markdown to HTML
+  let html = marked(latestRelease.value.body) as string;
+  
+  // Replace @username mentions with avatar images and links
+  html = html.replace(
+    /by \[<a href="([^"]+)">@([^<]+)<\/a>\]\(([^)]+)\)/g,
+    (match, innerUrl, username, outerUrl) => {
+      const avatarUrl = `https://github.com/${username}.png?size=32`;
+      return `<span class="inline-flex items-center gap-2">
+        <span class="text-sm text-[rgb(var(--text-muted))]">by</span>
+        <img src="${avatarUrl}" alt="${username}" class="w-6 h-6 rounded-full ring-1 ring-[rgb(var(--border))]" />
+        <a href="${outerUrl}" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:underline">@${username}</a>
+      </span>`;
+    }
+  );
   
   // Sanitize HTML to prevent XSS
-  return DOMPurify.sanitize(html);
+  return DOMPurify.sanitize(html, {
+    ADD_ATTR: ['target', 'rel'],
+    ADD_TAGS: ['img']
+  });
 });
 
 const formatDate = (dateString: string) => {
@@ -244,6 +260,19 @@ defineExpose({
   color: rgb(var(--text));
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Avatar and username styling */
+.changelog-content :deep(li span.inline-flex) {
+  margin-left: 0.5rem;
+}
+
+.changelog-content :deep(li img) {
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 /* Custom styled commit list items */
@@ -302,9 +331,5 @@ defineExpose({
   border: none;
   border-top: 1px solid rgb(var(--border));
   margin: 1.5rem 0;
-}
-
-.changelog-content :deep(img) {
-  flex-shrink: 0;
 }
 </style>
