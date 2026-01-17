@@ -36,6 +36,16 @@
             {{ pinnedItems.length }}
           </span>
         </Button>
+
+        <Button
+          size="sm"
+          variant="ghost"
+          @click="openChangelog"
+          class="h-9 w-9 p-0"
+          :aria-label="'What\'s New'"
+        >
+          <Icon icon="lucide:sparkles" class="w-4 h-4" />
+        </Button>
       </div>
     </nav>
 
@@ -233,6 +243,8 @@
       </div>
     </div>
 
+    <!-- Changelog Modal -->
+    <ChangelogModal ref="changelogModal" />
 
   </div>
 </template>
@@ -249,6 +261,7 @@ import FilamentBoard from "./components/FilamentBoard.vue";
 import FilamentDetailPanel from "./components/FilamentDetailPanel.vue";
 import LocaleSwitch from "./components/LocaleSwitch.vue";
 import ThemeSwitch from "./components/ThemeSwitch.vue";
+import ChangelogModal from "./components/ChangelogModal.vue";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
 import {
@@ -289,6 +302,11 @@ const viewMode = ref<"carousel" | "board">("board");
 const pinnedIds = ref(new Set<string>());
 const paletteOpen = ref(false)
 const selectedFilament = ref<FilamentCard | null>(null);
+const changelogModal = ref<InstanceType<typeof ChangelogModal> | null>(null);
+
+const openChangelog = () => {
+  changelogModal.value?.open();
+};
 
 const selectFilament = (filament: FilamentCard) => {
   selectedFilament.value = filament;
