@@ -1,3 +1,17 @@
+## [1.4.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.3.0...v1.4.0) (2026-01-17)
+
+### fix
+
+* use process.env instead of context.env for GITHUB_TOKEN access ([33590af](https://github.com/Disane87/spoolman-filament-swatch/commit/33590aff9706e2678cc56f9277fe1d392abbdf33)) by [@Marco Franke](https://github.com/Marco Franke)
+
+### refactor
+
+* clean up whitespace in getGitHubUsername function ([8cb8973](https://github.com/Disane87/spoolman-filament-swatch/commit/8cb8973619a089c5670c6f4047a67769a44fabc8)) by [@Marco Franke](https://github.com/Marco Franke)
+
+### feat
+
+* fetch GitHub username for commits and update author information in transform function ([757d27c](https://github.com/Disane87/spoolman-filament-swatch/commit/757d27cfb6b167e3a15baec7fdd89208e78c4f6c)) by [@Marco Franke](https://github.com/Marco Franke)
+
 ## [1.3.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.2.0...v1.3.0) (2026-01-17)
 
 ### docs
