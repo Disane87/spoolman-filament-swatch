@@ -1,3 +1,9 @@
+## [1.5.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.0...v1.5.1) (2026-01-17)
+
+### 🐛 Bug Fixes
+
+* **ci:** add emoji section headers to changelog by mapping commit types in transform ([24f42a0](https://github.com/Disane87/spoolman-filament-swatch/commit/24f42a008734df381c3785b2a0e1fac8c37ee76c)) by [@Marco Franke](https://github.com/Marco Franke)
+
 ## [1.5.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.3...v1.5.0) (2026-01-17)
 
 ### feat
