@@ -20,6 +20,7 @@ module.exports = {
                 ]
             }
         ],
+        './.release-github-authors.cjs',
         [
             '@semantic-release/release-notes-generator',
             {
@@ -39,30 +40,19 @@ module.exports = {
                     ]
                 },
                 writerOpts: {
-                    transform: (commit, context) => {
-                        // Email to GitHub username mapping for contributors with private emails
-                        const emailToUsername = {
-                            'mfranke87@icloud.com': 'Disane87',
-                            'mfranke@thinkadesso.com': 'Disane87'
-                        };
-                        
+                    transform: (commit) => {
                         // Shorten hash to 7 characters
                         const shortHash = commit.hash ? commit.hash.substring(0, 7) : commit.hash;
-                        
-                        let authorLogin = commit.author?.name || 'unknown';
-                        
-                        if (commit.author?.email) {
-                            // First try: Extract from GitHub noreply email
+
+                        // Prefer GitHub login injected by the ./.release-github-authors.cjs plugin
+                        let authorLogin = commit.author?.login || commit.committer?.login || commit.author?.name || 'unknown';
+
+                        // Fallback: extract from GitHub noreply email if present
+                        if (authorLogin === 'unknown' && commit.author?.email) {
                             const noreplyMatch = commit.author.email.match(/\+([^@]+)@users\.noreply\.github\.com/);
-                            if (noreplyMatch) {
-                                authorLogin = noreplyMatch[1];
-                            } 
-                            // Second try: Check email mapping for private emails
-                            else if (emailToUsername[commit.author.email]) {
-                                authorLogin = emailToUsername[commit.author.email];
-                            }
+                            if (noreplyMatch) authorLogin = noreplyMatch[1];
                         }
-                        
+
                         // Map commit types to sections with emojis
                         const typeToSection = {
                             'feat': '✨ Features',
@@ -76,7 +66,7 @@ module.exports = {
                             'build': '📦 Build',
                             'ci': '👷 CI/CD'
                         };
-                        
+
                         return {
                             ...commit,
                             shortHash,
