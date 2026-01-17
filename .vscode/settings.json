@@ -1,5 +1,11 @@
 {
     "i18n-ally.localesPaths": [
         "src/locales"
-    ]
+    ],
+    "chat.tools.terminal.autoApprove": {
+        "/^pwsh -Command \"npm install --save-dev semantic-release-notes-with-contributor\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
 }
