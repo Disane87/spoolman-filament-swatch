@@ -1,12 +1,18 @@
 {{#each commits}}
 {{#if @root.linkCompare~}}
-  - {{#if scope}}**{{scope}}:** {{/if}}{{subject}} ([{{hash}}]({{@root.host}}/{{@root.owner}}/{{@root.repository}}/commit/{{hash}})){{#if author.login}} by [@{{author.login}}]({{@root.host}}/{{author.login}}){{/if}}
+- {{#if scope}}**{{scope}}:** {{/if}}{{subject}}
+([{{hash}}]({{@root.host}}/{{@root.owner}}/{{@root.repository}}/commit/{{hash}})){{#if author.login}} by
+[@{{author.login}}]({{@root.host}}/{{author.login}}){{/if}}
 {{~else}}
-  - {{#if scope}}**{{scope}}:** {{/if}}{{subject}}{{#if author.login}} by [@{{author.login}}]({{@root.host}}/{{author.login}}){{/if}}
+- {{#if scope}}**{{scope}}:** {{/if}}{{subject}}{{#if author.login}} by
+[@{{author.login}}]({{@root.host}}/{{author.login}}){{/if}}
 {{~/if}}
 
 {{~#if this.references~}}
-  {{~#each this.references}}, closes {{#if @root.host}}[{{#if this.owner}}{{this.owner}}/{{/if}}{{this.repository}}#{{this.issue}}]({{@root.host}}/{{#if this.repository}}{{#if this.owner}}{{this.owner}}/{{/if}}{{this.repository}}{{else}}{{@root.owner}}/{{@root.repository}}{{/if}}/issues/{{this.issue}}){{else}}{{#if this.owner}}{{this.owner}}/{{/if}}{{this.repository}}#{{this.issue}}{{/if}}{{/each}}
+{{~#each this.references}}, closes {{#if @root.host}}[{{#if
+this.owner}}{{this.owner}}/{{/if}}{{this.repository}}#{{this.issue}}]({{@root.host}}/{{#if this.repository}}{{#if
+this.owner}}{{this.owner}}/{{/if}}{{this.repository}}{{else}}{{@root.owner}}/{{@root.repository}}{{/if}}/issues/{{this.issue}}){{else}}{{#if
+this.owner}}{{this.owner}}/{{/if}}{{this.repository}}#{{this.issue}}{{/if}}{{/each}}
 {{~/if}}
 
 {{/each}}
