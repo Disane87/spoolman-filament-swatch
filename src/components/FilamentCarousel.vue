@@ -80,9 +80,11 @@
           :key="item.id"
           class="carousel-card relative min-w-[240px] sm:min-w-[280px] max-w-[280px] sm:max-w-[320px] flex-1 snap-center transition-transform"
           :class="idx === currentIndex ? 'scale-[1.02]' : 'scale-100 opacity-90'"
+          :data-index="idx"
           ref="cardRefs"
         >
           <FilamentCard
+            v-if="visibleIndices.has(idx) || Math.abs(idx - currentIndex) < 5"
             :filament="item"
             :labels="labels"
             :pinned="isPinned(item.id)"
@@ -153,6 +155,8 @@ const cardRefs = ref<HTMLElement[]>([]);
 const currentIndex = ref(0);
 const rafId = ref<number | null>(null);
 const wheelHandler = ref<((e: WheelEvent) => void) | null>(null);
+const visibleIndices = ref(new Set<number>());
+let observer: IntersectionObserver | null = null;
 
 const swatches = computed(() =>
   props.items.map((item) => ({ id: item.id, hex: item.colorHex, name: item.colorName })),
@@ -220,6 +224,32 @@ onMounted(() => {
   el?.addEventListener("scroll", queueTransformUpdate, { passive: true });
   window.addEventListener("resize", queueTransformUpdate, { passive: true });
 
+  // Setup Intersection Observer
+  if (el) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const idx = parseInt(entry.target.getAttribute('data-index') || '-1');
+          if (idx >= 0) {
+            if (entry.isIntersecting) {
+              visibleIndices.value.add(idx);
+            } else {
+              visibleIndices.value.delete(idx);
+            }
+          }
+        });
+      },
+      {
+        root: el,
+        rootMargin: '400px',
+        threshold: 0
+      }
+    );
+    
+    // Observe all cards
+    cardRefs.value.forEach((card) => card && observer?.observe(card));
+  }
+
   wheelHandler.value = (evt: WheelEvent) => {
     // Translate vertical wheel into horizontal scroll; ignore if horizontal drag already dominates
     if (!el) return;
@@ -239,6 +269,9 @@ onUnmounted(() => {
     el?.removeEventListener("wheel", wheelHandler.value);
   }
   window.removeEventListener("resize", queueTransformUpdate);
+  if (observer) {
+    observer.disconnect();
+  }
 });
 </script>
 

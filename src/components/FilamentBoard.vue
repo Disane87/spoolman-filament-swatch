@@ -62,12 +62,12 @@
 
       <div class="board-grid" ref="gridRef">
         <div
-          v-for="filament in filaments"
+          v-for="filament in visibleItems"
           :key="filament.id"
           class="board-card"
           :id="cardId(filament.id)"
           :style="{
-            '--swatch': filament.colorHex,
+            '--swatch': filament.colorHex
           }"
           @click="$emit('selectFilament', filament)"
         >
@@ -102,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import type { FilamentCard as FilamentCardType } from "../composables/useFilaments";
 import { Icon } from '@iconify/vue';
 import { Button } from "@/components/ui/button";
@@ -151,7 +151,38 @@ defineEmits<{
 const gridRef = ref<HTMLElement | null>(null);
 const minimapRef = ref<HTMLElement | null>(null);
 const activeCardId = ref<string | null>(null);
+const scrollTop = ref(0);
+const cols = ref(2);
 let scrollTimeout: number | null = null;
+
+const CARD_HEIGHT = 240; // Approximate card height
+const BUFFER = 3; // Number of rows to render above/below viewport
+
+// Update column count based on window width
+const updateCols = () => {
+  if (typeof window === 'undefined') return;
+  if (window.innerWidth >= 1400) cols.value = 4;
+  else if (window.innerWidth >= 1000) cols.value = 3;
+  else if (window.innerWidth >= 640) cols.value = 3;
+  else cols.value = 2;
+};
+
+// Calculate which items should be rendered
+const visibleItems = computed(() => {
+  if (!gridRef.value) return props.filaments.slice(0, 20);
+  
+  const viewportHeight = gridRef.value.clientHeight;
+  const rowsInView = Math.ceil(viewportHeight / CARD_HEIGHT);
+  const startRow = Math.max(0, Math.floor(scrollTop.value / CARD_HEIGHT) - BUFFER);
+  const endRow = Math.ceil((scrollTop.value + viewportHeight) / CARD_HEIGHT) + BUFFER;
+  const startIdx = startRow * cols.value;
+  const endIdx = Math.min(props.filaments.length, endRow * cols.value);
+  
+  return props.filaments.slice(startIdx, endIdx).map((filament, idx) => ({
+    ...filament,
+    virtualIndex: startIdx + idx
+  }));
+});
 
 const updateActiveCard = () => {
   if (!gridRef.value) return;
@@ -180,6 +211,9 @@ const updateActiveCard = () => {
 };
 
 const onScroll = () => {
+  if (gridRef.value) {
+    scrollTop.value = gridRef.value.scrollTop;
+  }
   if (scrollTimeout) {
     window.clearTimeout(scrollTimeout);
   }
@@ -187,10 +221,12 @@ const onScroll = () => {
 };
 
 onMounted(() => {
+  updateCols();
   if (gridRef.value) {
     gridRef.value.addEventListener('scroll', onScroll);
     updateActiveCard();
   }
+  window.addEventListener('resize', updateCols);
 });
 
 onUnmounted(() => {
@@ -200,6 +236,7 @@ onUnmounted(() => {
   if (scrollTimeout) {
     window.clearTimeout(scrollTimeout);
   }
+  window.removeEventListener('resize', updateCols);
 });
 
 const isPinned = (id: string) => {
@@ -413,11 +450,11 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(var(--border), 0.7);
+  border: 1px solid rgba(var(--border), 1);
   border-radius: 12px;
   overflow: hidden;
   background: rgba(var(--surface-alt), 0.9);
-  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px -2px rgba(var(--shadow), 0.3), 0 2px 6px -1px rgba(var(--shadow), 0.2);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
   flex: 1 1 calc(50% - 4px);
   min-width: 140px;
@@ -451,7 +488,7 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-card:hover {
   transform: translateY(-2px);
   border-color: rgba(var(--accent), 0.6);
-  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 24px -4px rgba(var(--shadow), 0.4), 0 4px 12px -2px rgba(var(--shadow), 0.3);
 }
 
 .swatch {

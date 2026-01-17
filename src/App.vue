@@ -1,108 +1,52 @@
 <template>
   <div class="mx-auto flex min-h-screen h-screen max-w-6xl flex-col gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-10 overflow-hidden">
-    <header class="flex flex-col gap-2 sm:gap-6 flex-shrink-0">
-      <!-- Mobile Header -->
-      <div class="md:hidden flex items-center justify-between gap-2">
-        <h1 class="text-xl font-semibold truncate flex-1">{{ t("app.title") }}</h1>
+    <!-- Top Navigation Bar -->
+    <nav class="flex items-center justify-between gap-4 pb-3 flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <h1 class="text-lg sm:text-xl font-semibold">{{ t("app.title") }}</h1>
+      </div>
+      
+      <div class="flex items-center gap-2">
         <Button
           size="sm"
           variant="outline"
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          class="h-9 w-9 p-0 flex-shrink-0"
+          @click="openUrlDialog"
+          class="h-9 px-2 sm:px-3"
+          :aria-label="t('info.spoolmanUrl')"
         >
-          <Icon :icon="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-5 h-5" />
+          <Icon icon="lucide:server" class="w-4 h-4" />
+          <span class="hidden sm:inline text-xs font-mono ml-2 truncate max-w-[120px] lg:max-w-[200px]">{{ spoolmanUrl }}</span>
+        </Button>
+        
+        <LocaleSwitch />
+        <ThemeSwitch />
+        
+        <Button
+          size="sm"
+          variant="outline"
+          @click="paletteOpen = true"
+          class="relative h-9 w-9 p-0"
+          :aria-label="t('actions.openPalette')"
+        >
+          <Icon icon="lucide:palette" class="w-4 h-4" />
+          <span
+            v-if="pinnedItems.length > 0"
+            class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white shadow-lg border-2 border-[rgb(var(--background))]"
+          >
+            {{ pinnedItems.length }}
+          </span>
         </Button>
       </div>
+    </nav>
 
-      <!-- Mobile Menu -->
-      <div v-if="mobileMenuOpen" class="md:hidden mobile-menu" @click.stop>
-        <!-- Search -->
-        <div class="flex items-center gap-2">
-          <Input 
-            v-model="filters.search" 
-            type="search" 
-            :placeholder="t('search.placeholder')" 
-            class="flex-1 h-10" 
-          />
-          <Button
-            size="sm"
-            variant="outline"
-            @click="openUrlDialog"
-            class="h-10 w-10 p-0 flex-shrink-0"
-            :aria-label="t('info.spoolmanUrl')"
-          >
-            <Icon icon="lucide:server" class="w-4 h-4" />
-          </Button>
-        </div>
-        
-        <!-- Controls Row -->
-        <div class="flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <LocaleSwitch />
-            <ThemeSwitch />
-          </div>
-          <Button
-            size="sm"
-            variant="ghost"
-            @click="paletteOpen = true; mobileMenuOpen = false"
-            class="relative h-9 w-9 p-0"
-          >
-            <Icon icon="lucide:palette" class="w-5 h-5" />
-            <span
-              v-if="pinnedItems.length"
-              class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[rgb(var(--accent))] text-[9px] font-bold text-white"
-            >
-              {{ pinnedItems.length }}
-            </span>
-          </Button>
-        </div>
-      </div>
-
-      <!-- Desktop Header -->
-      <div class="hidden md:flex flex-wrap items-center justify-between gap-6">
-        <div class="flex flex-col gap-2">
-          <p class="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[rgb(var(--text-muted))]">
-            {{ t("app.subtitle") }}
-          </p>
-          <h1 class="text-2xl sm:text-4xl md:text-5xl font-semibold">
-            {{ t("app.title") }}
-          </h1>
-          <p class="max-w-2xl text-sm sm:text-base text-[rgb(var(--text-muted))]">
-            {{ t("app.tagline") }}
-          </p>
-        </div>
-        <div class="flex flex-col items-end gap-2 sm:gap-3">
-          <div class="flex items-center gap-1.5 sm:gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              @click="openUrlDialog"
-              class="h-9 sm:h-10 px-2 sm:px-3"
-              :aria-label="t('info.spoolmanUrl')"
-            >
-              <Icon icon="lucide:server" class="w-4 h-4 sm:mr-2" />
-              <span class="hidden sm:inline text-xs font-mono truncate max-w-[120px] lg:max-w-[200px]">{{ spoolmanUrl }}</span>
-            </Button>
-            <LocaleSwitch />
-            <ThemeSwitch />
-            <Button
-              size="sm"
-              variant="ghost"
-              @click="paletteOpen = true"
-              class="relative h-9 w-9 sm:h-10 sm:w-10 p-0"
-              :aria-label="t('actions.openPalette')"
-            >
-              <Icon icon="lucide:menu" class="w-5 h-5 sm:w-6 sm:h-6" />
-              <span
-                v-if="pinnedItems.length"
-                class="absolute -right-0.5 -top-0.5 sm:-right-1 sm:-top-1 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[rgb(var(--accent))] text-[9px] sm:text-[10px] font-bold text-white"
-              >
-                {{ pinnedItems.length }}
-              </span>
-            </Button>
-          </div>
-        </div>
-      </div>
+    <!-- Header Section -->
+    <header class="hidden md:flex flex-col gap-2 flex-shrink-0 pt-4">
+      <p class="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[rgb(var(--text-muted))]">
+        {{ t("app.subtitle") }}
+      </p>
+      <p class="max-w-2xl text-sm text-[rgb(var(--text-muted))]">
+        {{ t("app.tagline") }}
+      </p>
     </header>
 
     <div class="control-grid hidden md:flex">
@@ -344,7 +288,6 @@ const {
 const viewMode = ref<"carousel" | "board">("board");
 const pinnedIds = ref(new Set<string>());
 const paletteOpen = ref(false)
-const mobileMenuOpen = ref(false)
 const selectedFilament = ref<FilamentCard | null>(null);
 
 const selectFilament = (filament: FilamentCard) => {

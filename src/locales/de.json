@@ -116,7 +116,7 @@
   "theme": {
     "light": "Hell",
     "dark": "Dunkel",
-    "auto": "Auto"
+    "system": "System"
   },
   "seo": {
     "title": "Spoolman Filament Swatch",

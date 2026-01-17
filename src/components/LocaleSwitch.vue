@@ -1,18 +1,37 @@
 <template>
-  <div class="flex items-center gap-2">
-    <Toggle variant="outline" size="sm" :pressed="locale === 'de'" @click="setLocale('de')" class="h-9 sm:h-10">
-      <Icon icon="circle-flags:de" class="w-5 h-5" />
-    </Toggle>
-    <Toggle variant="outline" size="sm" :pressed="locale === 'en'" @click="setLocale('en')" class="h-9 sm:h-10">
-      <Icon icon="circle-flags:us" class="w-5 h-5" />
-    </Toggle>
-  </div>
+  <Select :model-value="locale" @update:model-value="setLocale">
+    <SelectTrigger class="h-9 w-[60px] px-2">
+      <SelectValue>
+        <Icon :icon="locale === 'de' ? 'circle-flags:de' : 'circle-flags:us'" class="w-4 h-4" />
+      </SelectValue>
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="de">
+        <div class="flex items-center gap-2">
+          <Icon icon="circle-flags:de" class="w-4 h-4" />
+          <span>Deutsch</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="en">
+        <div class="flex items-center gap-2">
+          <Icon icon="circle-flags:us" class="w-4 h-4" />
+          <span>English</span>
+        </div>
+      </SelectItem>
+    </SelectContent>
+  </Select>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { Toggle } from "@/components/ui/toggle";
 import { Icon } from '@iconify/vue';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const { locale } = useI18n();
 
