@@ -20,12 +20,10 @@ module.exports = {
                 ]
             }
         ],
-        './.release-github-authors.cjs',
         [
             '@semantic-release/release-notes-generator',
             {
                 preset: 'conventionalcommits',
-                writerOpts: require('./.release-transform.cjs'),
                 presetConfig: {
                     types: [
                         { type: 'feat', section: '✨ Features' },
@@ -39,6 +37,31 @@ module.exports = {
                         { type: 'build', section: '📦 Build' },
                         { type: 'ci', section: '👷 CI/CD' }
                     ]
+                },
+                writerOpts: {
+                    transform: (commit) => {
+                        // Shorten hash to 7 characters
+                        const shortHash = commit.hash ? commit.hash.substring(0, 7) : commit.hash;
+                        
+                        // Use git email to extract GitHub username
+                        // Git email format: "123456+username@users.noreply.github.com"
+                        let authorLogin = commit.author?.name || 'unknown';
+                        
+                        if (commit.author?.email) {
+                            const emailMatch = commit.author.email.match(/\+([^@]+)@users\.noreply\.github\.com/);
+                            if (emailMatch) {
+                                authorLogin = emailMatch[1];
+                            }
+                        }
+                        
+                        return {
+                            ...commit,
+                            shortHash,
+                            authorLogin
+                        };
+                    },
+                    commitPartial: `* {{#if scope}}**{{scope}}:** {{/if}}{{subject}} ([{{shortHash}}]({{@root.host}}/{{@root.owner}}/{{@root.repository}}/commit/{{hash}})){{#if authorLogin}} by [@{{authorLogin}}]({{@root.host}}/{{authorLogin}}){{/if}}
+`
                 }
             }
         ],
