@@ -1,3 +1,16 @@
+## [1.2.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.1.0...v1.2.0) (2026-01-17)
+
+### feat
+
+* add custom writer options for release notes generation ([0dd24df](https://github.com/Disane87/spoolman-filament-swatch/commit/0dd24df6ec943e6489b4ec81be0a653dc3954e57)) by @Marco Franke
+* add semantic release configuration with commit analyzer and release notes generator ([0b7e1e1](https://github.com/Disane87/spoolman-filament-swatch/commit/0b7e1e128880747ab246136edf4a728bb292bdb1)) by @Marco Franke
+* enhance release transform function with author name and refactor hash shortening ([2b9923e](https://github.com/Disane87/spoolman-filament-swatch/commit/2b9923ebb8ef86f05819f0aac003dfb61f55677b)) by @Marco Franke
+* replace .releaserc.json with .releaserc.js for semantic release configuration ([8c683e9](https://github.com/Disane87/spoolman-filament-swatch/commit/8c683e938218133ddc4b54c1747ced7bf3ef884f)) by @Marco Franke
+
+### fix
+
+* streamline hash shortening in release transform function ([da9e9fb](https://github.com/Disane87/spoolman-filament-swatch/commit/da9e9fb3d5fd232a44cd29e984a2d563250b83f6)) by @Marco Franke
+
 ## [1.1.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.0.0...v1.1.0) (2026-01-17)
 
 ### ✨ Features
