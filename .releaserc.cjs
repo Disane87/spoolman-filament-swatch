@@ -24,7 +24,7 @@ module.exports = {
             '@semantic-release/release-notes-generator',
             {
                 preset: 'conventionalcommits',
-                writerOpts: require('./.release-transform.js'),
+                writerOpts: require('./.release-transform.cjs'),
                 presetConfig: {
                     types: [
                         { type: 'feat', section: '✨ Features' },
