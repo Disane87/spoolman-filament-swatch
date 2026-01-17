@@ -1,3 +1,13 @@
+## [1.1.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.0.0...v1.1.0) (2026-01-17)
+
+### ✨ Features
+
+* update changelog modal for localization, add accordion components, and enhance styles ([516f77059f2fcb68967d2d6addd253b1479154f7](https://github.com/Disane87/spoolman-filament-swatch/commit/516f77059f2fcb68967d2d6addd253b1479154f7))
+
+### 🐛 Bug Fixes
+
+* adjust spacing in release notes template and styles for accordion animations ([cb99276b4e967613ae2725490f55d4662bb9c8d1](https://github.com/Disane87/spoolman-filament-swatch/commit/cb99276b4e967613ae2725490f55d4662bb9c8d1))
+
 ## 1.0.0 (2026-01-17)
 
 ### ✨ Features
