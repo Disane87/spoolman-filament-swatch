@@ -24,6 +24,7 @@
     "vue-i18n": "^9.10.2"
   },
   "devDependencies": {
+    "@octokit/rest": "^21.0.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/vite": "^4.0.1",
