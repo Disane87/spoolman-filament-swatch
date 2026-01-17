@@ -39,7 +39,7 @@ module.exports = {
                     ]
                 },
                 writerOpts: {
-                    transform: (commit) => {
+                    transform: (commit, context) => {
                         // Shorten hash to 7 characters
                         const shortHash = commit.hash ? commit.hash.substring(0, 7) : commit.hash;
                         
@@ -54,10 +54,25 @@ module.exports = {
                             }
                         }
                         
+                        // Map commit types to sections with emojis
+                        const typeToSection = {
+                            'feat': '✨ Features',
+                            'fix': '🐛 Bug Fixes',
+                            'perf': '⚡ Performance',
+                            'revert': '⏪ Reverts',
+                            'docs': '📚 Documentation',
+                            'style': '💄 Styling',
+                            'refactor': '♻️ Code Refactoring',
+                            'test': '✅ Tests',
+                            'build': '📦 Build',
+                            'ci': '👷 CI/CD'
+                        };
+                        
                         return {
                             ...commit,
                             shortHash,
-                            authorLogin
+                            authorLogin,
+                            type: typeToSection[commit.type] || commit.type
                         };
                     },
                     commitPartial: `* {{#if scope}}**{{scope}}:** {{/if}}{{subject}} ([{{shortHash}}]({{@root.host}}/{{@root.owner}}/{{@root.repository}}/commit/{{hash}})){{#if authorLogin}} by [@{{authorLogin}}]({{@root.host}}/{{authorLogin}}){{/if}}
