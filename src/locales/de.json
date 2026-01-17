@@ -121,5 +121,16 @@
   "seo": {
     "title": "Spoolman Filament Swatch",
     "description": "Lokaler Farbpicker fuer Spoolman mit Spulen- und Filamentkarussell."
+  },
+  "changelog": {
+    "title": "Was gibt's Neues",
+    "released": "Veröffentlicht {date}",
+    "loading": "Lade Changelog...",
+    "error": "Changelog konnte nicht geladen werden. Bitte versuche es später erneut.",
+    "by": "von",
+    "viewOnGithub": "Auf GitHub ansehen",
+    "viewAllReleases": "Alle Versionen ansehen",
+    "dontShowAgain": "Nicht mehr anzeigen",
+    "gotIt": "Verstanden!"
   }
 }

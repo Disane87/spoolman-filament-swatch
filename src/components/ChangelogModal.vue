@@ -4,13 +4,13 @@
       <DialogHeader>
         <DialogTitle class="flex items-center gap-2">
           <Icon icon="lucide:sparkles" class="w-5 h-5 text-yellow-500" />
-          <span>What's New</span>
+          <span>{{ $t('changelog.title') }}</span>
           <span v-if="latestRelease" class="text-sm font-mono text-[rgb(var(--text-muted))]">
-            v{{ latestRelease.tag_name }}
+            {{ latestRelease.tag_name }}
           </span>
         </DialogTitle>
         <DialogDescription>
-          {{ latestRelease ? `Released ${formatDate(latestRelease.published_at)}` : 'Loading changelog...' }}
+          {{ latestRelease ? $t('changelog.released', { date: formatDate(latestRelease.published_at) }) : $t('changelog.loading') }}
         </DialogDescription>
       </DialogHeader>
 
@@ -19,7 +19,7 @@
       </div>
 
       <div v-else-if="error" class="text-sm text-red-500 py-4">
-        {{ error }}
+        {{ $t('changelog.error') }}
       </div>
 
       <div v-else-if="latestRelease" class="flex-1 overflow-y-auto space-y-4">
@@ -34,7 +34,7 @@
           <div class="flex-1">
             <h3 class="font-semibold text-lg">{{ latestRelease.name || latestRelease.tag_name }}</h3>
             <p class="text-sm text-[rgb(var(--text-muted))]">
-              by <a :href="latestRelease.author?.html_url" target="_blank" class="hover:underline">{{ latestRelease.author?.login }}</a>
+              {{ $t('changelog.by') }} <a :href="latestRelease.author?.html_url" target="_blank" class="hover:underline">{{ latestRelease.author?.login }}</a>
             </p>
           </div>
           <a
@@ -42,7 +42,7 @@
             target="_blank"
             class="text-xs text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] flex items-center gap-1"
           >
-            View on GitHub
+            {{ $t('changelog.viewOnGithub') }}
             <Icon icon="lucide:external-link" class="w-3 h-3" />
           </a>
         </div>
@@ -60,17 +60,17 @@
             class="text-sm text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] inline-flex items-center gap-1"
           >
             <Icon icon="lucide:history" class="w-4 h-4" />
-            View all releases
+            {{ $t('changelog.viewAllReleases') }}
           </a>
         </div>
       </div>
 
       <div class="flex justify-end gap-2 pt-4 border-t border-[rgb(var(--border))]">
         <Button variant="outline" size="sm" @click="dontShowAgain">
-          Don't show again
+          {{ $t('changelog.dontShowAgain') }}
         </Button>
         <Button size="sm" @click="isOpen = false">
-          Got it!
+          {{ $t('changelog.gotIt') }}
         </Button>
       </div>
     </DialogContent>
@@ -80,6 +80,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { Icon } from '@iconify/vue';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import {
   Dialog,
   DialogContent,
@@ -111,37 +113,20 @@ const loading = ref(false);
 const error = ref('');
 const latestRelease = ref<Release | null>(null);
 
+// Configure marked
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
+
 const formattedChangelog = computed(() => {
   if (!latestRelease.value?.body) return '';
   
-  let html = latestRelease.value.body;
+  // Simply parse markdown to HTML
+  const html = marked(latestRelease.value.body) as string;
   
-  // Convert markdown to HTML (basic)
-  html = html
-    // Headers
-    .replace(/### (.*?)$/gm, '<h3 class="text-base font-semibold mt-4 mb-2">$1</h3>')
-    .replace(/## (.*?)$/gm, '<h2 class="text-lg font-bold mt-6 mb-3">$1</h2>')
-    // Lists
-    .replace(/^\* (.*?)$/gm, '<li class="ml-4">$1</li>')
-    .replace(/^- (.*?)$/gm, '<li class="ml-4">$1</li>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-blue-500 hover:underline">$1</a>')
-    // Bold
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    // Italic
-    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-    // Code
-    .replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 bg-[rgb(var(--surface-alt))] rounded text-sm font-mono">$1</code>')
-    // Line breaks
-    .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>');
-  
-  // Wrap lists in ul
-  html = html.replace(/(<li.*?<\/li>(\s*<br>)*)+/g, (match) => {
-    return `<ul class="list-disc space-y-1 my-2">${match.replace(/<br>/g, '')}</ul>`;
-  });
-  
-  return html;
+  // Sanitize HTML to prevent XSS
+  return DOMPurify.sanitize(html);
 });
 
 const formatDate = (dateString: string) => {
@@ -213,18 +198,80 @@ defineExpose({
 </script>
 
 <style scoped>
+.changelog-content :deep(h1),
 .changelog-content :deep(h2),
-.changelog-content :deep(h3) {
+.changelog-content :deep(h3),
+.changelog-content :deep(h4) {
   color: rgb(var(--text));
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.changelog-content :deep(h2) {
+  font-size: 1.5rem;
+  border-bottom: 2px solid rgb(var(--border));
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+}
+
+.changelog-content :deep(h3) {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.changelog-content :deep(h4) {
+  font-size: 1.1rem;
+}
+
+.changelog-content :deep(p) {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: rgb(var(--text));
+}
+
+.changelog-content :deep(ul),
+.changelog-content :deep(ol) {
+  margin-bottom: 1rem;
+}
+
+.changelog-content :deep(ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
 }
 
 .changelog-content :deep(li) {
   color: rgb(var(--text));
-  margin-bottom: 0.25rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom styled commit list items */
+.changelog-content :deep(li.flex) {
+  list-style: none;
+  margin-left: -1.5rem;
+  padding-left: 0;
 }
 
 .changelog-content :deep(code) {
   font-size: 0.875rem;
+  padding: 0.125rem 0.375rem;
+  background: rgb(var(--surface-alt));
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+}
+
+.changelog-content :deep(pre) {
+  background: rgb(var(--surface-alt));
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.changelog-content :deep(pre code) {
+  background: transparent;
+  padding: 0;
 }
 
 .changelog-content :deep(a) {
@@ -233,5 +280,31 @@ defineExpose({
 
 .changelog-content :deep(a:hover) {
   text-decoration: underline;
+}
+
+.changelog-content :deep(blockquote) {
+  border-left: 4px solid rgb(var(--border));
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: rgb(var(--text-muted));
+}
+
+.changelog-content :deep(strong) {
+  font-weight: 600;
+  color: rgb(var(--text));
+}
+
+.changelog-content :deep(em) {
+  font-style: italic;
+}
+
+.changelog-content :deep(hr) {
+  border: none;
+  border-top: 1px solid rgb(var(--border));
+  margin: 1.5rem 0;
+}
+
+.changelog-content :deep(img) {
+  flex-shrink: 0;
 }
 </style>

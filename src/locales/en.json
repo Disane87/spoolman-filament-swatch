@@ -121,5 +121,16 @@
   "seo": {
     "title": "Spoolman Filament Swatch",
     "description": "Local color picker for Spoolman with a filament carousel."
+  },
+  "changelog": {
+    "title": "What's New",
+    "released": "Released {date}",
+    "loading": "Loading changelog...",
+    "error": "Could not load changelog. Please try again later.",
+    "by": "by",
+    "viewOnGithub": "View on GitHub",
+    "viewAllReleases": "View all releases",
+    "dontShowAgain": "Don't show again",
+    "gotIt": "Got it!"
   }
 }
