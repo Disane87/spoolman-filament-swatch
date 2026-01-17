@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.4.0...v1.4.1) (2026-01-17)
+
+### fix
+
+* **ci:** only run build job if release job succeeds or is skipped ([b65f2e6](https://github.com/Disane87/spoolman-filament-swatch/commit/b65f2e6ed92f28ccc3ba6d7e194514e345e7b62a)) by [@Marco Franke](https://github.com/Marco Franke)
+
 ## [1.4.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.3.0...v1.4.0) (2026-01-17)
 
 ### fix
