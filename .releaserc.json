@@ -59,9 +59,7 @@
             "@semantic-release/release-notes-generator",
             {
                 "preset": "conventionalcommits",
-                "writerOpts": {
-                    "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{subject}} ([{{hash}}]({{@root.host}}/{{@root.owner}}/{{@root.repository}}/commit/{{hash}})){{#if committerName}} by @{{committerName}}{{/if}}\n"
-                },
+                "writerOpts": require("./.release-transform.js"),
                 "presetConfig": {
                     "types": [
                         {
