@@ -4,7 +4,7 @@
 
 # 🎨 Spoolman Filament Swatch
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://disane87.github.io/spoolman-filament-swatch/)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://spoolswatch.disane.dev/)
 [![GitHub](https://img.shields.io/github/license/Disane87/spoolman-filament-swatch?style=for-the-badge)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Disane87/spoolman-filament-swatch?style=for-the-badge)](https://github.com/Disane87/spoolman-filament-swatch/stargazers)
 
@@ -18,7 +18,7 @@ Hey there! 👋 This is a beautiful, interactive filament color browser for [Spo
 
 Want to see it in action? Check out the live demo:
 
-**🚀 [https://disane87.github.io/spoolman-filament-swatch/](https://disane87.github.io/spoolman-filament-swatch/)**
+**🚀 [https://spoolswatch.disane.dev/](https://spoolswatch.disane.dev/)**
 
 > [!NOTE]
 > On first visit, you'll need to enter your Spoolman server URL. The app stores this in your browser's local storage - we don't collect or store anything on our servers!
@@ -45,7 +45,7 @@ Glad you asked! Here's the good stuff:
 
 Using the live version is super easy:
 
-1. Visit **[https://disane87.github.io/spoolman-filament-swatch/](https://disane87.github.io/spoolman-filament-swatch/)**
+1. Visit **[https://spoolswatch.disane.dev/](https://spoolswatch.disane.dev/)**
 2. Enter your Spoolman server URL (e.g., `http://localhost:7912`)
 3. Start browsing your filaments! 🎉
 
@@ -54,22 +54,22 @@ Using the live version is super easy:
 
 ### ⚠️ CORS Configuration Required
 
-When using the deployed version (not localhost), you need to configure CORS on your Spoolman server to allow requests from `https://disane87.github.io`.
+When using the deployed version (not localhost), you need to configure CORS on your Spoolman server to allow requests from `https://spoolswatch.disane.dev`.
 
 **Add this to your Spoolman configuration:**
 
 ```env
-SPOOLMAN_CORS_ORIGIN=disane87.github.io
+SPOOLMAN_CORS_ORIGIN=spoolswatch.disane.dev
 ```
 
 For multiple origins (comma-separated, **NO SPACES**):
 
 ```env
-SPOOLMAN_CORS_ORIGIN=disane87.github.io,localhost:5173
+SPOOLMAN_CORS_ORIGIN=spoolswatch.disane.dev,localhost:5173
 ```
 
 > [!IMPORTANT]
-> Do NOT include the protocol (`https://` or `http://`). Use only the domain: `disane87.github.io` NOT `https://disane87.github.io`
+> Do NOT include the protocol (`https://` or `http://`). Use only the domain: `spoolswatch.disane.dev` NOT `https://spoolswatch.disane.dev`
 
 **Where to add this:**
 - **Docker**: Add to your `docker-compose.yml` under `environment:` or in your `.env` file
@@ -92,7 +92,7 @@ If you still get CORS errors after configuring `SPOOLMAN_CORS_ORIGIN`:
 
 **Alternative Solutions:**
 
-- **Use the `surl` parameter**: Share links like `https://disane87.github.io/spoolman-filament-swatch/?surl=http://your-spoolman:7912`
+- **Use the `surl` parameter**: Share links like `https://spoolswatch.disane.dev/?surl=http://your-spoolman:7912`
 - **Self-host this app**: Clone and deploy it on the same domain as your Spoolman instance
 - **Use a reverse proxy**: Configure nginx/traefik to serve both Spoolman and this app from the same domain
 - **Browser extension**: Use a CORS unblock extension (not recommended for security reasons)
@@ -173,7 +173,7 @@ Share specific searches with these URL parameters:
 
 Combine multiple parameters:
 ```
-https://disane87.github.io/spoolman-filament-swatch/?surl=http://spoolman.local:7912&v=prusament&m=petg
+https://spoolswatch.disane.dev/?surl=http://spoolman.local:7912&v=prusament&m=petg
 ```
 
 > [!TIP]
@@ -200,7 +200,7 @@ Want to add your language? Contributions are welcome! Check out the `src/locales
 ## 🎨 Screenshots
 
 > [!NOTE]
-> Screenshots coming soon! For now, check out the [live demo](https://disane87.github.io/spoolman-filament-swatch/) to see it in action.
+> Screenshots coming soon! For now, check out the [live demo](https://spoolswatch.disane.dev/) to see it in action.
 
 ## 🤝 Contributing
 

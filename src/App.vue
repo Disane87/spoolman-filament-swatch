@@ -196,7 +196,7 @@
         <DialogHeader>
           <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
           <DialogDescription>
-            {{ hasUrl.value ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912' }) : t("dialog.spoolmanUrlRequired") }}
+            {{ hasUrl.value ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912', domain: currentDomain }) : t("dialog.spoolmanUrlRequired") }}
           </DialogDescription>
         </DialogHeader>
         
@@ -205,7 +205,7 @@
           <p class="text-xs font-semibold uppercase tracking-wide text-yellow-700">{{ t("dialog.corsInfoTitle") }}</p>
           <p class="mt-2 text-xs text-yellow-700">{{ t("dialog.corsInfoDescription") }}</p>
           <div class="mt-3 rounded bg-black/20 p-2">
-            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel") }}</code>
+            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel", { domain: currentDomain }) }}</code>
           </div>
           <p class="mt-2 text-xs text-yellow-700">
             <span v-for="(part, idx) in parseMarkdownLink(t('dialog.corsRestartRequired'))" :key="idx">
@@ -418,6 +418,14 @@ const detailLabels = computed(() => ({
 const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
 const urlDialogOpen = ref(false);
 const spoolmanUrlInput = ref(spoolmanUrl.value);
+
+// Dynamic domain for CORS configuration
+const currentDomain = computed(() => {
+  if (typeof window !== 'undefined') {
+    return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+  }
+  return 'spoolswatch.disane.dev';
+});
 
 const openUrlDialog = () => {
   spoolmanUrlInput.value = spoolmanUrl.value;

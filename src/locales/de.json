@@ -67,11 +67,11 @@
   },
   "dialog": {
     "spoolmanUrlTitle": "Spoolman URL setzen",
-    "spoolmanUrlDescription": "Die URL wird lokal im Browser gespeichert. Standard ist {defaultUrl}. Hinweis: Bei deployten Instanzen musst du SPOOLMAN_CORS_ORIGIN=disane87.github.io (ohne https://) auf deinem Spoolman-Server konfigurieren und neu starten.",
+    "spoolmanUrlDescription": "Die URL wird lokal im Browser gespeichert. Standard ist {defaultUrl}. Hinweis: Bei deployten Instanzen musst du SPOOLMAN_CORS_ORIGIN={domain} (ohne https://) auf deinem Spoolman-Server konfigurieren und neu starten.",
     "spoolmanUrlRequired": "Bitte gib die URL deines Spoolman-Servers ein, um fortzufahren.",
     "corsInfoTitle": "⚠️ CORS erforderlich",
     "corsInfoDescription": "Bitte prüfe, dass deine Spoolman-Instanz diese Umgebungsvariable gesetzt hat",
-    "corsConfigLabel": "SPOOLMAN_CORS_ORIGIN=disane87.github.io",
+    "corsConfigLabel": "SPOOLMAN_CORS_ORIGIN={domain}",
     "corsConfigHint": "",
     "corsRestartRequired": "Mehr in der Dokumentation zu [CORS](https://github.com/Disane87/spoolman-filament-swatch?tab=readme-ov-file#%EF%B8%8F-cors-configuration-required)",
     "useSpoolmanDB": "Alternativ: SpoolmanDB verwenden",
