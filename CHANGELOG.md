@@ -1,3 +1,9 @@
+## [1.5.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.1...v1.5.2) (2026-01-17)
+
+### 🐛 Bug Fixes
+
+* **ci:** add email-to-username mapping to support both private and noreply emails in changelog ([4715b9d](https://github.com/Disane87/spoolman-filament-swatch/commit/4715b9d650397f0baf6ad96859d0b67a1d396972)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.5.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.0...v1.5.1) (2026-01-17)
 
 ### 🐛 Bug Fixes
