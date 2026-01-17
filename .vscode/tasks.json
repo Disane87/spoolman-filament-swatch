@@ -10,21 +10,20 @@
 				"dev"
 			],
 			"isBackground": true,
-			"problemMatcher": [
-				{
-					"owner": "vite-dev",
-					"fileLocation": "absolute",
-					"pattern": {
-						"regexp": "^(.+)$",
-						"message": 1
-					},
-					"background": {
-						"activeOnStart": true,
-						"beginsPattern": "^\\s*(vite|VITE) v",
-						"endsPattern": "^\\s*Local:\\s+https?://localhost:[0-9]+/"
-					}
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "^\\s*$",
+					"file": 1,
+					"line": 1,
+					"column": 1,
+					"message": 1
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^\\s*(vite|VITE) v",
+					"endsPattern": "Local:.*http://localhost:[0-9]+/"
 				}
-			]
+			}
 		}
 	]
 }
