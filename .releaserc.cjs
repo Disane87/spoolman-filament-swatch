@@ -20,6 +20,7 @@ module.exports = {
                 ]
             }
         ],
+        './.release-github-authors.cjs',
         [
             '@semantic-release/release-notes-generator',
             {
