@@ -6,8 +6,9 @@ let octokit = null;
 
 async function getGitHubUsername(commit, context) {
     // Initialize Octokit if not already done
-    if (!octokit && context.env.GITHUB_TOKEN) {
-        octokit = new Octokit({ auth: context.env.GITHUB_TOKEN });
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!octokit && githubToken) {
+        octokit = new Octokit({ auth: githubToken });
     }
 
     if (!octokit) {
