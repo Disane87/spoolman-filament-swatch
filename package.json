@@ -8,7 +8,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "sync:filaments": "node scripts/sync-external-filaments.mjs",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "release:dry": "semantic-release --dry-run --no-ci",
+    "release:local": "semantic-release --dry-run --no-ci --branches $(git rev-parse --abbrev-ref HEAD)",
+    "release:test": "node scripts/test-release.mjs"
   },
   "dependencies": {
     "@iconify/vue": "^4.3.0",
@@ -32,6 +35,8 @@
     "@types/node": "^25.0.9",
     "@vitejs/plugin-vue": "^6.0.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
+    "conventional-commits-parser": "^6.2.1",
+    "execa": "^9.6.1",
     "semantic-release": "^24.2.0",
     "tailwindcss": "^4.0.1",
     "tw-animate-css": "^1.4.0",

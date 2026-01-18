@@ -131,6 +131,19 @@
     "viewOnGithub": "Auf GitHub ansehen",
     "viewAllReleases": "Alle Versionen ansehen",
     "dontShowAgain": "Nicht mehr anzeigen",
-    "gotIt": "Verstanden!"
+    "gotIt": "Verstanden!",
+    "types": {
+      "features": "✨ Features",
+      "fixes": "🐛 Fehlerbehebungen",
+      "performance": "⚡ Performance",
+      "reverts": "⏪ Rückgängig",
+      "docs": "📚 Dokumentation",
+      "styling": "💄 Styling",
+      "refactoring": "♻️ Code-Refactoring",
+      "tests": "✅ Tests",
+      "build": "📦 Build",
+      "ci": "👷 CI/CD",
+      "chores": "🔧 Wartung"
+    }
   }
 }

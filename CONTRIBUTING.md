@@ -99,39 +99,88 @@ We use **[Conventional Commits](https://www.conventionalcommits.org/)** for clea
 
 ### Types
 
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation only changes
-- **style**: Changes that don't affect the meaning of the code (white-space, formatting, etc.)
-- **refactor**: Code change that neither fixes a bug nor adds a feature
-- **perf**: Performance improvements
-- **test**: Adding or updating tests
-- **build**: Changes to the build system or dependencies
-- **ci**: Changes to CI configuration files
-- **chore**: Other changes that don't modify src or test files
+- **feat**: A new feature (Minor release)
+- **fix**: A bug fix (Patch release)
+- **docs**: Documentation only changes (Patch release)
+- **style**: Changes that don't affect the meaning of the code (Patch release)
+- **refactor**: Code change that neither fixes a bug nor adds a feature (Patch release)
+- **perf**: Performance improvements (Patch release)
+- **test**: Adding or updating tests (Patch release)
+- **build**: Changes to the build system or dependencies (Patch release)
+- **ci**: Changes to CI configuration files (Patch release)
+- **chore**: Other changes that don't modify src or test files (No release)
+
+### Scopes with Emojis
+
+We use scopes to categorize commits. The following scopes automatically get emojis in the changelog:
+
+| Scope | Emoji | Description |
+|-------|-------|-------------|
+| `ui` | 🎨 | UI components (FilamentCard, FilamentBoard, etc.) |
+| `api` | 🔌 | API integration (Spoolman, SpoolmanDB) |
+| `filters` | 🔍 | Filter functionality |
+| `i18n` | 🌐 | Internationalization/Translations |
+| `logo` | 🖼️ | Logo and branding |
+| `theme` | 🎨 | Theme system (Dark/Light Mode) |
+| `seo` | 📈 | SEO optimizations |
+| `pwa` | 📱 | Progressive Web App features |
+| `a11y` | ♿ | Accessibility |
+| `security` | 🔒 | Security |
+| `deps` | 📦 | Dependencies |
+| `config` | ⚙️ | Configuration |
 
 ### Examples
 
 ```bash
-feat: add color harmony suggestions to detail panel
-fix: resolve CORS issue with localhost connections
+# Features (with scopes and emojis)
+feat(ui): add color gradient picker
+feat(api): integrate SpoolmanDB external filaments
+feat(i18n): add Spanish translation
+feat(filters): add multi-select for manufacturers
+
+# Bug fixes
+fix(filters): color picker not updating on mobile
+fix(theme): dark mode logo not loading correctly
+fix(ui): FilamentCard hover effect in Safari
+
+# Documentation
 docs: update README with new URL parameters
+
+# Other
 style: improve mobile responsiveness of filament cards
 refactor: extract color conversion logic to utility function
 perf: implement virtual scrolling for large filament lists
-test: add unit tests for color filtering
+test(ui): add unit tests for FilamentCard component
+chore(deps): update vue to 3.5.13
 ```
+
+### Testing Your Commits
+
+Before pushing, you can test what release would be created:
+
+```bash
+# Shows which version would be created + release notes preview
+npm run release:test
+```
+
+This will analyze your commits and show:
+- What version change would occur (major/minor/patch)
+- All commits included in the release
+- A preview of the formatted release notes with emojis
+- **No changes are made to your repository** - it's 100% safe!
 
 ### Breaking Changes
 
-If your commit introduces a breaking change, add `BREAKING CHANGE:` in the commit body:
+If your commit introduces a breaking change, add `!` after the type and include `BREAKING CHANGE:` in the commit body:
 
 ```bash
-feat!: redesign filter API
+feat(api)!: redesign filter API
 
 BREAKING CHANGE: Filter component now uses new props structure.
-Migration guide available in docs/migration.md
+See migration guide in docs/migration.md
 ```
+
+This will trigger a **major version** release (e.g., 1.6.0 → 2.0.0).
 
 ## 🌿 Branch Strategy
 

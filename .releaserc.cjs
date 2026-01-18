@@ -6,17 +6,41 @@ module.exports = {
             {
                 preset: 'conventionalcommits',
                 releaseRules: [
+                    // Breaking changes
+                    { breaking: true, release: 'major' },
+                    
+                    // Features
                     { type: 'feat', release: 'minor' },
+                    
+                    // Bug fixes and improvements
                     { type: 'fix', release: 'patch' },
                     { type: 'perf', release: 'patch' },
                     { type: 'revert', release: 'patch' },
+                    
+                    // Documentation and styling
                     { type: 'docs', release: 'patch' },
                     { type: 'style', release: 'patch' },
+                    
+                    // Code quality
                     { type: 'refactor', release: 'patch' },
                     { type: 'test', release: 'patch' },
+                    
+                    // Build and infrastructure
                     { type: 'build', release: 'patch' },
                     { type: 'ci', release: 'patch' },
-                    { type: 'chore', release: false }
+                    
+                    // Scoped releases (specific to this project)
+                    { type: 'feat', scope: 'ui', release: 'minor' },
+                    { type: 'feat', scope: 'api', release: 'minor' },
+                    { type: 'feat', scope: 'filters', release: 'minor' },
+                    { type: 'feat', scope: 'i18n', release: 'minor' },
+                    { type: 'feat', scope: 'logo', release: 'minor' },
+                    { type: 'feat', scope: 'theme', release: 'minor' },
+                    { type: 'feat', scope: 'seo', release: 'patch' },
+                    
+                    // No release
+                    { type: 'chore', release: false },
+                    { scope: 'no-release', release: false }
                 ]
             }
         ],
@@ -29,14 +53,15 @@ module.exports = {
                     types: [
                         { type: 'feat', section: '✨ Features' },
                         { type: 'fix', section: '🐛 Bug Fixes' },
-                        { type: 'perf', section: '⚡ Performance' },
+                        { type: 'perf', section: '⚡ Performance Improvements' },
                         { type: 'revert', section: '⏪ Reverts' },
                         { type: 'docs', section: '📚 Documentation' },
                         { type: 'style', section: '💄 Styling' },
                         { type: 'refactor', section: '♻️ Code Refactoring' },
                         { type: 'test', section: '✅ Tests' },
-                        { type: 'build', section: '📦 Build' },
-                        { type: 'ci', section: '👷 CI/CD' }
+                        { type: 'build', section: '📦 Build System' },
+                        { type: 'ci', section: '👷 CI/CD' },
+                        { type: 'chore', section: '🔧 Maintenance' }
                     ]
                 },
                 writerOpts: {
@@ -57,20 +82,44 @@ module.exports = {
                         const typeToSection = {
                             'feat': '✨ Features',
                             'fix': '🐛 Bug Fixes',
-                            'perf': '⚡ Performance',
+                            'perf': '⚡ Performance Improvements',
                             'revert': '⏪ Reverts',
                             'docs': '📚 Documentation',
                             'style': '💄 Styling',
                             'refactor': '♻️ Code Refactoring',
                             'test': '✅ Tests',
-                            'build': '📦 Build',
-                            'ci': '👷 CI/CD'
+                            'build': '📦 Build System',
+                            'ci': '👷 CI/CD',
+                            'chore': '🔧 Maintenance'
                         };
+                        
+                        // Map scopes to emojis for better readability
+                        const scopeEmojis = {
+                            'ui': '🎨',
+                            'api': '🔌',
+                            'filters': '🔍',
+                            'i18n': '🌐',
+                            'logo': '🖼️',
+                            'theme': '🎨',
+                            'seo': '📈',
+                            'pwa': '📱',
+                            'a11y': '♿',
+                            'security': '🔒',
+                            'deps': '📦',
+                            'config': '⚙️'
+                        };
+
+                        // Add emoji to scope if available
+                        let scopeText = commit.scope;
+                        if (scopeText && scopeEmojis[scopeText]) {
+                            scopeText = `${scopeEmojis[scopeText]} ${scopeText}`;
+                        }
 
                         return {
                             ...commit,
                             shortHash,
                             authorLogin,
+                            scope: scopeText,
                             type: typeToSection[commit.type] || commit.type
                         };
                     },
