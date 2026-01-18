@@ -1,6 +1,36 @@
 {
   "name": "spoolman-filament-swatch",
+<<<<<<< HEAD
   "version": "1.7.0",
+=======
+  "version": "1.6.0",
+  "description": "Beautiful, interactive filament color browser for Spoolman - your personal 3D printing filament showroom",
+  "author": "Disane87",
+  "license": "MIT",
+  "homepage": "https://spoolswatch.disane.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Disane87/spoolman-filament-swatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Disane87/spoolman-filament-swatch/issues"
+  },
+  "keywords": [
+    "spoolman",
+    "filament",
+    "3d-printing",
+    "color-browser",
+    "vue",
+    "vite",
+    "typescript",
+    "tailwind",
+    "pwa",
+    "filament-management",
+    "color-palette",
+    "3d-printer",
+    "material-management"
+  ],
+>>>>>>> 86b3189 (chore: update package.json with additional metadata and keywords)
   "private": true,
   "type": "module",
   "scripts": {
