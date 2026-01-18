@@ -1,3 +1,14 @@
+## [1.7.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.6.0...v1.7.0) (2026-01-18)
+
+### ✨ Features
+
+* enhance changelog modal with accordion for releases and improve release fetching logic ([75080e6](https://github.com/Disane87/spoolman-filament-swatch/commit/75080e6c9c657167d0eb577183a6ab4cbdba4b9e)) by [@Disane87](https://github.com/Disane87)
+
+### 🔧 Maintenance
+
+* add MIT License file ([e20081a](https://github.com/Disane87/spoolman-filament-swatch/commit/e20081acd50dae347d6f1326dbad98b5b1ed972b)) by [@Disane87](https://github.com/Disane87)
+* clean up whitespace in configuration and script files ([5000028](https://github.com/Disane87/spoolman-filament-swatch/commit/500002896ded8837eeff4810a68f940a95581225)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.6.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.2...v1.6.0) (2026-01-18)
 
 ### chore
