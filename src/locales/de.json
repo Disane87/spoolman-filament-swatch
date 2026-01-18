@@ -145,5 +145,200 @@
       "ci": "👷 CI/CD",
       "chores": "🔧 Wartung"
     }
+  },
+  "landing": {
+    "hero": {
+      "title": "Visueller Filament-Farbbrowser",
+      "subtitle": "Schönes, interaktives Interface für deine Spoolman-Sammlung",
+      "description": "Durchsuche deine 3D-Druck-Filamentsammlung visuell. Verbinde dich mit deiner {spoolman}-Instanz und sieh alle deine Farben auf einen Blick.",
+      "requiresTitle": "⚠️ Benötigt deine Spoolman-Instanz",
+      "requiresText": "Diese App verbindet sich mit deinem eigenen {spoolman}-Server. Alle Daten bleiben zwischen deinem Browser und deiner Spoolman-Instanz — keine zentrale Datenbank, keine externe Speicherung.",
+      "launchApp": "App starten",
+      "viewDemo": "Demo ansehen",
+      "exploreFeatures": "Features erkunden",
+      "github": "GitHub"
+    },
+    "testimonial": {
+      "madeWithLove": "Gemacht mit Liebe für die 3D-Druck-Community"
+    },
+    "stats": [
+      {
+        "value": "Deine Farben",
+        "label": "Wunderschön dargestellt"
+      },
+      {
+        "value": "Jede Marke",
+        "label": "Alle Hersteller unterstützt"
+      },
+      {
+        "value": "100%",
+        "label": "Open Source"
+      },
+      {
+        "value": "⚡",
+        "label": "Blitzschnell"
+      }
+    ],
+    "useCases": {
+      "title": "Perfekt für jede Situation",
+      "subtitle": "Ob du deinen nächsten Druck planst oder deine Werkstatt organisierst, wir haben dich abgedeckt",
+      "items": [
+        {
+          "title": "Finde die perfekte Farbe",
+          "description": "Durchsuche deine gesamte Sammlung visuell und finde genau den Farbton, den du für dein Projekt brauchst."
+        },
+        {
+          "title": "Plane deine Einkäufe",
+          "description": "Sieh welche Farben du bereits hast, bevor du neue Filamente kaufst. Spare Geld, vermeide Duplikate."
+        },
+        {
+          "title": "Organisiere deine Werkstatt",
+          "description": "Verfolge wo jede Spule gelagert wird. Keine Suche mehr durch Kisten, um das richtige Filament zu finden."
+        },
+        {
+          "title": "Verwalte mehrfarbige Filamente",
+          "description": "Spezielle Unterstützung für Farbverlaufs- und Mehrfarbenspulen mit visuellen Musterindikatoren."
+        }
+      ]
+    },
+    "features": {
+      "title": "Leistungsstarke Funktionen",
+      "subtitle": "Alles, was du zum Verwalten und Durchsuchen deiner Filament-Sammlung brauchst",
+      "items": [
+        {
+          "title": "Wunderschöne Farbdarstellung",
+          "description": "Sieh deine Filamente mit ihren echten Farben in atemberaubender Raster- oder Karussellansicht",
+          "details": []
+        },
+        {
+          "title": "Intelligente Filter",
+          "description": "Filtere nach Hersteller, Material, Farbtyp, Standort und mehr",
+          "details": []
+        },
+        {
+          "title": "Standortverfolgung",
+          "description": "Verfolge genau, wo deine Spulen in deiner Werkstatt aufbewahrt werden",
+          "details": []
+        },
+        {
+          "title": "Mehrfarbunterstützung",
+          "description": "Volle Unterstützung für mehrfarbige Filamente mit visuellen Indikatoren",
+          "details": []
+        },
+        {
+          "title": "Responsives Design",
+          "description": "Funktioniert perfekt auf Desktop, Tablet und mobilen Geräten",
+          "details": []
+        },
+        {
+          "title": "Mehrsprachig",
+          "description": "Verfügbar in mehreren Sprachen mit einfachem Wechsel",
+          "details": []
+        },
+        {
+          "title": "Blitzschnell",
+          "description": "Mit moderner Technologie für sofortiges Laden und flüssige Interaktionen gebaut",
+          "details": []
+        },
+        {
+          "title": "Hell-/Dunkelmodus",
+          "description": "Wähle dein bevorzugtes Theme oder lass es sich an dein System anpassen",
+          "details": []
+        }
+      ]
+    },
+    "problem": {
+      "title": "Die Herausforderung",
+      "mainTitle": "Spoolman ist großartig, aber...",
+      "items": [
+        {
+          "title": "Datenorientierte Oberfläche",
+          "description": "Spoolman ist hervorragend im Verwalten von Filament-Inventar mit detaillierten Spezifikationen, Gewichten und Herstellerinformationen. Aber wenn du vor deinem Drucker stehst und entscheidest, welche Farbe du verwenden möchtest, ist das Scrollen durch eine Datentabelle nicht ideal."
+        },
+        {
+          "title": "Farbe geht verloren",
+          "description": "Deine Filamente sind wunderschön — lebendige Rottöne, tiefes Blau, dezente Pastelltöne. Aber in einer traditionellen Listenansicht werden diese Farben auf Hex-Codes und kleine Farbmuster reduziert. Die visuelle Magie verschwindet."
+        }
+      ],
+      "solutions": [
+        {
+          "title": "Farbe zuerst",
+          "description": "Diese App dreht den Spieß um. Deine Filamente werden als wunderschöne Farbkarten in einem Raster oder Karussell angezeigt, sodass es mühelos ist, visuell zu stöbern und genau den Farbton zu finden, den du suchst."
+        },
+        {
+          "title": "Schnell & intuitiv",
+          "description": "Filtere nach Hersteller, Material oder Standort mit einem einzigen Klick. Pinne deine Lieblingsfarben an. Stöbere auf deinem Handy, während du vor deinem Regal stehst. Alles ist auf Geschwindigkeit und visuelle Klarheit ausgelegt."
+        }
+      ],
+      "workflow": {
+        "title": "Stell dir diesen Workflow vor",
+        "step": "Schritt",
+        "done": "Fertig!",
+        "steps": [
+          {
+            "emoji": "🔍",
+            "text": "\"Ich brauche ein dunkelblaues PETG für dieses Projekt...\""
+          },
+          {
+            "emoji": "🎨",
+            "text": "Filter: Material → PETG. Durchsuche das visuelle Raster."
+          },
+          {
+            "emoji": "✨",
+            "text": "Gefunden! Marineblaues PETG, Regal A3, 750g übrig."
+          }
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "So funktioniert's",
+      "subtitle": "Verbinde deine Spoolman-Instanz und starte das Stöbern in Sekunden",
+      "steps": [
+        {
+          "title": "Gib deine Spoolman-URL ein",
+          "description": "Beim ersten Start gibst du einfach die URL zu deiner laufenden Spoolman-Instanz ein (z.B. http://192.168.1.50:7912). Diese wird lokal in deinem Browser gespeichert — wir senden deine Daten niemals irgendwohin.",
+          "tip": "💡 Tipp: Deine Spoolman-Instanz muss vom Netzwerk aus erreichbar sein, von dem du browsest."
+        },
+        {
+          "title": "Durchsuche deine Sammlung",
+          "description": "Die App holt deine Filamente direkt von Spoolman und zeigt sie als wunderschöne Farbkarten an. Wechsle zwischen Rasteransicht für eine Übersicht oder Karussellansicht für detailliertes Stöbern. Alle Daten bleiben zwischen deinem Browser und deinem Spoolman-Server.",
+          "tip": "💡 Tipp: Nutze Tastaturkürzel für schnelle Navigation — Pfeiltasten in der Karussellansicht, Escape zum Schließen von Dialogen."
+        },
+        {
+          "title": "Filtern & Finden",
+          "description": "Nutze leistungsstarke Filter, um nach Hersteller, Materialtyp, Farbfamilie, Lagerort oder Mehrfarbmustern einzugrenzen. Pinne deine Favoriten an, um eine benutzerdefinierte Palette zu erstellen. Suche nach Name oder Farbcode für sofortige Ergebnisse.",
+          "tip": "💡 Tipp: Filter sind kombinierbar — wähle \"Prusament\" + \"PETG\" + \"Standort: Regal A\", um präzise einzugrenzen."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Bereit, deine Filamente zu organisieren?",
+      "subtitle": "Starte damit, deine Filament-Sammlung auf schöne, organisierte Weise zu durchsuchen. Es ist kostenlos, Open Source und läuft vollständig in deinem Browser!",
+      "primaryButton": "Jetzt starten - Kostenlos!",
+      "secondaryButton": "Auf GitHub bewerten"
+    },
+    "footer": {
+      "description": "Wunderschöner, interaktiver Filament-Farbbrowser für deine 3D-Druck-Bedürfnisse. Kostenlos und Open Source.",
+      "links": {
+        "title": "Links",
+        "items": {
+          "github": "GitHub Repository",
+          "spoolman": "Spoolman Projekt",
+          "issues": "Probleme melden",
+          "contributing": "Mitwirken"
+        }
+      },
+      "resources": {
+        "title": "Ressourcen",
+        "items": {
+          "features": "Features",
+          "launchApp": "App starten",
+          "documentation": "Dokumentation",
+          "spoolmanProject": "Spoolman Projekt"
+        }
+      },
+      "copyright": "Spoolman Filament Swatch. Open Source unter MIT-Lizenz.",
+      "madeWith": "Gemacht mit {heart} von {author} für die 3D-Druck-Community"
+    }
   }
 }

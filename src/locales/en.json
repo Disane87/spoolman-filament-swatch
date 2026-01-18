@@ -145,5 +145,200 @@
       "ci": "👷 CI/CD",
       "chores": "🔧 Chores"
     }
+  },
+  "landing": {
+    "hero": {
+      "title": "Visual Filament Color Browser",
+      "subtitle": "Beautiful, Interactive Interface for Your Spoolman Collection",
+      "description": "Browse your 3D printing filament collection visually. Connect to your {spoolman} instance and see all your colors at a glance.",
+      "requiresTitle": "⚠️ Requires Your Spoolman Instance",
+      "requiresText": "This app connects to your own {spoolman} server. All data stays between your browser and your Spoolman instance — no central database, no external storage.",
+      "launchApp": "Launch App",
+      "viewDemo": "View Demo",
+      "exploreFeatures": "Explore Features",
+      "github": "GitHub"
+    },
+    "testimonial": {
+      "madeWithLove": "Made with love for the 3D printing community"
+    },
+    "stats": [
+      {
+        "value": "Your Colors",
+        "label": "Beautifully Displayed"
+      },
+      {
+        "value": "Any Brand",
+        "label": "All Vendors Supported"
+      },
+      {
+        "value": "100%",
+        "label": "Open Source"
+      },
+      {
+        "value": "⚡",
+        "label": "Lightning Fast"
+      }
+    ],
+    "useCases": {
+      "title": "Perfect For Every Situation",
+      "subtitle": "Whether you're planning your next print or organizing your workshop, we've got you covered",
+      "items": [
+        {
+          "title": "Find the Perfect Color",
+          "description": "Browse through your entire collection visually and find that exact shade you need for your project."
+        },
+        {
+          "title": "Plan Your Purchases",
+          "description": "See which colors you already have before buying new filaments. Save money, avoid duplicates."
+        },
+        {
+          "title": "Organize Your Workshop",
+          "description": "Track where each spool is stored. No more hunting through boxes to find the right filament."
+        },
+        {
+          "title": "Manage Multi-Color Filaments",
+          "description": "Special support for gradient and multi-color spools with visual pattern indicators."
+        }
+      ]
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to manage and browse your filament collection",
+      "items": [
+        {
+          "title": "Beautiful Color Display",
+          "description": "See your filaments with their actual colors in stunning grid or carousel view",
+          "details": []
+        },
+        {
+          "title": "Smart Filtering",
+          "description": "Filter by vendor, material, color type, location, and more",
+          "details": []
+        },
+        {
+          "title": "Location Tracking",
+          "description": "Track exactly where your spools are stored in your workshop",
+          "details": []
+        },
+        {
+          "title": "Multi-Color Support",
+          "description": "Full support for multi-color filaments with visual indicators",
+          "details": []
+        },
+        {
+          "title": "Responsive Design",
+          "description": "Works perfectly on desktop, tablet, and mobile devices",
+          "details": []
+        },
+        {
+          "title": "Multi-Language",
+          "description": "Available in multiple languages with easy switching",
+          "details": []
+        },
+        {
+          "title": "Lightning Fast",
+          "description": "Built with modern tech for instant loading and smooth interactions",
+          "details": []
+        },
+        {
+          "title": "Dark/Light Mode",
+          "description": "Choose your preferred theme or let it adapt to your system",
+          "details": []
+        }
+      ]
+    },
+    "problem": {
+      "title": "The Challenge",
+      "mainTitle": "Spoolman is Amazing, But...",
+      "items": [
+        {
+          "title": "Data-Focused Interface",
+          "description": "Spoolman excels at managing filament inventory with detailed specifications, weights, and vendor information. But when you're standing at your printer deciding which color to use, scrolling through a data table isn't ideal."
+        },
+        {
+          "title": "Color Gets Lost",
+          "description": "Your filaments are beautiful — vibrant reds, deep blues, subtle pastels. But in a traditional list view, these colors are reduced to hex codes and small swatches. The visual magic disappears."
+        }
+      ],
+      "solutions": [
+        {
+          "title": "Color-First Experience",
+          "description": "This app flips the script. Your filaments are displayed as beautiful color cards in a grid or carousel, making it effortless to browse visually and find exactly the shade you're looking for."
+        },
+        {
+          "title": "Fast & Intuitive",
+          "description": "Filter by vendor, material, or location with a single click. Pin your favorite colors. Browse on your phone while standing at your shelf. Everything is designed for speed and visual clarity."
+        }
+      ],
+      "workflow": {
+        "title": "Imagine This Workflow",
+        "step": "Step",
+        "done": "Done!",
+        "steps": [
+          {
+            "emoji": "🔍",
+            "text": "\"I need a dark blue PETG for this project...\""
+          },
+          {
+            "emoji": "🎨",
+            "text": "Filter: Material → PETG. Browse the visual grid."
+          },
+          {
+            "emoji": "✨",
+            "text": "Found it! Navy Blue PETG, Shelf A3, 750g remaining."
+          }
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Connect your Spoolman instance and start browsing in seconds",
+      "steps": [
+        {
+          "title": "Enter Your Spoolman URL",
+          "description": "On first launch, simply provide the URL to your running Spoolman instance (e.g., http://192.168.1.50:7912). This is saved locally in your browser — we never send your data anywhere.",
+          "tip": "💡 Tip: Your Spoolman instance must be network-accessible from where you're browsing."
+        },
+        {
+          "title": "Browse Your Collection",
+          "description": "The app fetches your filaments directly from Spoolman and displays them as beautiful color cards. Switch between grid view for an overview or carousel view for detailed browsing. All data stays between your browser and your Spoolman server.",
+          "tip": "💡 Tip: Use keyboard shortcuts to navigate quickly — arrow keys in carousel view, Escape to close modals."
+        },
+        {
+          "title": "Filter & Find",
+          "description": "Use powerful filters to narrow down by vendor, material type, color family, storage location, or multi-color patterns. Pin your favorites to create a custom palette. Search by name or color code for instant results.",
+          "tip": "💡 Tip: Filters are combinable — select \"Prusament\" + \"PETG\" + \"Location: Shelf A\" to drill down precisely."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Organize Your Filaments?",
+      "subtitle": "Start browsing your filament collection in a beautiful, organized way. It's free, open source, and runs entirely in your browser!",
+      "primaryButton": "Get Started Now - It's Free!",
+      "secondaryButton": "Star on GitHub"
+    },
+    "footer": {
+      "description": "Beautiful, interactive filament color browser for your 3D printing needs. Free and open source.",
+      "links": {
+        "title": "Links",
+        "items": {
+          "github": "GitHub Repository",
+          "spoolman": "Spoolman Project",
+          "issues": "Report Issues",
+          "contributing": "Contributing"
+        }
+      },
+      "resources": {
+        "title": "Resources",
+        "items": {
+          "features": "Features",
+          "launchApp": "Launch App",
+          "documentation": "Documentation",
+          "spoolmanProject": "Spoolman Project"
+        }
+      },
+      "copyright": "Spoolman Filament Swatch. Open Source under MIT License.",
+      "madeWith": "Made with {heart} by {author} for the 3D printing community"
+    }
   }
 }

@@ -12,7 +12,11 @@
 
 ---
 
-Hey there! 👋 This is a beautiful, interactive filament color browser for [Spoolman](https://github.com/Donkie/Spoolman/). Think of it as your personal filament showroom - browse colors, filter by material, vendor, location, and find that perfect filament for your next print! 🖨️✨
+Hey there! 👋 This is a beautiful, interactive filament color browser for [Spoolman](https://github.com/Donkie/Spoolman/) - the awesome open-source filament inventory management system. 
+
+Think of it as your personal filament showroom - browse colors, filter by material, vendor, location, and find that perfect filament for your next print! 🖨️✨
+
+> **Note:** This is a companion app for Spoolman. You'll need a running [Spoolman](https://github.com/Donkie/Spoolman/) instance to manage your filaments, or you can browse the external community database without Spoolman.
 
 ## 🌐 Live Demo
 
@@ -242,8 +246,16 @@ Thanks for checking out this project! If you like it, give it a ⭐ on GitHub - 
 
 Found a bug? Have an idea? [Open an issue](https://github.com/Disane87/spoolman-filament-swatch/issues) and let's make this better together! 🚀
 
+## 🙏 Acknowledgments
+
+This project wouldn't exist without:
+
+- **[Spoolman](https://github.com/Donkie/Spoolman/)** by [Donkie](https://github.com/Donkie) - The amazing filament management system that powers this app. Seriously, go check it out and give it a star! ⭐
+- The entire 3D printing community for inspiration and feedback
+- All contributors who help make this project better
+
+If you're using this app, you should definitely be using Spoolman too. It's the backbone that makes filament tracking actually useful!
+
 ---
 
 Made with ❤️ for the 3D printing community
-# test
-# test2

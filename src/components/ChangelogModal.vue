@@ -5,9 +5,6 @@
         <DialogTitle class="flex items-center gap-2">
           <Icon icon="lucide:sparkles" class="w-5 h-5 text-yellow-500" />
           <span>{{ $t('changelog.title') }}</span>
-          <span v-if="releases?.length > 0" class="text-sm font-mono text-[rgb(var(--text-muted))]">
-            {{ releases[0].tag_name }}
-          </span>
         </DialogTitle>
         <DialogDescription>
           {{ releases?.length > 0 ? $t('changelog.released', { date: formatDate(releases[0].published_at) }) : $t('changelog.loading') }}
@@ -23,54 +20,46 @@
       </div>
 
       <div v-else-if="releases?.length > 0" class="flex-1 overflow-y-auto">
-        <Accordion type="single" :default-value="releases[0]?.tag_name" collapsible class="w-full">
-          <AccordionItem 
-            v-for="(release, index) in releases" 
-            :key="release.tag_name" 
-            :value="release.tag_name"
-            class="border-[rgb(var(--border))]"
-          >
-            <AccordionTrigger class="hover:no-underline py-4 px-2">
-              <div class="flex items-center gap-3 w-full">
-                <img
-                  v-if="release.author?.avatar_url"
-                  :src="release.author.avatar_url"
-                  :alt="release.author.login"
-                  class="w-8 h-8 rounded-full ring-2 ring-[rgb(var(--border))] shrink-0"
-                />
-                <div class="flex-1 text-left">
-                  <div class="flex items-center gap-2">
-                    <span class="font-semibold">{{ release.name || release.tag_name }}</span>
-                    <span class="text-xs text-[rgb(var(--text-muted))] font-mono">{{ release.tag_name }}</span>
-                    <span v-if="index === 0" class="text-xs bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 px-2 py-0.5 rounded-full font-medium">
-                      Neu
-                    </span>
-                  </div>
-                  <p class="text-xs text-[rgb(var(--text-muted))] mt-0.5">
-                    {{ formatDate(release.published_at) }} · {{ $t('changelog.by') }} {{ release.author?.login }}
-                  </p>
-                </div>
+        <div 
+          class="bg-[rgb(var(--foreground))]/5 backdrop-blur-sm rounded-2xl p-6 border border-input hover:shadow-lg transition-all duration-300"
+        >
+          <!-- Card Header -->
+          <div class="flex items-start gap-4 mb-4">
+            <img
+              v-if="releases[0].author?.avatar_url"
+              :src="releases[0].author.avatar_url"
+              :alt="releases[0].author.login"
+              class="w-10 h-10 rounded-full ring-2 ring-[rgb(var(--border))] shrink-0"
+            />
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-bold text-lg">{{ releases[0].name || releases[0].tag_name }}</h3>
+                <span class="text-xs text-[rgb(var(--text-muted))] font-mono bg-[rgb(var(--foreground))]/10 px-2 py-1 rounded">
+                  {{ releases[0].tag_name }}
+                </span>
+                <span class="text-xs bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 px-2 py-1 rounded-full font-medium">
+                  Neu
+                </span>
               </div>
-            </AccordionTrigger>
-            
-            <AccordionContent class="px-2 pb-4">
-              <div class="prose prose-sm dark:prose-invert max-w-none">
-                <div v-html="formatReleaseNotes(release.body)" class="changelog-content" />
-              </div>
-              
-              <div class="mt-4 pt-3 border-t border-[rgb(var(--border))]">
-                <a
-                  :href="release.html_url"
-                  target="_blank"
-                  class="text-xs text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] inline-flex items-center gap-1"
-                >
-                  <Icon icon="lucide:external-link" class="w-3 h-3" />
-                  {{ $t('changelog.viewOnGithub') }}
-                </a>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+              <p class="text-xs text-[rgb(var(--text-muted))] mt-1.5">
+                {{ formatDate(releases[0].published_at) }} · {{ $t('changelog.by') }} {{ releases[0].author?.login }}
+              </p>
+            </div>
+            <a
+              :href="releases[0].html_url"
+              target="_blank"
+              class="text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] transition-colors p-2 hover:bg-[rgb(var(--foreground))]/5 rounded-lg"
+              :title="$t('changelog.viewOnGithub')"
+            >
+              <Icon icon="lucide:external-link" class="w-5 h-5" />
+            </a>
+          </div>
+          
+          <!-- Card Content -->
+          <div class="prose prose-sm dark:prose-invert max-w-none">
+            <div v-html="formatReleaseNotes(releases[0].body)" class="changelog-content" />
+          </div>
+        </div>
 
         <!-- All Releases Link -->
         <div class="pt-4 text-center">
@@ -85,7 +74,7 @@
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-4 border-t border-[rgb(var(--border))]">
+      <div class="flex justify-end gap-2 pt-4">
         <Button variant="outline" size="sm" @click="dontShowAgain">
           {{ $t('changelog.dontShowAgain') }}
         </Button>
@@ -196,15 +185,9 @@ const formatReleaseNotes = (body: string): string => {
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  const now = new Date();
-  const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+  const locale = navigator.language || 'en-US';
   
-  if (diffInDays === 0) return 'today';
-  if (diffInDays === 1) return 'yesterday';
-  if (diffInDays < 7) return `${diffInDays} days ago`;
-  if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
-  
-  return date.toLocaleDateString('en-US', { 
+  return date.toLocaleDateString(locale, { 
     year: 'numeric', 
     month: 'long', 
     day: 'numeric' 
@@ -254,6 +237,20 @@ watch(isOpen, (newValue) => {
 });
 
 onMounted(() => {
+  // Check for nover parameter in dev mode
+  if (import.meta.env.DEV) {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const noVersion = urlParams.get('nover');
+      if (noVersion === 'true' || noVersion === '1') {
+        console.log('🚫 Changelog disabled via nover parameter (dev mode)');
+        return; // Don't fetch or show changelog
+      }
+    } catch (err) {
+      console.warn('Could not read nover parameter', err);
+    }
+  }
+  
   fetchReleases();
 });
 

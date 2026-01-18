@@ -6,6 +6,9 @@
         "/^pwsh -Command \"npm install --save-dev semantic-release-notes-with-contributor\"$/": {
             "approve": true,
             "matchCommandLine": true
-        }
+        },
+        "Move-Item": true,
+        "New-Item": true,
+        "Copy-Item": true
     }
 }

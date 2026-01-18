@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
+import router from "./router";
 import App from "./App.vue";
 import "./styles.css";
 import de from "./locales/de.json";
@@ -28,4 +29,4 @@ if (import.meta.env.MODE !== 'development') {
   document.head.appendChild(script);
 }
 
-createApp(App).use(i18n).mount("#app");
+createApp(App).use(i18n).use(router).mount("#app");
