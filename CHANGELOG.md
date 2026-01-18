@@ -1,3 +1,18 @@
+## [1.8.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.7.0...v1.8.0) (2026-01-18)
+
+### ✨ Features
+
+* **router:** add Vue Router setup with landing and main app routes ([466bec9](https://github.com/Disane87/spoolman-filament-swatch/commit/466bec94a55a8c854e4159f8b32427276066256f)) by [@Disane87](https://github.com/Disane87)
+
+### 🐛 Bug Fixes
+
+* correct version number in package.json from 1.6.0 to 1.7.0 ([259935f](https://github.com/Disane87/spoolman-filament-swatch/commit/259935fde5487da9d04743c4702b897103e41c70)) by [@Disane87](https://github.com/Disane87)
+
+### 🔧 Maintenance
+
+* clean up whitespace in HTML, package.json, and screenshot script ([b28218b](https://github.com/Disane87/spoolman-filament-swatch/commit/b28218bb385759a08eac8f5d16c8de260ef5dcf0)) by [@Disane87](https://github.com/Disane87)
+* update package.json with additional metadata and keywords ([ca81961](https://github.com/Disane87/spoolman-filament-swatch/commit/ca8196159441feffece67f9245c4155327eb9c62)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.7.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.6.0...v1.7.0) (2026-01-18)
 
 ### ✨ Features
