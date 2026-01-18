@@ -1,9 +1,6 @@
 {
   "name": "spoolman-filament-swatch",
-<<<<<<< HEAD
   "version": "1.7.0",
-=======
-  "version": "1.6.0",
   "description": "Beautiful, interactive filament color browser for Spoolman - your personal 3D printing filament showroom",
   "author": "Disane87",
   "license": "MIT",
@@ -30,7 +27,6 @@
     "3d-printer",
     "material-management"
   ],
->>>>>>> 86b3189 (chore: update package.json with additional metadata and keywords)
   "private": true,
   "type": "module",
   "scripts": {
