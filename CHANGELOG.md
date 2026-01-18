@@ -1,3 +1,9 @@
+## [1.9.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.8.0...v1.9.0) (2026-01-18)
+
+### ✨ Features
+
+* **LandingPage:** enhance interactivity and animations with mouse tracking and improved visual effects ([3e327d3](https://github.com/Disane87/spoolman-filament-swatch/commit/3e327d3bbcfa1cd04c3ead56d5473945a3e14464)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.8.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.7.0...v1.8.0) (2026-01-18)
 
 ### ✨ Features
