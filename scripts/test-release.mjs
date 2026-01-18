@@ -28,16 +28,16 @@ try {
     // Hole die letzten Commits seit dem letzten Tag
     const { stdout: lastTag } = await execa('git', ['describe', '--tags', '--abbrev=0'], { reject: false });
     const range = lastTag ? `${lastTag.trim()}..HEAD` : '';
-    
+
     const { stdout: commits } = await execa('git', ['log', range, '--format=%H|%s|%b|%an|%ae']);
-    
+
     if (!commits) {
         console.log('ℹ️  No new commits since last release');
         process.exit(0);
     }
 
     const commitLines = commits.split('\n').filter(Boolean);
-    
+
     console.log(`📊 Found ${commitLines.length} commits since ${lastTag || 'beginning'}:\n`);
 
     let releaseType = null;
@@ -75,7 +75,7 @@ try {
     for (const line of commitLines) {
         const [hash, subject, body, author] = line.split('|');
         const shortHash = hash.substring(0, 7);
-        
+
         // Parse conventional commit
         const parsed = conventionalCommitsParser.sync(subject, {
             headerPattern: /^(\w*)(?:\(([^)]*)\))?: (.*)$/,
@@ -115,11 +115,11 @@ try {
     }
 
     console.log('\n' + '='.repeat(60));
-    
+
     if (releaseType) {
         const [major, minor, patch] = currentVersion.split('.').map(Number);
         let newVersion;
-        
+
         if (releaseType === 'major') {
             newVersion = `${major + 1}.0.0`;
         } else if (releaseType === 'minor') {
@@ -141,7 +141,7 @@ try {
         }
 
         console.log('📝 Release Notes Preview:\n');
-        
+
         const sections = {
             'feat': '✨ Features',
             'fix': '🐛 Bug Fixes',

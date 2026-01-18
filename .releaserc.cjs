@@ -8,27 +8,27 @@ module.exports = {
                 releaseRules: [
                     // Breaking changes
                     { breaking: true, release: 'major' },
-                    
+
                     // Features
                     { type: 'feat', release: 'minor' },
-                    
+
                     // Bug fixes and improvements
                     { type: 'fix', release: 'patch' },
                     { type: 'perf', release: 'patch' },
                     { type: 'revert', release: 'patch' },
-                    
+
                     // Documentation and styling
                     { type: 'docs', release: 'patch' },
                     { type: 'style', release: 'patch' },
-                    
+
                     // Code quality
                     { type: 'refactor', release: 'patch' },
                     { type: 'test', release: 'patch' },
-                    
+
                     // Build and infrastructure
                     { type: 'build', release: 'patch' },
                     { type: 'ci', release: 'patch' },
-                    
+
                     // Scoped releases (specific to this project)
                     { type: 'feat', scope: 'ui', release: 'minor' },
                     { type: 'feat', scope: 'api', release: 'minor' },
@@ -37,7 +37,7 @@ module.exports = {
                     { type: 'feat', scope: 'logo', release: 'minor' },
                     { type: 'feat', scope: 'theme', release: 'minor' },
                     { type: 'feat', scope: 'seo', release: 'patch' },
-                    
+
                     // No release
                     { type: 'chore', release: false },
                     { scope: 'no-release', release: false }
@@ -92,7 +92,7 @@ module.exports = {
                             'ci': '👷 CI/CD',
                             'chore': '🔧 Maintenance'
                         };
-                        
+
                         // Map scopes to emojis for better readability
                         const scopeEmojis = {
                             'ui': '🎨',
