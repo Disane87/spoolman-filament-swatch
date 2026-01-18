@@ -1,3 +1,14 @@
+## [1.6.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.2...v1.6.0) (2026-01-18)
+
+### chore
+
+* **ci:** remove .mailmap and rely on CI GitHub author lookup; remove private email mappings ([3ab595d](https://github.com/Disane87/spoolman-filament-swatch/commit/3ab595ddc6d6d3a3c44b98d016eb75379b45e9b3)) by [@Disane87](https://github.com/Disane87)
+* **history:** squashed 1.0.0 merge ([4757747](https://github.com/Disane87/spoolman-filament-swatch/commit/475774714de382d189bc2b4db39458830efb1319)) by [@Marco Franke](https://github.com/Marco Franke)
+
+### ✨ Features
+
+* **analytics:** add production analytics script loading ([3963f55](https://github.com/Disane87/spoolman-filament-swatch/commit/3963f553a0880fea955fbcd1fdea2b7ac0222be4)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.5.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.5.1...v1.5.2) (2026-01-17)
 
 ### 🐛 Bug Fixes
