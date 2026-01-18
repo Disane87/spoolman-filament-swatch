@@ -1,3 +1,9 @@
+## [1.10.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.9.0...v1.10.0) (2026-01-18)
+
+### ✨ Features
+
+* rename project from "Spoolman Filament Swatch" to "Spool Swatch" and update related texts ([e3b8b10](https://github.com/Disane87/spoolman-filament-swatch/commit/e3b8b10912f15e66d5670fee180beba8ba54fbe5)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.9.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.8.0...v1.9.0) (2026-01-18)
 
 ### ✨ Features
