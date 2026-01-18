@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Spoolman Filament Swatch",
+    "title": "Spool Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
     "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches."
   },
@@ -159,7 +159,17 @@
       "github": "GitHub"
     },
     "testimonial": {
-      "madeWithLove": "Gemacht mit Liebe für die 3D-Druck-Community"
+      "name": "Marco",
+      "role": "Entwickler & Maintainer",
+      "quote1": "Als leidenschaftlicher 3D-Druck-Enthusiast stand ich ständig vor einer einfachen Frage:",
+      "quote1Bold": "Welche Farbe hatte dieses Filament noch gleich?",
+      "quote2": "Spoolman ist ein fantastisches Tool zur Verwaltung von Filament-Inventar, aber wenn es darum geht, Farben visuell zu durchsuchen, kommt es zu kurz. Ich wollte etwas, das es mir ermöglicht,",
+      "quote2Bold": "meine gesamte Sammlung auf einen Blick zu sehen",
+      "quote2Continue": ", nach den Farben zu filtern, die ich brauche, und schnell zu finden, wo jede Spule gelagert ist.",
+      "quote3": "Also habe ich dieses Tool entwickelt - nicht nur für mich, sondern für alle, die die haptische Freude am Organisieren von Filamenten und die visuelle Zufriedenheit lieben, all diese wunderschönen Farben wie eine digitale Palette ausgelegt zu sehen.",
+      "quote4": "Es ist zu einem wesentlichen Teil meines Workflows geworden, und ich hoffe, es hilft dir genauso sehr wie mir!",
+      "madeWithLove": "Gemacht mit Liebe für die 3D-Druck-Community",
+      "poweredBy": "Ermöglicht durch {spoolman} — Ohne dieses großartige Filament-Management-System würde dieses Projekt nicht existieren. Vielen Dank an {donkie} und alle Mitwirkenden!"
     },
     "stats": [
       {
@@ -337,7 +347,7 @@
           "spoolmanProject": "Spoolman Projekt"
         }
       },
-      "copyright": "Spoolman Filament Swatch. Open Source unter MIT-Lizenz.",
+      "copyright": "Spool Swatch. Open Source unter MIT-Lizenz.",
       "madeWith": "Gemacht mit {heart} von {author} für die 3D-Druck-Community"
     }
   }

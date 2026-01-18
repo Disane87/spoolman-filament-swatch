@@ -10,7 +10,7 @@ const router = createRouter({
       name: 'landing',
       component: LandingPage,
       meta: {
-        title: 'Spoolman Filament Swatch - Your 3D Printing Filament Color Browser'
+        title: 'Spool Swatch - Your 3D Printing Filament Color Browser'
       }
     },
     {
@@ -18,7 +18,7 @@ const router = createRouter({
       name: 'app',
       component: MainApp,
       meta: {
-        title: 'Spoolman Filament Swatch - Browse Your Collection'
+        title: 'Spool Swatch - Browse Your Collection'
       }
     }
   ],
@@ -33,7 +33,7 @@ const router = createRouter({
 
 // Update document title on route change
 router.beforeEach((to, from, next) => {
-  document.title = (to.meta.title as string) || 'Spoolman Filament Swatch';
+  document.title = (to.meta.title as string) || 'Spool Swatch';
   next();
 });
 

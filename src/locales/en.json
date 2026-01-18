@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Spoolman Filament Swatch",
+    "title": "Spool Swatch",
     "subtitle": "Local color picker for filaments and spools",
     "tagline": "Swipe through colors, filter materials, and pick perfect matches."
   },
@@ -159,7 +159,17 @@
       "github": "GitHub"
     },
     "testimonial": {
-      "madeWithLove": "Made with love for the 3D printing community"
+      "name": "Marco",
+      "role": "Creator & Maintainer",
+      "quote1": "As a passionate 3D printing enthusiast, I found myself constantly struggling with one simple question:",
+      "quote1Bold": "What color was that filament again?",
+      "quote2": "Spoolman is an amazing tool for managing filament inventory, but when it comes to browsing colors visually, it falls short. I wanted something that would let me",
+      "quote2Bold": "see my entire collection at a glance",
+      "quote2Continue": ", filter by the colors I need, and quickly find where each spool is stored.",
+      "quote3": "So I built this tool - not just for me, but for everyone who loves the tactile joy of organizing filaments and the visual satisfaction of seeing all those beautiful colors laid out like a digital palette.",
+      "quote4": "It's become an essential part of my workflow, and I hope it helps you as much as it helps me!",
+      "madeWithLove": "Made with love for the 3D printing community",
+      "poweredBy": "Powered by {spoolman} — Without this awesome filament management system, this project wouldn't exist. Huge thanks to {donkie} and all contributors!"
     },
     "stats": [
       {
@@ -337,7 +347,7 @@
           "spoolmanProject": "Spoolman Project"
         }
       },
-      "copyright": "Spoolman Filament Swatch. Open Source under MIT License.",
+      "copyright": "Spool Swatch. Open Source under MIT License.",
       "madeWith": "Made with {heart} by {author} for the 3D printing community"
     }
   }

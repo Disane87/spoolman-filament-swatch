@@ -1,6 +1,6 @@
 {
-    "name": "Spoolman Filament Swatch",
-    "short_name": "Filament Swatch",
+    "name": "Spool Swatch",
+    "short_name": "Spool Swatch",
     "description": "Beautiful color browser for your 3D printer filaments",
     "start_url": "/",
     "display": "standalone",

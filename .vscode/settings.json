@@ -9,6 +9,14 @@
         },
         "Move-Item": true,
         "New-Item": true,
-        "Copy-Item": true
+        "Copy-Item": true,
+        "/^\\(Get-Content \"src\\\\components\\\\LandingPage\\.vue\" -Raw\\) -replace 'duration-1000', 'duration-300' -replace 'duration-500', 'duration-200' -replace 'duration-300\\(\\?!ms\\)', 'duration-150' \\| Set-Content \"src\\\\components\\\\LandingPage\\.vue\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$content = Get-Content \"c:\\\\Workspace\\\\spoolman-filament-swatch\\\\src\\\\components\\\\LandingPage\\.vue\" -Raw; \\$content = \\$content -replace 'duration-1000', 'duration-300' -replace 'duration-500', 'duration-200'; Set-Content \"c:\\\\Workspace\\\\spoolman-filament-swatch\\\\src\\\\components\\\\LandingPage\\.vue\" -Value \\$content$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }

@@ -103,10 +103,8 @@ body {
     linear-gradient(120deg, rgb(var(--bg)) 0%, rgb(var(--bg-alt)) 100%);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   background-attachment: fixed;
-  transform: translateZ(0);
   will-change: auto;
   overflow-x: hidden;
-  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   touch-action: manipulation;
