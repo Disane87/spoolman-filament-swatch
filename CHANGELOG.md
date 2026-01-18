@@ -1,3 +1,9 @@
+## [1.11.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.10.0...v1.11.0) (2026-01-18)
+
+### ✨ Features
+
+* add multi_color and single_color metadata files with PNG and XML content types ([2611dac](https://github.com/Disane87/spoolman-filament-swatch/commit/2611dacae238c044f6c5d3bce7dd54716e760303)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.10.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.9.0...v1.10.0) (2026-01-18)
 
 ### ✨ Features
