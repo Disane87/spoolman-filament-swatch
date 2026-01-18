@@ -19,4 +19,13 @@ const i18n = createI18n({
 
 setupTheme();
 
+// Analytics - nur in Produktion laden
+if (import.meta.env.MODE !== 'development') {
+  const script = document.createElement('script');
+  script.defer = true;
+  script.src = 'https://statistics.disane.dev/script.js';
+  script.setAttribute('data-website-id', '95c90cb7-c1d3-488c-a68b-4210a7d2c76c');
+  document.head.appendChild(script);
+}
+
 createApp(App).use(i18n).mount("#app");
