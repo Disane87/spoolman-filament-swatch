@@ -44,6 +44,9 @@ Glad you asked! Here's the good stuff:
 - 🔗 **Deep Linking**: Share searches with URL parameters (e.g., `?v=prusament&m=petg`)
 - 💾 **Local First**: All settings stored in your browser - no cloud, no tracking
 - 🚀 **External Database**: Browse filaments from the community database even without Spoolman
+- 📦 **Projects** *(Beta)*: Import 3D print files (.3MF, .gcode), track filament usage by print, view thumbnails and 3D previews, calculate costs per filament, per plate, and total
+
+> **Beta Feature**: The Projects feature is currently in beta. It allows you to import 3D print files, automatically detect filament colors, match them with your Spoolman inventory, and track total costs. This feature is experimental and may change based on user feedback.
 
 ## 🚀 Getting Started
 

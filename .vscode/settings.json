@@ -17,6 +17,10 @@
         "/^\\$content = Get-Content \"c:\\\\Workspace\\\\spoolman-filament-swatch\\\\src\\\\components\\\\LandingPage\\.vue\" -Raw; \\$content = \\$content -replace 'duration-1000', 'duration-300' -replace 'duration-500', 'duration-200'; Set-Content \"c:\\\\Workspace\\\\spoolman-filament-swatch\\\\src\\\\components\\\\LandingPage\\.vue\" -Value \\$content$/": {
             "approve": true,
             "matchCommandLine": true
-        }
-    }
+        },
+        "ConvertFrom-Json": true,
+        "ConvertTo-Json": true,
+        "Out-Null": true
+    },
+    "i18n-ally.keystyle": "nested"
 }

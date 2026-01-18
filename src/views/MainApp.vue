@@ -1,12 +1,54 @@
 <template>
-  <div class="mx-auto flex min-h-screen h-screen max-w-6xl flex-col gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-10 overflow-hidden">
+  <div class="mx-auto flex min-h-screen flex-col gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-10 overflow-hidden">
     <!-- Top Navigation Bar -->
-    <nav class="flex items-center justify-between gap-4 pb-3 flex-shrink-0">
+    <nav class="sticky top-0 z-40 bg-[rgb(var(--background))] flex items-center justify-between gap-4 pb-3 flex-shrink-0 border-b">
       <div class="flex items-center gap-3">
         <h1 class="text-lg sm:text-xl font-semibold">{{ t("app.title") }}</h1>
+        
+        <!-- View Toggle -->
+        <div class="flex gap-1 border rounded-lg p-1">
+          <Button
+            :variant="$route.path.includes('/swatch') ? 'default' : 'ghost'"
+            size="sm"
+            @click="$router.push('/app/swatch')"
+            class="h-8 px-3"
+          >
+            <Icon icon="lucide:palette" class="w-4 h-4 sm:mr-1" />
+            <span class="hidden sm:inline">Filamente</span>
+          </Button>
+          <Button
+            :variant="$route.path.includes('/projects') ? 'default' : 'ghost'"
+            size="sm"
+            @click="$router.push('/app/projects')"
+            class="h-8 px-3 relative"
+          >
+            <Icon icon="lucide:folder" class="w-4 h-4 sm:mr-1" />
+            <span class="hidden sm:inline">Projekte</span>
+            <span class="ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30">
+              BETA
+            </span>
+            <span
+              v-if="projectsCount > 0"
+              class="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold"
+            >
+              {{ projectsCount }}
+            </span>
+          </Button>
+        </div>
       </div>
       
       <div class="flex items-center gap-2">
+        <Button
+          v-if="$route.path.includes('/projects') && $route.name === 'projects'"
+          size="sm"
+          variant="default"
+          @click="showImportDialog = true"
+          class="h-9 px-2 sm:px-3"
+        >
+          <Icon icon="lucide:plus" class="w-4 h-4 sm:mr-1" />
+          <span class="hidden sm:inline">Import</span>
+        </Button>
+        
         <Button
           size="sm"
           variant="outline"
@@ -49,157 +91,10 @@
       </div>
     </nav>
 
-    <!-- Header Section -->
-    <header class="hidden md:flex flex-col gap-2 flex-shrink-0 pt-4">
-      <p class="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[rgb(var(--text-muted))]">
-        {{ t("app.subtitle") }}
-      </p>
-      <p class="max-w-2xl text-sm text-[rgb(var(--text-muted))]">
-        {{ t("app.tagline") }}
-      </p>
-    </header>
+    <!-- Router Outlet -->
+    <RouterView class="flex-1 min-h-0" />
 
-    <div class="control-grid hidden md:flex">
-      <div class="control-card glass">
-        <FiltersBar
-          :filters="filters"
-          :vendor-options="vendorOptions"
-          :material-options="materialOptions"
-          :color-options="colorOptions"
-          :location-options="locationOptions"
-          :search-placeholder="t('search.placeholder')"
-          :labels="{
-            vendor: t('filters.vendor'),
-            material: t('filters.material'),
-            location: t('filters.location'),
-            all: t('filters.all'),
-            onlySpoolman: t('filters.onlySpoolman'),
-            onlyExternal: t('filters.onlyExternal'),
-            color: t('filters.color'),
-            colorType: t('filters.colorType'),
-            singleColor: t('filters.singleColor'),
-            multiColor: t('filters.multiColor'),
-            source: t('filters.source'),
-            sort: t('filters.sort'),
-            sortAsc: t('filters.sortAsc'),
-            sortDesc: t('filters.sortDesc'),
-            sortNameAsc: t('filters.sortNameAsc'),
-            sortVendorAsc: t('filters.sortVendorAsc'),
-            sortMaterialAsc: t('filters.sortMaterialAsc'),
-            sortSourceAsc: t('filters.sortSourceAsc'),
-            sortHueAsc: t('filters.sortHueAsc'),
-            sortLuminanceAsc: t('filters.sortLuminanceAsc'),
-            sortLightnessAsc: t('filters.sortLightnessAsc')
-          }"
-        />
-      </div>
-    </div>
-
-    <section class="flex flex-1 flex-col gap-3 sm:gap-6 min-h-0">
-      <div v-if="loading" class="text-sm text-[rgb(var(--text-muted))]">
-        {{ t("status.loading") }}
-      </div>
-      <div v-else-if="error" class="text-sm text-red-400">
-        {{ t("status.error") }} ({{ error }})
-      </div>
-      <div v-else-if="filtered.length === 0" class="text-sm text-[rgb(var(--text-muted))]">
-        {{ t("status.empty") }}
-      </div>
-      <div v-else class="flex flex-col flex-1 gap-4 min-h-0">
-        <FilamentCarousel
-          v-if="viewMode === 'carousel'"
-          :items="filtered"
-          :count-label="countLabel"
-          :labels="cardLabels"
-          :filters="filters"
-          :sort-labels="sortLabels"
-          :view-mode="viewMode"
-          @togglePin="togglePin"
-          @selectFilament="selectFilament"
-          @changeView="viewMode = $event"
-          :pinned-ids="pinnedIds"
-        />
-
-        <FilamentBoard
-          v-else
-          :filaments="filtered"
-          :pinned-ids="pinnedIds"
-          :labels="boardLabels"
-          :filters="filters"
-          :sort-labels="sortLabels"
-          :view-mode="viewMode"
-          @changeView="viewMode = $event"
-          :title="countLabel"
-          @togglePin="togglePin"
-          @selectFilament="selectFilament"
-        />
-      </div>
-    </section>
-
-    <!-- Detail Panel -->
-    <FilamentDetailPanel
-      :filament="selectedFilament"
-      :all-filaments="allFilaments"
-      :labels="detailLabels"
-      @close="selectedFilament = null"
-      @selectFilament="selectFilament"
-    />
-
-    <Dialog v-model:open="urlDialogOpen">
-      <DialogContent class="sm:max-w-md" :onInteractOutside="(e) => { if (!hasUrl.value) e.preventDefault(); }">
-        <DialogHeader>
-          <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
-          <DialogDescription>
-            {{ hasUrl.value ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912', domain: currentDomain }) : t("dialog.spoolmanUrlRequired") }}
-          </DialogDescription>
-        </DialogHeader>
-        
-        <!-- CORS Warning Alert -->
-        <div class="mt-4 rounded-lg border border-yellow-500/40 bg-yellow-400/15 p-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-yellow-700">{{ t("dialog.corsInfoTitle") }}</p>
-          <p class="mt-2 text-xs text-yellow-700">{{ t("dialog.corsInfoDescription") }}</p>
-          <div class="mt-3 rounded bg-black/20 p-2">
-            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel", { domain: currentDomain }) }}</code>
-          </div>
-          <p class="mt-2 text-xs text-yellow-700">
-            <span v-for="(part, idx) in parseMarkdownLink(t('dialog.corsRestartRequired'))" :key="idx">
-              <a v-if="part.isLink" :href="part.url" target="_blank" class="underline hover:text-yellow-600">{{ part.text }}</a>
-              <span v-else>{{ part.text }}</span>
-            </span>
-          </p>
-        </div>
-        
-        <form class="mt-2 flex flex-col gap-4" @submit.prevent="applySpoolmanUrl">
-          <label class="flex flex-col gap-2 text-sm font-semibold text-[rgb(var(--text))]">
-            <span class="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
-              {{ t("info.spoolmanUrl") }}
-            </span>
-            <Input
-              v-model="spoolmanUrlInput"
-              type="text"
-              name="spoolman-url"
-              placeholder="https://spoolman.your.tld"
-              required
-            />
-          </label>
-          <div class="flex flex-wrap justify-between gap-3">
-            <Button v-if="hasUrl.value" type="button" variant="ghost" size="sm" @click="resetUrlToDefault">
-              {{ t("actions.reset") }}
-            </Button>
-            <div v-else></div>
-            <div class="flex gap-3">
-              <Button v-if="hasUrl.value" type="button" variant="secondary" size="sm" @click="urlDialogOpen = false">
-                {{ t("actions.cancel") }}
-              </Button>
-              <Button type="submit" size="sm">
-                {{ t("actions.save") }}
-              </Button>
-            </div>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-
+    <!-- Palette Drawer -->
     <div class="palette-drawer" :class="{ open: paletteOpen }">
       <div class="palette-overlay" @click="paletteOpen = false" />
       <div class="palette-panel">
@@ -243,25 +138,86 @@
       </div>
     </div>
 
+    <!-- URL Dialog -->
+    <Dialog v-model:open="urlDialogOpen">
+      <DialogContent class="sm:max-w-md" :onInteractOutside="(e) => { if (!hasUrl) e.preventDefault(); }">
+        <DialogHeader>
+          <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
+          <DialogDescription>
+            {{ hasUrl ? t("dialog.spoolmanUrlDescription", { defaultUrl: DEFAULT_SPOOLMAN_URL || 'http://localhost:7912', domain: currentDomain }) : t("dialog.spoolmanUrlRequired") }}
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div class="mt-4 rounded-lg border border-yellow-500/40 bg-yellow-400/15 p-3">
+          <p class="text-xs font-semibold uppercase tracking-wide text-yellow-700">{{ t("dialog.corsInfoTitle") }}</p>
+          <p class="mt-2 text-xs text-yellow-700">{{ t("dialog.corsInfoDescription") }}</p>
+          <div class="mt-3 rounded bg-black/20 p-2">
+            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel", { domain: currentDomain }) }}</code>
+          </div>
+          <p class="mt-2 text-xs text-yellow-700">
+            <span v-for="(part, idx) in parseMarkdownLink(t('dialog.corsRestartRequired'))" :key="idx">
+              <a v-if="part.isLink" :href="part.url" target="_blank" class="underline hover:text-yellow-600">{{ part.text }}</a>
+              <span v-else>{{ part.text }}</span>
+            </span>
+          </p>
+        </div>
+        
+        <form class="mt-2 flex flex-col gap-4" @submit.prevent="applySpoolmanUrl">
+          <label class="flex flex-col gap-2 text-sm font-semibold text-[rgb(var(--text))]">
+            <span class="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
+              {{ t("info.spoolmanUrl") }}
+            </span>
+            <Input
+              v-model="spoolmanUrlInput"
+              type="text"
+              name="spoolman-url"
+              placeholder="https://spoolman.your.tld"
+              required
+            />
+          </label>
+          <div class="flex flex-wrap justify-between gap-3">
+            <Button v-if="hasUrl" type="button" variant="ghost" size="sm" @click="resetUrlToDefault">
+              {{ t("actions.reset") }}
+            </Button>
+            <div v-else></div>
+            <div class="flex gap-3">
+              <Button v-if="hasUrl" type="button" variant="secondary" size="sm" @click="urlDialogOpen = false">
+                {{ t("actions.cancel") }}
+              </Button>
+              <Button type="submit" size="sm">
+                {{ t("actions.save") }}
+              </Button>
+            </div>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+
     <!-- Changelog Modal -->
     <ChangelogModal ref="changelogModal" />
+
+    <!-- Project Import Dialog -->
+    <ProjectImportDialog
+      v-model:open="showImportDialog"
+      @project-created="handleProjectCreated"
+    />
 
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, provide, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useFilaments } from "../composables/useFilaments";
+import { useRouter, RouterView } from "vue-router";
 import { useSeo } from "../composables/useSeo";
 import { useSpoolmanUrl } from "../composables/useSpoolmanUrl";
-import FiltersBar from "../components/FiltersBar.vue";
-import FilamentCarousel from "../components/FilamentCarousel.vue";
-import FilamentBoard from "../components/FilamentBoard.vue";
-import FilamentDetailPanel from "../components/FilamentDetailPanel.vue";
+import { getProjects } from "../api/projects";
+import { useFilaments } from "../composables/useFilaments";
 import LocaleSwitch from "../components/LocaleSwitch.vue";
 import ThemeSwitch from "../components/ThemeSwitch.vue";
 import ChangelogModal from "../components/ChangelogModal.vue";
+import ProjectImportDialog from "../components/ProjectImportDialog.vue";
+import type { FilamentCard } from "../composables/useFilaments";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
 import {
@@ -272,141 +228,25 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Toggle } from "@/components/ui/toggle";
 import { DEFAULT_SPOOLMAN_URL } from "../api/spoolman";
-import type { FilamentCard } from "../composables/useFilaments";
-import { watch } from "vue";
 
 const { t, locale } = useI18n();
-const {
-  filtered,
-  filters,
-  vendorOptions,
-  materialOptions,
-  colorOptions,
-  locationOptions,
-  loading,
-  error,
-  refresh,
-  allFilaments,
-} = useFilaments();
+const router = useRouter();
+const { refresh, allFilaments } = useFilaments();
 
+// Shared state for child views
 const viewMode = ref<"carousel" | "board">("board");
 const pinnedIds = ref(new Set<string>());
-const paletteOpen = ref(false)
+const paletteOpen = ref(false);
 const selectedFilament = ref<FilamentCard | null>(null);
 const changelogModal = ref<InstanceType<typeof ChangelogModal> | null>(null);
+const showImportDialog = ref(false);
 
-const openChangelog = () => {
-  changelogModal.value?.open();
-};
+const projectsCount = computed(() => getProjects().length);
 
+// Define functions before providing them
 const selectFilament = (filament: FilamentCard) => {
   selectedFilament.value = filament;
-};
-
-const countLabel = computed(() =>
-  t("info.count", { count: filtered.value.length }),
-);
-
-const cardLabels = computed(() => ({
-  vendor: t("card.vendor"),
-  material: t("card.material"),
-  spool: t("card.spool"),
-  weight: t("card.weight"),
-  copy: t("actions.copy"),
-  copied: t("actions.copied"),
-  sourceSpoolman: t("card.sourceSpoolman"),
-  sourceExternal: t("card.sourceExternal"),
-  pin: t("actions.pin"),
-  unpin: t("actions.unpin"),
-}));
-
-const boardLabels = computed(() => ({
-  pin: t("actions.pin"),
-  unpin: t("actions.unpin"),
-  sourceSpoolman: t("card.sourceSpoolman"),
-  sourceExternal: t("card.sourceExternal"),
-  legend: t("info.legend"),
-}));
-
-const sortLabels = computed(() => ({
-  name: t('filters.sortNameAsc'),
-  vendor: t('filters.sortVendorAsc'),
-  material: t('filters.sortMaterialAsc'),
-  source: t('filters.sortSourceAsc'),
-  hue: t('filters.sortHueAsc'),
-  luminance: t('filters.sortLuminanceAsc'),
-  lightness: t('filters.sortLightnessAsc'),
-}));
-
-const detailLabels = computed(() => ({
-  color: t("detail.color"),
-  details: t("detail.details"),
-  spoolId: t("detail.spoolId"),
-  remainingWeight: t("detail.remainingWeight"),
-  weight: t("detail.weight"),
-  spoolWeight: t("detail.spoolWeight"),
-  price: t("detail.price"),
-  density: t("detail.density"),
-  diameter: t("detail.diameter"),
-  extruderTemp: t("detail.extruderTemp"),
-  bedTemp: t("detail.bedTemp"),
-  articleNumber: t("detail.articleNumber"),
-  comment: t("detail.comment"),
-  multiColorType: t("detail.multiColorType"),
-  coaxial: t("detail.coaxial"),
-  longitudinal: t("detail.longitudinal"),
-  similarColors: t("detail.similarColors"),
-  complementaryColors: t("detail.complementaryColors"),
-  spools: t("detail.spools"),
-  archived: t("detail.archived"),
-  remaining: t("detail.remaining"),
-  used: t("detail.used"),
-  colorHarmonies: t("detail.colorHarmonies"),
-  currentColor: t("detail.currentColor"),
-  complementary: t("detail.complementary"),
-  similar: t("detail.similar"),
-}));
-
-const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
-const urlDialogOpen = ref(false);
-const spoolmanUrlInput = ref(spoolmanUrl.value);
-
-// Dynamic domain for CORS configuration
-const currentDomain = computed(() => {
-  if (typeof window !== 'undefined') {
-    return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-  }
-  return 'spoolswatch.disane.dev';
-});
-
-const openUrlDialog = () => {
-  spoolmanUrlInput.value = spoolmanUrl.value;
-  urlDialogOpen.value = true;
-};
-
-const applySpoolmanUrl = () => {
-  if (!spoolmanUrlInput.value.trim()) {
-    return; // Don't close if empty
-  }
-  setSpoolmanUrl(spoolmanUrlInput.value);
-  urlDialogOpen.value = false;
-  refresh();
-};
-
-const resetUrlToDefault = () => {
-  resetSpoolmanUrl();
-  spoolmanUrlInput.value = spoolmanUrl.value;
-  urlDialogOpen.value = false;
-  refresh();
 };
 
 const togglePin = (filament: { id: string }) => {
@@ -417,6 +257,22 @@ const togglePin = (filament: { id: string }) => {
     next.add(filament.id);
   }
   pinnedIds.value = next;
+};
+
+// Provide state to child views
+provide('viewMode', viewMode);
+provide('pinnedIds', pinnedIds);
+provide('selectedFilament', selectedFilament);
+provide('togglePin', togglePin);
+provide('selectFilament', selectFilament);
+
+const openChangelog = () => {
+  changelogModal.value?.open();
+};
+
+const handleProjectCreated = (projectId: string) => {
+  showImportDialog.value = false;
+  router.push(`/app/projects/${projectId}`);
 };
 
 const clearPalette = () => {
@@ -449,6 +305,38 @@ const scrollToPinned = (id: string) => {
   }
 };
 
+const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
+const urlDialogOpen = ref(false);
+const spoolmanUrlInput = ref(spoolmanUrl.value);
+
+const currentDomain = computed(() => {
+  if (typeof window !== 'undefined') {
+    return window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+  }
+  return 'spoolswatch.disane.dev';
+});
+
+const openUrlDialog = () => {
+  spoolmanUrlInput.value = spoolmanUrl.value;
+  urlDialogOpen.value = true;
+};
+
+const applySpoolmanUrl = () => {
+  if (!spoolmanUrlInput.value.trim()) {
+    return;
+  }
+  setSpoolmanUrl(spoolmanUrlInput.value);
+  urlDialogOpen.value = false;
+  refresh();
+};
+
+const resetUrlToDefault = () => {
+  resetSpoolmanUrl();
+  spoolmanUrlInput.value = spoolmanUrl.value;
+  urlDialogOpen.value = false;
+  refresh();
+};
+
 const parseMarkdownLink = (text: string): Array<{ text: string; url?: string; isLink: boolean }> => {
   const parts: Array<{ text: string; url?: string; isLink: boolean }> = [];
   const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -477,11 +365,15 @@ useSeo(
 );
 
 onMounted(() => {
-  // Open URL dialog if no URL is set
   if (!hasUrl.value) {
     urlDialogOpen.value = true;
   } else {
     refresh();
+  }
+  
+  // Redirect to swatch if on /app root
+  if (router.currentRoute.value.path === '/app') {
+    router.replace('/app/swatch');
   }
 });
 </script>

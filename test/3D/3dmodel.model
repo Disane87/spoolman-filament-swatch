@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" unit="millimeter" xml:lang="en-US" requiredextensions="p" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021">
+ <metadata name="Application">BambuStudio-01.10.02.67</metadata>
+ <metadata name="BambuStudio:3mfVersion">1</metadata>
+ <metadata name="CopyRight">"[]"</metadata>
+ <metadata name="Copyright">[]</metadata>
+ <metadata name="CreationDate">2025-01-23</metadata>
+ <metadata name="Description">&amp;lt;p&amp;gt;&amp;lt;span&amp;gt;This is a spool holder for Bambu filaments.&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;</metadata>
+ <metadata name="DesignModelId">USb02791906e64b3</metadata>
+ <metadata name="DesignProfileId">84784696</metadata>
+ <metadata name="DesignRegion">US</metadata>
+ <metadata name="Designer">Bambu Lab</metadata>
+ <metadata name="DesignerCover">2023-04-18_b15922bdba9eb.png</metadata>
+ <metadata name="DesignerUserId">3614949154</metadata>
+ <metadata name="License">BY-NC</metadata>
+ <metadata name="ModificationDate">2025-01-23</metadata>
+ <metadata name="Origin">original</metadata>
+ <metadata name="ProfileCover">2023-04-18_bcb409ac092b.jpg</metadata>
+ <metadata name="ProfileDescription">&amp;lt;p&amp;gt;Print Settings:&amp;lt;/p&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;0.2mm layer height&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;6 top layers, 4 bottom layers&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;no brim&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;</metadata>
+ <metadata name="ProfileTitle">Bambu Spool</metadata>
+ <metadata name="ProfileUserId">3614949154</metadata>
+ <metadata name="ProfileUserName">Bambu Lab</metadata>
+ <metadata name="Thumbnail_Middle">/Auxiliaries/.thumbnails/thumbnail_middle.png</metadata>
+ <metadata name="Thumbnail_Small">/Auxiliaries/.thumbnails/thumbnail_small.png</metadata>
+ <metadata name="Title">Bambu Spool</metadata>
+ <resources>
+  <object id="2" p:UUID="00000001-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_1.model" objectid="1" p:UUID="00010000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 0" />
+   </components>
+  </object>
+  <object id="4" p:UUID="00000002-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_2.model" objectid="3" p:UUID="00020000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 0" />
+   </components>
+  </object>
+  <object id="6" p:UUID="00000003-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_3.model" objectid="5" p:UUID="00030000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 0" />
+   </components>
+  </object>
+ </resources>
+ <build p:UUID="2c7c17d8-22b5-4d84-8835-1976022ea369">
+  <item objectid="2" p:UUID="00000002-b1ec-4553-aec9-835e5b724bb4" transform="0 -5.55111512e-17 1 0.96150513 -0.274786979 1.66533454e-16 0.274786979 0.96150513 1.11022302e-16 435.147173 141.874579 17.0499992" printable="1" />
+  <item objectid="4" p:UUID="00000004-b1ec-4553-aec9-835e5b724bb4" transform="2.22044605e-16 0 -1 0 1 0 1 0 2.22044605e-16 38.7695134 63.112652 9" printable="1" />
+  <item objectid="6" p:UUID="00000006-b1ec-4553-aec9-835e5b724bb4" transform="2.22044605e-16 0 -1 0 1 0 1 0 2.22044605e-16 135.792632 141.966588 20.3500004" printable="1" />
+ </build>
+</model>

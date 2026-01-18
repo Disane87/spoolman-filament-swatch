@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" unit="millimeter" xml:lang="en-US" requiredextensions="p" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021">
+ <metadata name="Application">BambuStudio-02.04.00.70</metadata>
+ <metadata name="BambuStudio:3mfVersion">1</metadata>
+ <metadata name="Copyright" />
+ <metadata name="CreationDate">2026-01-14</metadata>
+ <metadata name="Description">&amp;lt;p&amp;gt;❤️Knitted Valentine Snail ❤️&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</metadata>
+ <metadata name="Designer">Smoggy3D</metadata>
+ <metadata name="DesignerCover">2026-01-14_e5558d549a569.jpg</metadata>
+ <metadata name="DesignerUserId">1537693799</metadata>
+ <metadata name="License">Standard Digital File License</metadata>
+ <metadata name="ModificationDate">2026-01-14</metadata>
+ <metadata name="Origin">original</metadata>
+ <metadata name="ProfileCover">2026-01-14_e5558d549a569.jpg</metadata>
+ <metadata name="ProfileDescription">&amp;lt;p&amp;gt;No AMS needed!&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Only single color change for the hearts!&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;If you don&amp;amp;#39;t have an AMS, you can add pause and manually change filaments.&amp;lt;/p&amp;gt;</metadata>
+ <metadata name="ProfileTitle">Separate Parts, 0.12mm layer, 2 walls, 10% infill</metadata>
+ <metadata name="Thumbnail_Middle">/Metadata/plate_1.png</metadata>
+ <metadata name="Thumbnail_Small">/Metadata/plate_1_small.png</metadata>
+ <metadata name="Title">Knitted Valentine's Day Snail</metadata>
+ <resources>
+  <object id="2" p:UUID="00000004-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_4.model" objectid="1" p:UUID="00040000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 4.06250025e-16" />
+   </components>
+  </object>
+  <object id="4" p:UUID="0000000b-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_11.model" objectid="3" p:UUID="000b0000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 0" />
+   </components>
+  </object>
+  <object id="5" p:UUID="00000021-71cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_11.model" objectid="3" p:UUID="00210000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 0" />
+   </components>
+  </object>
+  <object id="7" p:UUID="00000020-61cb-4c03-9d28-80fed5dfa1dc" type="model">
+   <components>
+    <component p:path="/3D/Objects/object_32.model" objectid="6" p:UUID="00200000-b206-40ff-9872-83e8017abed1" transform="1 0 0 0 1 0 0 0 1 0 0 4.06250025e-16" />
+   </components>
+  </object>
+ </resources>
+ <build p:UUID="2c7c17d8-22b5-4d84-8835-1976022ea369">
+  <item objectid="2" p:UUID="00000002-b1ec-4553-aec9-835e5b724bb4" transform="-0.0348994951 0.999390827 0 -0.998782024 -0.0348782352 -0.0348995397 -0.0348782799 -0.00121797631 0.999390826 561 160 21.2484847" printable="1" />
+  <item objectid="4" p:UUID="00000004-b1ec-4553-aec9-835e5b724bb4" transform="0.929360838 5.16253706e-17 0.0370684384 5.158989e-17 0.93 2.05771169e-18 -0.0344736477 0 0.999312729 155.031601 -228.379544 3.02143047" printable="1" />
+  <item objectid="5" p:UUID="00000005-b1ec-4553-aec9-835e5b724bb4" transform="-0.929360838 5.16253706e-17 0.0370684384 -5.158989e-17 0.93 2.05771169e-18 0.0344736477 0 0.999312729 172.120884 -229.092914 3.02143047" printable="1" />
+  <item objectid="7" p:UUID="00000007-b1ec-4553-aec9-835e5b724bb4" transform="1 0 0 0 1 0 0 0 1 162.00298 156.681343 26.9551239" printable="1" />
+ </build>
+<metadata name="CopyRight">[]</metadata><metadata name="ProfileUserId">1537693799</metadata><metadata name="ProfileUserName">Smoggy3D</metadata><metadata name="DesignRegion">US</metadata><metadata name="DesignModelId">USfb1b9aacb51106</metadata><metadata name="DesignProfileId">564742313</metadata></model>

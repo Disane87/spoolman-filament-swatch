@@ -29,7 +29,8 @@ const featuresIcons = [
   { icon: 'lucide:smartphone', gradient: 'from-violet-500 to-purple-500', color: 'text-violet-500', borderColor: '#8b5cf6' },
   { icon: 'lucide:globe', gradient: 'from-cyan-500 to-blue-500', color: 'text-cyan-500', borderColor: '#06b6d4' },
   { icon: 'lucide:zap', gradient: 'from-yellow-500 to-orange-500', color: 'text-yellow-500', borderColor: '#eab308' },
-  { icon: 'lucide:moon', gradient: 'from-slate-500 to-zinc-500', color: 'text-slate-500', borderColor: '#64748b' }
+  { icon: 'lucide:moon', gradient: 'from-slate-500 to-zinc-500', color: 'text-slate-500', borderColor: '#64748b' },
+  { icon: 'lucide:package-open', gradient: 'from-amber-500 to-orange-500', color: 'text-amber-500', borderColor: '#f59e0b' }
 ];
 
 const useCasesIcons = [

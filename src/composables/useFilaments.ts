@@ -171,7 +171,17 @@ const normalizeSpoolmanDB = (filament: SpoolmanDBFilament, index: number): Filam
   };
 };
 
+// Singleton instance
+let instance: ReturnType<typeof useFilaments> | null = null;
+
 export const useFilaments = () => {
+  if (!instance) {
+    instance = createFilamentsComposable();
+  }
+  return instance;
+};
+
+const createFilamentsComposable = () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
   const allFilaments = ref<FilamentCard[]>([]);

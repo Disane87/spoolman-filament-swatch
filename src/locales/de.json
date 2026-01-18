@@ -254,6 +254,16 @@
           "title": "Hell-/Dunkelmodus",
           "description": "Wähle dein bevorzugtes Theme oder lass es sich an dein System anpassen",
           "details": []
+        },
+        {
+          "title": "Projekte (Beta)",
+          "description": "Importiere 3D-Druckdateien und verfolge Filamentverbrauch mit Kosten",
+          "details": [
+            "Zeige 3D-Modellvorschau und Plattenbilder an",
+            "Erkenne und ordne Filamentfarben automatisch zu",
+            "Berechne Kosten pro Filament, Platte und Gesamtbetrag",
+            "Verfolge Druckverlauf mit Miniaturansichten"
+          ]
         }
       ]
     },
@@ -349,6 +359,84 @@
       },
       "copyright": "Spool Swatch. Open Source unter MIT-Lizenz.",
       "madeWith": "Gemacht mit {heart} von {author} für die 3D-Druck-Community"
+    }
+  },
+  "projects": {
+    "title": "Projekte",
+    "subtitle": "Verwalte deine 3D-Druck-Projekte und Filament-Verbrauch",
+    "import": "Projekt importieren",
+    "create": "Projekt erstellen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "noProjects": "Keine Projekte gefunden",
+    "noProjectsHint": "Importiere deine erste .3mf oder .gcode Datei, um loszulegen",
+    "noDescription": "Keine Beschreibung",
+    "confirmDelete": "Projekt löschen?",
+    "confirmDeleteMessage": "Möchtest du \"{name}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "stats": {
+      "total": "Gesamt",
+      "active": "Aktiv",
+      "printTime": "Druckzeit",
+      "filament": "Filament",
+      "used": "Verbraucht",
+      "estimated": "Geschätzt",
+      "projects": "Projekte"
+    },
+    "status": {
+      "all": "Alle",
+      "planning": "Planung",
+      "inProgress": "In Arbeit",
+      "completed": "Fertig",
+      "archived": "Archiviert"
+    },
+    "fields": {
+      "name": "Projektname",
+      "description": "Beschreibung",
+      "weight": "Gewicht",
+      "printTime": "Druckzeit",
+      "cost": "Kosten",
+      "costs": "Kosten",
+      "slicer": "Slicer",
+      "material": "Material",
+      "vendor": "Hersteller",
+      "total": "Gesamt",
+      "estimated": "Geschätzt",
+      "actual": "Tatsächlich",
+      "layerHeight": "Schichthöhe",
+      "updated": "Aktualisiert"
+    },
+    "time": {
+      "today": "Heute",
+      "yesterday": "Gestern",
+      "daysAgo": "vor {count} Tagen",
+      "weeksAgo": "vor {count} Wochen"
+    },
+    "importDialog": {
+      "title": "Projekt aus Slicer-Datei erstellen",
+      "description": "Lade eine .3mf oder .gcode Datei hoch, um automatisch Filament-Informationen zu extrahieren",
+      "dropzone": "Datei hier ablegen oder klicken zum Auswählen",
+      "supportedFormats": "Unterstützt: .3mf, .gcode",
+      "processing": "Datei wird verarbeitet...",
+      "errorParsing": "Fehler beim Parsen der Datei: {error}",
+      "errorCreating": "Fehler beim Erstellen des Projekts: {error}",
+      "errorUnsupported": "Nur .3mf und .gcode Dateien werden unterstützt",
+      "filaments": "Erkannte Filamente ({count})",
+      "unknownMaterial": "Unbekanntes Material",
+      "namePlaceholder": "z.B. Benchy, Vase, Gehäuse...",
+      "descriptionPlaceholder": "Zusätzliche Notizen zum Projekt...",
+      "nameRequired": "Projektname *",
+      "descriptionOptional": "Beschreibung (optional)",
+      "preview": "Vorschau"
+    },
+    "detail": {
+      "backToProjects": "Zurück zu Projekten",
+      "projectInfo": "Projekt-Informationen",
+      "filamentUsage": "Filament-Verbrauch",
+      "removeFilament": "Filament entfernen",
+      "editProject": "Projekt bearbeiten",
+      "deleteProject": "Projekt löschen"
     }
   }
 }
