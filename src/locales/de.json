@@ -19,7 +19,8 @@
     "clearPalette": "Palette leeren",
     "openPalette": "Palette oeffnen",
     "showFilters": "Filter anzeigen",
-    "hideFilters": "Filter ausblenden"
+    "hideFilters": "Filter ausblenden",
+    "sponsor": "Sponsor"
   },
   "search": {
     "placeholder": "Suche nach Name, Hersteller, Material, Farbe..."
@@ -336,6 +337,16 @@
       "subtitle": "Starte damit, deine Filament-Sammlung auf schöne, organisierte Weise zu durchsuchen. Es ist kostenlos, Open Source und läuft vollständig in deinem Browser!",
       "primaryButton": "Jetzt starten - Kostenlos!",
       "secondaryButton": "Auf GitHub bewerten"
+    },
+    "sponsor": {
+      "nav": "Sponsor",
+      "title": "Unterstütze dieses Projekt",
+      "description": "Spool Swatch ist kostenlos und Open Source. Wenn es dir gefällt und du die Weiterentwicklung unterstützen möchtest, freue ich mich über eine Spende!",
+      "benefit1": "Hosting & Infrastrukturkosten decken",
+      "benefit2": "Entwicklungszeit mit Kaffee befeuern",
+      "benefit3": "Neue Features & Verbesserungen ermöglichen",
+      "button": "Jetzt Sponsor werden",
+      "note": "Jeder Beitrag hilft, egal wie klein. Danke für deine Unterstützung! ❤️"
     },
     "footer": {
       "description": "Wunderschöner, interaktiver Filament-Farbbrowser für deine 3D-Druck-Bedürfnisse. Kostenlos und Open Source.",

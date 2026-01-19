@@ -90,6 +90,22 @@
           >
             <Icon icon="lucide:sparkles" class="w-4 h-4" />
           </Button>
+
+          <a
+            href="https://github.com/sponsors/Disane87"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              size="sm"
+              variant="outline"
+              class="h-9 px-2 sm:px-3 text-pink-500 hover:text-pink-400 hover:border-pink-400/50"
+              :aria-label="t('actions.sponsor')"
+            >
+              <Icon icon="lucide:heart" class="w-4 h-4 sm:mr-1" />
+              <span class="hidden sm:inline">{{ t('actions.sponsor') }}</span>
+            </Button>
+          </a>
         </div>
       </nav>
 

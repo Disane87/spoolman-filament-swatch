@@ -183,6 +183,15 @@ const scrollToSection = (id: string) => {
           </div>
         </div>
         <div class="flex items-center gap-1">
+          <a
+            href="https://github.com/sponsors/Disane87"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex items-center gap-1.5 px-3 py-1.5 bg-pink-500/10 backdrop-blur-md rounded-full border border-pink-400/30 hover:border-pink-400/60 hover:bg-pink-500/20 transition-all duration-150 hover:scale-105 mr-2"
+          >
+            <Icon icon="lucide:heart" class="w-3.5 h-3.5 text-pink-400 group-hover:scale-125 transition-transform duration-150" />
+            <span class="text-xs font-semibold text-pink-400">{{ t('landing.sponsor.nav') }}</span>
+          </a>
           <LocaleSwitch variant="ghost" />
           <ThemeSwitch variant="ghost" />
         </div>
@@ -809,6 +818,66 @@ const scrollToSection = (id: string) => {
                 {{ t('landing.cta.secondaryButton') }}
               </Button>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sponsor Section -->
+    <section class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative" id="sponsor">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="group relative">
+          <!-- Glow effect -->
+          <div class="absolute inset-0 bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 rounded-3xl blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-200"></div>
+          
+          <div class="relative bg-gradient-to-br from-pink-500/5 via-red-500/8 to-orange-500/5 backdrop-blur-md rounded-3xl p-12 border border-pink-400/30 group-hover:border-pink-400/50 transition-all duration-200 hover:shadow-2xl hover:shadow-pink-500/20">
+            <div class="flex justify-center mb-6">
+              <div class="relative">
+                <div class="absolute inset-0 bg-pink-500 blur-xl opacity-50 rounded-full"></div>
+                <Icon icon="lucide:heart" class="w-16 h-16 text-pink-400 relative z-10 animate-pulse" />
+              </div>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 relative">
+              <span class="bg-gradient-to-r from-pink-400 via-red-400 to-orange-400 bg-clip-text text-transparent">
+                {{ t('landing.sponsor.title') }}
+              </span>
+            </h2>
+            <p class="text-lg text-[rgb(var(--foreground))]/70 mb-6 max-w-2xl mx-auto leading-relaxed">
+              {{ t('landing.sponsor.description') }}
+            </p>
+            <ul class="text-left max-w-md mx-auto mb-8 space-y-3">
+              <li class="flex items-center gap-3 text-[rgb(var(--foreground))]/80">
+                <Icon icon="lucide:server" class="w-5 h-5 text-pink-400" />
+                <span>{{ t('landing.sponsor.benefit1') }}</span>
+              </li>
+              <li class="flex items-center gap-3 text-[rgb(var(--foreground))]/80">
+                <Icon icon="lucide:coffee" class="w-5 h-5 text-pink-400" />
+                <span>{{ t('landing.sponsor.benefit2') }}</span>
+              </li>
+              <li class="flex items-center gap-3 text-[rgb(var(--foreground))]/80">
+                <Icon icon="lucide:rocket" class="w-5 h-5 text-pink-400" />
+                <span>{{ t('landing.sponsor.benefit3') }}</span>
+              </li>
+            </ul>
+            <a 
+              href="https://github.com/sponsors/Disane87" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="lg"
+                class="group/btn relative overflow-hidden bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 hover:from-pink-600 hover:via-red-600 hover:to-orange-600 text-white border-0 px-10 py-7 text-lg font-bold transition-all duration-200 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/50 hover:-translate-y-1"
+              >
+                <span class="relative z-10 flex items-center gap-3">
+                  <Icon icon="lucide:heart" class="w-6 h-6 group-hover/btn:scale-125 transition-transform duration-150" />
+                  {{ t('landing.sponsor.button') }}
+                </span>
+                <div class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-150 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+              </Button>
+            </a>
+            <p class="mt-6 text-sm text-[rgb(var(--foreground))]/50">
+              {{ t('landing.sponsor.note') }}
+            </p>
           </div>
         </div>
       </div>
