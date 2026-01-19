@@ -1,6 +1,6 @@
 <template>
   <Select :model-value="mode" @update:model-value="setMode">
-    <SelectTrigger class="h-9 w-[60px] px-2">
+    <SelectTrigger :variant="variant" class="h-9 w-[60px] px-2">
       <SelectValue>
         <Icon 
           :icon="mode === 'light' ? 'lucide:sun' : mode === 'dark' ? 'lucide:moon' : 'lucide:monitor'" 
@@ -42,6 +42,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+defineProps<{
+  variant?: "default" | "ghost";
+}>();
 
 const { t } = useI18n();
 const { mode, setMode } = useTheme();

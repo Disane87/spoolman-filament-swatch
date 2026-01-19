@@ -1,98 +1,103 @@
 <template>
-  <div class="mx-auto flex min-h-screen flex-col gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-10 overflow-hidden">
-    <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 z-40 bg-[rgb(var(--background))] flex items-center justify-between gap-4 pb-3 flex-shrink-0 border-b">
-      <div class="flex items-center gap-3">
-        <h1 class="text-lg sm:text-xl font-semibold">{{ t("app.title") }}</h1>
+  <div class="mx-auto flex h-screen flex-col overflow-hidden">
+    <!-- Main Content Wrapper (gets blurred when panels are open) -->
+    <div class="main-content-wrapper" :class="{ blurred: paletteOpen || selectedFilament }">
+      <!-- Top Navigation Bar -->
+      <nav class="sticky top-0 z-40 bg-[rgb(var(--background))] flex items-center justify-between gap-4 px-3 sm:px-6 py-2 sm:py-4 pb-3 flex-shrink-0 border-b">
+        <div class="flex items-center gap-3">
+          <h1 class="text-lg sm:text-xl font-semibold">{{ t("app.title") }}</h1>
+        </div>
         
-        <!-- View Toggle -->
-        <div class="flex gap-1 border rounded-lg p-1">
-          <Button
-            :variant="$route.path.includes('/swatch') ? 'default' : 'ghost'"
-            size="sm"
-            @click="$router.push('/app/swatch')"
-            class="h-8 px-3"
-          >
-            <Icon icon="lucide:palette" class="w-4 h-4 sm:mr-1" />
-            <span class="hidden sm:inline">Filamente</span>
-          </Button>
-          <Button
-            :variant="$route.path.includes('/projects') ? 'default' : 'ghost'"
-            size="sm"
-            @click="$router.push('/app/projects')"
-            class="h-8 px-3 relative"
-          >
-            <Icon icon="lucide:folder" class="w-4 h-4 sm:mr-1" />
-            <span class="hidden sm:inline">Projekte</span>
-            <span class="ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30">
-              BETA
-            </span>
-            <span
-              v-if="projectsCount > 0"
-              class="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold"
+        <div class="flex items-center gap-2">
+          <!-- View Toggle -->
+          <div class="flex gap-1 border rounded-lg bg-[rgb(var(--surface))] overflow-hidden">
+            <Button
+              :variant="$route.path.includes('/swatch') ? 'default' : 'ghost'"
+              size="sm"
+              @click="$router.push('/app/swatch')"
+              class="h-9 px-3 rounded-none"
             >
-              {{ projectsCount }}
+              <Icon icon="lucide:palette" class="w-4 h-4 sm:mr-1" />
+              <span class="hidden sm:inline">Filamente</span>
+            </Button>
+            <Button
+              :variant="$route.path.includes('/projects') ? 'default' : 'ghost'"
+              size="sm"
+              @click="$router.push('/app/projects')"
+              class="h-9 px-3 relative rounded-none"
+            >
+              <Icon icon="lucide:folder" class="w-4 h-4 sm:mr-1" />
+              <span class="hidden sm:inline">Projekte</span>
+              <span class="ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30">
+                BETA
+              </span>
+              <span
+                v-if="projectsCount > 0"
+                class="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold"
+              >
+                {{ projectsCount }}
+              </span>
+            </Button>
+          </div>
+          
+          <Button
+            v-if="$route.path.includes('/projects') && $route.name === 'projects'"
+            size="sm"
+            variant="outline"
+            @click="showImportDialog = true"
+            class="h-9 px-2 sm:px-3"
+          >
+            <Icon icon="lucide:plus" class="w-4 h-4 sm:mr-1" />
+            <span class="hidden sm:inline">Import</span>
+          </Button>
+          
+          <Button
+            size="sm"
+            variant="outline"
+            @click="openUrlDialog"
+            class="h-9 px-2 sm:px-3"
+            :aria-label="t('info.spoolmanUrl')"
+          >
+            <Icon icon="lucide:server" class="w-4 h-4" />
+            <span class="hidden sm:inline text-xs font-mono ml-2 truncate max-w-[120px] lg:max-w-[200px]">{{ spoolmanUrl }}</span>
+          </Button>
+          
+          <LocaleSwitch />
+          <ThemeSwitch />
+          
+          <Button
+            size="sm"
+            variant="outline"
+            @click="paletteOpen = true"
+            class="relative h-9 w-9 p-0"
+            :aria-label="t('actions.openPalette')"
+          >
+            <Icon icon="lucide:palette" class="w-4 h-4" />
+            <span
+              v-if="pinnedItems.length > 0"
+              class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white shadow-lg border-2 border-[rgb(var(--background))]"
+            >
+              {{ pinnedItems.length }}
             </span>
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            @click="openChangelog"
+            class="h-9 w-9 p-0"
+            :aria-label="'What\'s New'"
+          >
+            <Icon icon="lucide:sparkles" class="w-4 h-4" />
           </Button>
         </div>
-      </div>
-      
-      <div class="flex items-center gap-2">
-        <Button
-          v-if="$route.path.includes('/projects') && $route.name === 'projects'"
-          size="sm"
-          variant="default"
-          @click="showImportDialog = true"
-          class="h-9 px-2 sm:px-3"
-        >
-          <Icon icon="lucide:plus" class="w-4 h-4 sm:mr-1" />
-          <span class="hidden sm:inline">Import</span>
-        </Button>
-        
-        <Button
-          size="sm"
-          variant="outline"
-          @click="openUrlDialog"
-          class="h-9 px-2 sm:px-3"
-          :aria-label="t('info.spoolmanUrl')"
-        >
-          <Icon icon="lucide:server" class="w-4 h-4" />
-          <span class="hidden sm:inline text-xs font-mono ml-2 truncate max-w-[120px] lg:max-w-[200px]">{{ spoolmanUrl }}</span>
-        </Button>
-        
-        <LocaleSwitch />
-        <ThemeSwitch />
-        
-        <Button
-          size="sm"
-          variant="outline"
-          @click="paletteOpen = true"
-          class="relative h-9 w-9 p-0"
-          :aria-label="t('actions.openPalette')"
-        >
-          <Icon icon="lucide:palette" class="w-4 h-4" />
-          <span
-            v-if="pinnedItems.length > 0"
-            class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white shadow-lg border-2 border-[rgb(var(--background))]"
-          >
-            {{ pinnedItems.length }}
-          </span>
-        </Button>
+      </nav>
 
-        <Button
-          size="sm"
-          variant="ghost"
-          @click="openChangelog"
-          class="h-9 w-9 p-0"
-          :aria-label="'What\'s New'"
-        >
-          <Icon icon="lucide:sparkles" class="w-4 h-4" />
-        </Button>
+      <!-- Router Outlet -->
+      <div class="router-content px-3 sm:px-6 py-1 sm:py-2">
+        <RouterView class="flex-1 min-h-0" />
       </div>
-    </nav>
-
-    <!-- Router Outlet -->
-    <RouterView class="flex-1 min-h-0" />
+    </div>
 
     <!-- Palette Drawer -->
     <div class="palette-drawer" :class="{ open: paletteOpen }">
@@ -202,6 +207,18 @@
       @project-created="handleProjectCreated"
     />
 
+    <!-- Detail Panel Overlay -->
+    <div v-if="selectedFilament" class="detail-overlay" @click="selectedFilament = null" />
+
+    <!-- Detail Panel -->
+    <FilamentDetailPanel
+      :filament="selectedFilament"
+      :all-filaments="allFilaments"
+      :labels="detailLabels"
+      @close="selectedFilament = null"
+      @selectFilament="selectFilament"
+    />
+
   </div>
 </template>
 
@@ -217,6 +234,7 @@ import LocaleSwitch from "../components/LocaleSwitch.vue";
 import ThemeSwitch from "../components/ThemeSwitch.vue";
 import ChangelogModal from "../components/ChangelogModal.vue";
 import ProjectImportDialog from "../components/ProjectImportDialog.vue";
+import FilamentDetailPanel from "../components/FilamentDetailPanel.vue";
 import type { FilamentCard } from "../composables/useFilaments";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
@@ -265,6 +283,36 @@ provide('pinnedIds', pinnedIds);
 provide('selectedFilament', selectedFilament);
 provide('togglePin', togglePin);
 provide('selectFilament', selectFilament);
+
+// Detail panel labels
+const detailLabels = computed(() => ({
+  color: t("detail.color"),
+  details: t("detail.details"),
+  spoolId: t("detail.spoolId"),
+  remainingWeight: t("detail.remainingWeight"),
+  weight: t("detail.weight"),
+  spoolWeight: t("detail.spoolWeight"),
+  price: t("detail.price"),
+  density: t("detail.density"),
+  diameter: t("detail.diameter"),
+  extruderTemp: t("detail.extruderTemp"),
+  bedTemp: t("detail.bedTemp"),
+  articleNumber: t("detail.articleNumber"),
+  comment: t("detail.comment"),
+  multiColorType: t("detail.multiColorType"),
+  coaxial: t("detail.coaxial"),
+  longitudinal: t("detail.longitudinal"),
+  similarColors: t("detail.similarColors"),
+  complementaryColors: t("detail.complementaryColors"),
+  spools: t("detail.spools"),
+  archived: t("detail.archived"),
+  remaining: t("detail.remaining"),
+  used: t("detail.used"),
+  colorHarmonies: t("detail.colorHarmonies"),
+  currentColor: t("detail.currentColor"),
+  complementary: t("detail.complementary"),
+  similar: t("detail.similar"),
+}));
 
 const openChangelog = () => {
   changelogModal.value?.open();

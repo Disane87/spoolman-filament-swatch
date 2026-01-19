@@ -4,10 +4,10 @@
       <div class="text-xs sm:text-sm text-[rgb(var(--text-muted))]">
         {{ countLabel }}
       </div>
-      <div class="flex flex-wrap items-center gap-1 sm:gap-2">
+      <div class="flex flex-wrap items-center gap-1">
         <!-- Sort Controls -->
         <Select v-model="filters.sortField" class="w-28 sm:w-36">
-          <SelectTrigger class="h-9 sm:h-10">
+          <SelectTrigger variant="ghost" class="h-9 sm:h-10">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -20,10 +20,10 @@
             <SelectItem value="lightness">{{ sortLabels.lightness }}</SelectItem>
           </SelectContent>
         </Select>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
+        <Toggle variant="ghost" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-up" class="w-4 h-4" />
         </Toggle>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
+        <Toggle variant="ghost" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-down" class="w-4 h-4" />
         </Toggle>
         

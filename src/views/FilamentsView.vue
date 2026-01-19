@@ -86,15 +86,6 @@
         />
       </div>
     </section>
-
-    <!-- Detail Panel -->
-    <FilamentDetailPanel
-      :filament="selectedFilament"
-      :all-filaments="allFilaments"
-      :labels="detailLabels"
-      @close="selectedFilament = null"
-      @selectFilament="selectFilament"
-    />
   </div>
 </template>
 
@@ -105,7 +96,6 @@ import { useFilaments } from "../composables/useFilaments";
 import FiltersBar from "../components/FiltersBar.vue";
 import FilamentCarousel from "../components/FilamentCarousel.vue";
 import FilamentBoard from "../components/FilamentBoard.vue";
-import FilamentDetailPanel from "../components/FilamentDetailPanel.vue";
 import type { FilamentCard } from "../composables/useFilaments";
 import type { Ref } from "vue";
 
@@ -173,34 +163,5 @@ const sortLabels = computed(() => ({
   hue: t('filters.sortHueAsc'),
   luminance: t('filters.sortLuminanceAsc'),
   lightness: t('filters.sortLightnessAsc'),
-}));
-
-const detailLabels = computed(() => ({
-  color: t("detail.color"),
-  details: t("detail.details"),
-  spoolId: t("detail.spoolId"),
-  remainingWeight: t("detail.remainingWeight"),
-  weight: t("detail.weight"),
-  spoolWeight: t("detail.spoolWeight"),
-  price: t("detail.price"),
-  density: t("detail.density"),
-  diameter: t("detail.diameter"),
-  extruderTemp: t("detail.extruderTemp"),
-  bedTemp: t("detail.bedTemp"),
-  articleNumber: t("detail.articleNumber"),
-  comment: t("detail.comment"),
-  multiColorType: t("detail.multiColorType"),
-  coaxial: t("detail.coaxial"),
-  longitudinal: t("detail.longitudinal"),
-  similarColors: t("detail.similarColors"),
-  complementaryColors: t("detail.complementaryColors"),
-  spools: t("detail.spools"),
-  archived: t("detail.archived"),
-  remaining: t("detail.remaining"),
-  used: t("detail.used"),
-  colorHarmonies: t("detail.colorHarmonies"),
-  currentColor: t("detail.currentColor"),
-  complementary: t("detail.complementary"),
-  similar: t("detail.similar"),
 }));
 </script>

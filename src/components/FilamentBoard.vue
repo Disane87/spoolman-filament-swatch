@@ -5,7 +5,7 @@
       <div class="board-actions">
         <!-- Sort Controls -->
         <Select v-model="filters.sortField" class="w-28 sm:w-36">
-          <SelectTrigger class="h-9 sm:h-10">
+          <SelectTrigger variant="ghost" class="h-9 sm:h-10">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -18,15 +18,15 @@
             <SelectItem value="lightness">{{ sortLabels.lightness }}</SelectItem>
           </SelectContent>
         </Select>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
+        <Toggle variant="ghost" size="sm" :pressed="filters.sortDir === 'asc'" @click="filters.sortDir = 'asc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-up" class="w-4 h-4" />
         </Toggle>
-        <Toggle variant="outline" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
+        <Toggle variant="ghost" size="sm" :pressed="filters.sortDir === 'desc'" @click="filters.sortDir = 'desc'" class="h-9 w-9 sm:h-10 sm:w-10">
           <Icon icon="lucide:arrow-down" class="w-4 h-4" />
         </Toggle>
         
         <!-- View Toggle -->
-        <div class="flex gap-1 ml-1 sm:ml-2">
+        <div class="flex gap-1">
           <Button
             :variant="viewMode === 'carousel' ? 'default' : 'ghost'"
             size="sm"
@@ -347,14 +347,8 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
-}
-
-@media (min-width: 640px) {
-  .board-actions {
-    gap: 12px;
-  }
 }
 
 .legend {
@@ -411,6 +405,7 @@ const ensureHex = (value: string | null | undefined): string => {
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 2px;
+  padding-top: 4px;
   flex: 1;
   justify-content: flex-start;
   min-height: 0;
@@ -450,11 +445,11 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(var(--border), 1);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   background: rgba(var(--surface-alt), 0.9);
-  box-shadow: 0 4px 12px -2px rgba(var(--shadow), 0.3), 0 2px 6px -1px rgba(var(--shadow), 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
   flex: 1 1 calc(50% - 4px);
   min-width: 140px;
@@ -488,7 +483,7 @@ const ensureHex = (value: string | null | undefined): string => {
 .board-card:hover {
   transform: translateY(-2px);
   border-color: rgba(var(--accent), 0.6);
-  box-shadow: 0 8px 24px -4px rgba(var(--shadow), 0.4), 0 4px 12px -2px rgba(var(--shadow), 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .swatch {

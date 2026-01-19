@@ -734,7 +734,7 @@ const isTriadic = (item: typeof props.allFilaments[0]) => {
   bottom: 0;
   width: 400px;
   max-width: 90vw;
-  border-left: 1px solid rgba(var(--border), 0.7);
+  border-left: 1px solid var(--border);
   box-shadow: -8px 0 32px -8px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(32px) saturate(150%);
   -webkit-backdrop-filter: blur(32px) saturate(150%);
@@ -745,7 +745,7 @@ const isTriadic = (item: typeof props.allFilaments[0]) => {
 }
 
 .detail-header {
-  border-bottom: 1px solid rgba(var(--border), 0.3);
+  border-bottom: 1px solid color-mix(in oklch, var(--border), transparent 70%);
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -776,6 +776,7 @@ const isTriadic = (item: typeof props.allFilaments[0]) => {
 
 .detail-body {
   padding: 20px;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;

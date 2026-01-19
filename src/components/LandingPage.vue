@@ -182,9 +182,9 @@ const scrollToSection = (id: string) => {
             </a>
           </div>
         </div>
-        <div class="flex items-center gap-4">
-          <LocaleSwitch />
-          <ThemeSwitch />
+        <div class="flex items-center gap-1">
+          <LocaleSwitch variant="ghost" />
+          <ThemeSwitch variant="ghost" />
         </div>
       </div>
     </div>

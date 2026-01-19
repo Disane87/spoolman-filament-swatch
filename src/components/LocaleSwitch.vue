@@ -1,6 +1,6 @@
 <template>
   <Select :model-value="locale" @update:model-value="setLocale">
-    <SelectTrigger class="h-9 w-[60px] px-2">
+    <SelectTrigger :variant="variant" class="h-9 w-[60px] px-2">
       <SelectValue>
         <Icon :icon="locale === 'de' ? 'circle-flags:de' : 'circle-flags:us'" class="w-4 h-4" />
       </SelectValue>
@@ -32,6 +32,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+defineProps<{
+  variant?: "default" | "ghost";
+}>();
 
 const { locale } = useI18n();
 

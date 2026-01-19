@@ -1,0 +1,10 @@
+{
+    "settings": {
+        "i18n-ally.localesPaths": [
+            "src/locales"
+        ],
+        "chat.tools.terminal.autoApprove": {
+            "git stash": true
+        }
+    }
+}
