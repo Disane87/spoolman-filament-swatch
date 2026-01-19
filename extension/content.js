@@ -12,17 +12,17 @@ async function get3MFFileUrl() {
     while (container && !container.classList.contains('MuiStack-root')) {
       container = container.nextElementSibling;
     }
-    
+
     if (container) {
       const downloadButton = Array.from(container.querySelectorAll('button, a'))
-        .find(el => el.textContent.includes('3MF') || 
-                    el.textContent.includes('3mf'));
-      
+        .find(el => el.textContent.includes('3MF') ||
+          el.textContent.includes('3mf'));
+
       if (downloadButton) {
         let url = downloadButton.href;
         if (!url) {
-          url = downloadButton.getAttribute('data-url') || 
-                downloadButton.getAttribute('data-download-url');
+          url = downloadButton.getAttribute('data-url') ||
+            downloadButton.getAttribute('data-download-url');
         }
         if (url && !url.startsWith('http')) {
           url = new URL(url, window.location.origin).href;
@@ -31,31 +31,31 @@ async function get3MFFileUrl() {
       }
     }
   }
-  
+
   // Fallback: search entire page
   const downloadButton = Array.from(document.querySelectorAll('button, a'))
-    .find(el => el.textContent.includes('3MF') || 
-                el.textContent.includes('Download') || 
-                el.textContent.includes('3mf') ||
-                el.textContent.includes('下载'));
-  
+    .find(el => el.textContent.includes('3MF') ||
+      el.textContent.includes('Download') ||
+      el.textContent.includes('3mf') ||
+      el.textContent.includes('下载'));
+
   if (!downloadButton) {
     console.error('No 3MF download button found');
     return null;
   }
-  
+
   let url = downloadButton.href;
-  
+
   if (!url) {
-    url = downloadButton.getAttribute('data-url') || 
-          downloadButton.getAttribute('data-download-url') ||
-          downloadButton.getAttribute('href');
+    url = downloadButton.getAttribute('data-url') ||
+      downloadButton.getAttribute('data-download-url') ||
+      downloadButton.getAttribute('href');
   }
-  
+
   if (url && !url.startsWith('http')) {
     url = new URL(url, window.location.origin).href;
   }
-  
+
   return url;
 }
 
@@ -73,16 +73,16 @@ async function download3MFFile(url) {
 
 // Extract project name from page
 function getProjectName() {
-  const titleEl = document.querySelector('h1') || 
-                 document.querySelector('[data-title]') ||
-                 document.querySelector('title');
-  
+  const titleEl = document.querySelector('h1') ||
+    document.querySelector('[data-title]') ||
+    document.querySelector('title');
+
   if (!titleEl) return 'Imported Project';
-  
+
   let title = titleEl.textContent.trim();
   // Clean up title
   title = title.replace(/\s*-\s*MakerWorld.*/, '').substring(0, 100);
-  
+
   return title;
 }
 
@@ -92,24 +92,24 @@ function addButtonToPage() {
   if (document.getElementById('spool-swatch-button')) {
     return;
   }
-  
+
   // Find the 3MF download button anywhere on the page
   const downloadButton = Array.from(document.querySelectorAll('button, a'))
     .find(el => el.textContent.includes('3MF') || el.textContent.includes('3mf'));
-  
+
   if (!downloadButton) {
     console.warn('3MF download button not found, skipping Spool Swatch button');
     return;
   }
-  
+
   console.log('Found 3MF button:', downloadButton);
   console.log('Parent container:', downloadButton.parentElement);
-  
+
   // Create button with same styling as 3MF button for consistency
   const button = document.createElement('button');
   button.id = 'spool-swatch-button';
   button.textContent = '📥 In Spool Swatch importieren';
-  
+
   // Copy styling from the 3MF button to match MakerWorld design
   const computedStyle = window.getComputedStyle(downloadButton);
   button.style.cssText = downloadButton.style.cssText;
@@ -119,23 +119,23 @@ function addButtonToPage() {
     margin: 10px;
     transition: all 0.3s ease;
   `;
-  
+
   button.onmouseover = () => {
     button.style.transform = 'translateY(-2px)';
     button.style.boxShadow = '0 8px 16px rgba(99, 102, 241, 0.3)';
   };
-  
+
   button.onmouseout = () => {
     button.style.transform = 'translateY(0)';
     button.style.boxShadow = 'none';
   };
-  
+
   button.onclick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     button.disabled = true;
     button.textContent = '⏳ Wird heruntergeladen...';
-    
+
     // Get 3MF file URL
     const fileUrl = await get3MFFileUrl();
     if (!fileUrl) {
@@ -146,9 +146,9 @@ function addButtonToPage() {
       }, 3000);
       return;
     }
-    
+
     console.log('3MF URL found:', fileUrl);
-    
+
     // Download file
     const fileData = await download3MFFile(fileUrl);
     if (!fileData) {
@@ -159,11 +159,11 @@ function addButtonToPage() {
       }, 3000);
       return;
     }
-    
+
     // Convert to base64
     const binary = String.fromCharCode.apply(null, new Uint8Array(fileData));
     const base64 = btoa(binary);
-    
+
     // Store project data
     const projectName = getProjectName();
     const projectData = {
@@ -172,14 +172,14 @@ function addButtonToPage() {
       timestamp: new Date().toISOString(),
       source: 'MakerWorld'
     };
-    
+
     chrome.storage.local.set({ pendingProject: projectData }, () => {
       button.textContent = '✅ Öffne Spool Swatch...';
-      
+
       // Open Spool Swatch with import flag
       const spoolSwatchUrl = 'http://localhost:5173';
       window.open(`${spoolSwatchUrl}?import=true`, '_blank');
-      
+
       // Reset button after 2 seconds
       setTimeout(() => {
         button.disabled = false;
@@ -187,7 +187,7 @@ function addButtonToPage() {
       }, 2000);
     });
   };
-  
+
   // Insert button right after the 3MF button in the same container
   downloadButton.parentElement.insertBefore(button, downloadButton.nextSibling);
   console.log('Spool Swatch button added successfully');

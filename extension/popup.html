@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
         }
+
         .header {
             display: flex;
             align-items: center;
@@ -21,8 +23,9 @@
             background: white;
             padding: 12px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         .logo {
             width: 40px;
             height: 40px;
@@ -35,32 +38,38 @@
             font-weight: bold;
             font-size: 20px;
         }
+
         .title {
             flex: 1;
         }
+
         .title h1 {
             margin: 0;
             font-size: 16px;
             font-weight: 600;
         }
+
         .title p {
             margin: 2px 0 0 0;
             font-size: 12px;
             color: #666;
         }
+
         .content {
             background: white;
             padding: 16px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 16px;
         }
+
         .filament-info {
             display: grid;
             grid-template-columns: 60px 1fr;
             gap: 12px;
             margin-bottom: 12px;
         }
+
         .color-swatch {
             width: 60px;
             height: 60px;
@@ -68,33 +77,40 @@
             border: 2px solid #ddd;
             background: #888;
         }
+
         .info-text {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
+
         .info-text p {
             margin: 0;
             padding: 0;
         }
+
         .name {
             font-weight: 600;
             font-size: 14px;
             color: #333;
         }
+
         .material {
             font-size: 12px;
             color: #666;
         }
+
         .price {
             font-size: 13px;
             font-weight: 600;
             color: #10b981;
         }
+
         .buttons {
             display: flex;
             gap: 8px;
         }
+
         .btn {
             flex: 1;
             padding: 10px;
@@ -105,22 +121,27 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
+
         .btn-primary:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
         }
+
         .btn-secondary {
             background: #f0f0f0;
             color: #333;
         }
+
         .btn-secondary:hover {
             background: #e0e0e0;
         }
+
         .status {
             padding: 12px;
             border-radius: 6px;
@@ -128,19 +149,23 @@
             text-align: center;
             display: none;
         }
+
         .status.show {
             display: block;
         }
+
         .status.success {
             background: #d1fae5;
             color: #065f46;
             border: 1px solid #6ee7b7;
         }
+
         .status.error {
             background: #fee2e2;
             color: #991b1b;
             border: 1px solid #fca5a5;
         }
+
         .loading {
             text-align: center;
             padding: 20px;
@@ -148,6 +173,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="logo">🎨</div>
@@ -156,12 +182,12 @@
             <p>Bambu Lab Importer</p>
         </div>
     </div>
-    
+
     <div class="content">
         <div id="loading" class="loading" style="display: none;">
             Laden...
         </div>
-        
+
         <div id="filament-data" style="display: none;">
             <div class="filament-info">
                 <div id="colorSwatch" class="color-swatch"></div>
@@ -171,21 +197,22 @@
                     <p class="price" id="filamentPrice">-</p>
                 </div>
             </div>
-            
+
             <div class="buttons">
                 <button class="btn btn-primary" id="addBtn">➕ Hinzufügen</button>
                 <button class="btn btn-secondary" id="settingsBtn">⚙️</button>
             </div>
         </div>
-        
+
         <div id="noData" class="loading" style="display: none;">
             Keine Filament-Daten gefunden.<br>
             <small>Diese Seite ist möglicherweise kein Bambu Lab Produkt.</small>
         </div>
     </div>
-    
+
     <div id="status" class="status"></div>
-    
+
     <script src="popup.js"></script>
 </body>
+
 </html>

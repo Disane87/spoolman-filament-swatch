@@ -19,7 +19,9 @@
         "https://www.makerworld.com/*/models/*",
         "https://makerworld.com/*/models/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end"
     }
   ],
