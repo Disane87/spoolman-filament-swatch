@@ -1,3 +1,9 @@
+## [1.12.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.11.0...v1.12.0) (2026-01-19)
+
+### ✨ Features
+
+* **🎨 ui:** add blur effect and overlay for offcanvas panels ([e4c0211](https://github.com/Disane87/spoolman-filament-swatch/commit/e4c0211b9a6b32d466148edf56030f40974391bc)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.11.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.10.0...v1.11.0) (2026-01-18)
 
 ### ✨ Features
