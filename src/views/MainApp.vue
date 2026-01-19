@@ -252,7 +252,7 @@
           <p class="text-xs font-semibold uppercase tracking-wide text-yellow-700">{{ t("dialog.corsInfoTitle") }}</p>
           <p class="mt-2 text-xs text-yellow-700">{{ t("dialog.corsInfoDescription") }}</p>
           <div class="mt-3 rounded bg-black/20 p-2">
-            <code class="font-mono text-xs text-yellow-700">{{ t("dialog.corsConfigLabel", { domain: currentDomain }) }}</code>
+            <code class="font-mono text-xs text-yellow-700 break-all">{{ t("dialog.corsConfigLabel", { domain: currentDomain }) }}</code>
           </div>
           <p class="mt-2 text-xs text-yellow-700">
             <span v-for="(part, idx) in parseMarkdownLink(t('dialog.corsRestartRequired'))" :key="idx">
