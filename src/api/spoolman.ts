@@ -28,13 +28,13 @@ export const checkSpoolmanConnection = async (baseUrl: string): Promise<{ health
   if (!baseUrl || baseUrl.trim().length === 0) {
     return { healthy: false, error: "No URL provided" };
   }
-  
+
   try {
     const health = await fetchJson<SpoolmanHealth>(baseUrl, "/api/v1/health");
     if (health.status !== "healthy") {
       return { healthy: false, error: `Unhealthy status: ${health.status}` };
     }
-    
+
     const info = await fetchJson<SpoolmanInfo>(baseUrl, "/api/v1/info");
     return { healthy: true, info };
   } catch (err) {
