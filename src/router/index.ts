@@ -18,6 +18,7 @@ const router = createRouter({
     {
       path: '/app',
       component: MainApp,
+      redirect: '/app/swatch',
       children: [
         {
           path: 'swatch',
@@ -44,6 +45,11 @@ const router = createRouter({
           }
         }
       ]
+    },
+    // Catch-all redirect for unknown routes
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ],
   scrollBehavior(to, from, savedPosition) {

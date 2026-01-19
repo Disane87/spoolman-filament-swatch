@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import ThemeSwitch from '@/components/ThemeSwitch.vue';
 import LocaleSwitch from '@/components/LocaleSwitch.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -34,7 +33,7 @@ const { t } = useI18n();
 
           <div class="hidden lg:flex items-center gap-2">
             <a
-              href="https://github.com/Donkie/Spoolman/stargazers"
+              href="https://github.com/Disane87/spoolman-filament-swatch/stargazers"
               target="_blank"
               class="group inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgb(var(--foreground))]/5 backdrop-blur-md rounded-full border border-input/50 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all duration-150 hover:scale-105"
             >
@@ -43,7 +42,7 @@ const { t } = useI18n();
             </a>
 
             <a
-              href="https://github.com/Donkie/Spoolman/graphs/contributors"
+              href="https://github.com/Disane87/spoolman-filament-swatch/graphs/contributors"
               target="_blank"
               class="group inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgb(var(--foreground))]/5 backdrop-blur-md rounded-full border border-input/50 hover:border-blue-400/50 hover:bg-blue-500/10 transition-all duration-150 hover:scale-105"
             >
@@ -53,7 +52,7 @@ const { t } = useI18n();
 
             <a
               v-if="githubStats.latestRelease"
-              href="https://github.com/Donkie/Spoolman/releases/latest"
+              href="https://github.com/Disane87/spoolman-filament-swatch/releases/latest"
               target="_blank"
               class="group inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgb(var(--foreground))]/5 backdrop-blur-md rounded-full border border-input/50 hover:border-green-400/50 hover:bg-green-500/10 transition-all duration-150 hover:scale-105"
             >
@@ -73,7 +72,6 @@ const { t } = useI18n();
             <span class="text-xs font-semibold text-pink-400">{{ t('landing.sponsor.nav') }}</span>
           </a>
           <LocaleSwitch variant="ghost" />
-          <ThemeSwitch variant="ghost" />
         </div>
       </div>
     </div>
