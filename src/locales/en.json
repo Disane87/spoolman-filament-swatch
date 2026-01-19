@@ -75,7 +75,7 @@
   },
   "dialog": {
     "spoolmanUrlTitle": "Set Spoolman URL",
-    "spoolmanUrlDescription": "The URL is stored locally in this browser. Default is {defaultUrl}. Note: For deployed instances, you must configure SPOOLMAN_CORS_ORIGIN={domain} (without https://) in your Spoolman server and restart.",
+    "spoolmanUrlDescription": "Enter the URL of your Spoolman server (e.g. https://spoolman.my-domain.com). The URL is stored locally in your browser only.",
     "spoolmanUrlRequired": "Please enter the URL of your Spoolman server to continue.",
     "corsInfoTitle": "⚠️ CORS Required",
     "corsInfoDescription": "Please verify that your Spoolman instance has this environment variable set",
@@ -83,7 +83,11 @@
     "corsConfigHint": "",
     "corsRestartRequired": "More in the docs [CORS](https://github.com/Disane87/spoolman-filament-swatch?tab=readme-ov-file#%EF%B8%8F-cors-configuration-required)",
     "useSpoolmanDB": "Alternative: Use SpoolmanDB",
-    "useSpoolmanDBHint": "You can also use the SpoolmanDB community database, which doesn't require CORS configuration."
+    "useSpoolmanDBHint": "You can also use the SpoolmanDB community database, which doesn't require CORS configuration.",
+    "connectionChecking": "Checking connection...",
+    "connectionSuccess": "Connection successful!",
+    "connectionFailed": "Connection failed",
+    "connectionFailedHint": "Check the URL and CORS configuration of your Spoolman server."
   },
   "card": {
     "vendor": "Vendor",

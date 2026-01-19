@@ -150,7 +150,7 @@ const createFilamentsComposable = () => {
   const spoolmanMaterials = ref<SpoolmanMaterial[]>([]);
   const spoolmanVendors = ref<SpoolmanVendor[]>([]);
   const spoolmanLocations = ref<string[]>([]);
-  const { resolvedBaseUrl } = useSpoolmanUrl();
+  const { resolvedBaseUrl, hasUrl } = useSpoolmanUrl();
 
   // Read query parameters from URL (case-insensitive)
   const urlParams = new URLSearchParams(window.location.search);
@@ -179,15 +179,17 @@ const createFilamentsComposable = () => {
     try {
       const baseUrl = resolvedBaseUrl.value;
 
+      // Only load Spoolman data if a URL is configured
+      const shouldLoadSpoolman = hasUrl.value && baseUrl.trim().length > 0;
       // Only load external data sources if not filtering for spoolman only
       const shouldLoadExternal = filters.source !== "spoolman";
 
       const [filaments, materials, vendors, locations, spools, external, spoolmanDBFilaments, spoolmanDBMaterials] = await Promise.all([
-        fetchSpoolmanFilaments(baseUrl).catch(() => [] as SpoolmanFilament[]),
-        fetchSpoolmanMaterials(baseUrl).catch(() => [] as SpoolmanMaterial[]),
-        fetchSpoolmanVendors(baseUrl).catch(() => [] as SpoolmanVendor[]),
-        fetchSpoolmanLocations(baseUrl).catch(() => [] as string[]),
-        fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]),
+        shouldLoadSpoolman ? fetchSpoolmanFilaments(baseUrl).catch(() => [] as SpoolmanFilament[]) : Promise.resolve([] as SpoolmanFilament[]),
+        shouldLoadSpoolman ? fetchSpoolmanMaterials(baseUrl).catch(() => [] as SpoolmanMaterial[]) : Promise.resolve([] as SpoolmanMaterial[]),
+        shouldLoadSpoolman ? fetchSpoolmanVendors(baseUrl).catch(() => [] as SpoolmanVendor[]) : Promise.resolve([] as SpoolmanVendor[]),
+        shouldLoadSpoolman ? fetchSpoolmanLocations(baseUrl).catch(() => [] as string[]) : Promise.resolve([] as string[]),
+        shouldLoadSpoolman ? fetchSpoolmanSpools(baseUrl).catch(() => [] as SpoolmanSpool[]) : Promise.resolve([] as SpoolmanSpool[]),
         shouldLoadExternal ? fetchExternalFilaments().catch(() => [] as ExternalFilament[]) : Promise.resolve([] as ExternalFilament[]),
         shouldLoadExternal ? fetchSpoolmanDBFilaments().catch(() => [] as SpoolmanDBFilament[]) : Promise.resolve([] as SpoolmanDBFilament[]),
         shouldLoadExternal ? fetchSpoolmanDBMaterials().catch(() => [] as SpoolmanDBMaterial[]) : Promise.resolve([] as SpoolmanDBMaterial[]),

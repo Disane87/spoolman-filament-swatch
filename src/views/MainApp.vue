@@ -55,11 +55,24 @@
             size="sm"
             variant="outline"
             @click="openUrlDialog"
-            class="h-9 px-2 sm:px-3"
+            class="relative h-9 w-9 p-0"
             :aria-label="t('info.spoolmanUrl')"
           >
             <Icon icon="lucide:server" class="w-4 h-4" />
-            <span class="hidden sm:inline text-xs font-mono ml-2 truncate max-w-[120px] lg:max-w-[200px]">{{ spoolmanUrl }}</span>
+            <!-- Connection status indicator -->
+            <span
+              v-if="isConnected"
+              class="absolute -right-1 -top-1 flex h-3 w-3"
+            >
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span
+              v-else-if="hasUrl"
+              class="absolute -right-1 -top-1 flex h-3 w-3"
+            >
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
           </Button>
           
           <LocaleSwitch />
@@ -262,6 +275,35 @@
               required
             />
           </label>
+          
+          <!-- Connection Status -->
+          <div v-if="connectionChecking" class="flex items-center gap-2 text-sm text-[rgb(var(--text-muted))]">
+            <Icon icon="lucide:loader-2" class="w-4 h-4 animate-spin" />
+            {{ t("dialog.connectionChecking") }}
+          </div>
+          <div v-else-if="connectionStatus?.healthy" class="rounded-lg border border-green-500/40 bg-green-400/15 p-3">
+            <div class="flex items-center gap-2 text-sm font-semibold text-green-700 dark:text-green-400">
+              <Icon icon="lucide:check-circle" class="w-4 h-4" />
+              {{ t("dialog.connectionSuccess") }}
+            </div>
+            <div v-if="connectionStatus.info" class="mt-2 text-xs text-green-700 dark:text-green-400">
+              <span class="font-mono">Spoolman v{{ connectionStatus.info.version }}</span>
+              <span v-if="connectionStatus.info.db_type" class="ml-2 opacity-75">({{ connectionStatus.info.db_type }})</span>
+            </div>
+          </div>
+          <div v-else-if="connectionStatus && !connectionStatus.healthy" class="rounded-lg border border-red-500/40 bg-red-400/15 p-3">
+            <div class="flex items-center gap-2 text-sm font-semibold text-red-700 dark:text-red-400">
+              <Icon icon="lucide:x-circle" class="w-4 h-4" />
+              {{ t("dialog.connectionFailed") }}
+            </div>
+            <p class="mt-1 text-xs text-red-700 dark:text-red-400">
+              {{ connectionStatus.error }}
+            </p>
+            <p class="mt-2 text-xs text-red-700 dark:text-red-400 opacity-75">
+              {{ t("dialog.connectionFailedHint") }}
+            </p>
+          </div>
+          
           <div class="flex flex-wrap justify-between gap-3">
             <Button v-if="hasUrl" type="button" variant="ghost" size="sm" @click="resetUrlToDefault">
               {{ t("actions.reset") }}
@@ -271,7 +313,8 @@
               <Button v-if="hasUrl" type="button" variant="secondary" size="sm" @click="urlDialogOpen = false">
                 {{ t("actions.cancel") }}
               </Button>
-              <Button type="submit" size="sm">
+              <Button type="submit" size="sm" :disabled="connectionChecking">
+                <Icon v-if="connectionChecking" icon="lucide:loader-2" class="w-4 h-4 animate-spin mr-2" />
                 {{ t("actions.save") }}
               </Button>
             </div>
@@ -328,7 +371,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { DEFAULT_SPOOLMAN_URL } from "../api/spoolman";
+import { DEFAULT_SPOOLMAN_URL, checkSpoolmanConnection, type SpoolmanInfo } from "../api/spoolman";
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -438,6 +481,10 @@ const scrollToPinned = (id: string) => {
 const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
 const urlDialogOpen = ref(false);
 const spoolmanUrlInput = ref(spoolmanUrl.value);
+const connectionChecking = ref(false);
+const connectionStatus = ref<{ healthy: boolean; info?: SpoolmanInfo; error?: string } | null>(null);
+
+const isConnected = computed(() => connectionStatus.value?.healthy === true);
 
 const currentDomain = computed(() => {
   if (typeof window !== 'undefined') {
@@ -446,18 +493,47 @@ const currentDomain = computed(() => {
   return 'spoolswatch.disane.dev';
 });
 
-const openUrlDialog = () => {
+const openUrlDialog = async () => {
   spoolmanUrlInput.value = spoolmanUrl.value;
+  connectionStatus.value = null;
   urlDialogOpen.value = true;
+  
+  // Check current connection if URL exists
+  if (spoolmanUrl.value.trim()) {
+    await checkConnection(spoolmanUrl.value);
+  }
 };
 
-const applySpoolmanUrl = () => {
+const checkConnection = async (url: string) => {
+  if (!url.trim()) {
+    connectionStatus.value = null;
+    return;
+  }
+  connectionChecking.value = true;
+  connectionStatus.value = null;
+  try {
+    connectionStatus.value = await checkSpoolmanConnection(url);
+  } catch (err) {
+    connectionStatus.value = { healthy: false, error: err instanceof Error ? err.message : 'Unknown error' };
+  } finally {
+    connectionChecking.value = false;
+  }
+};
+
+const applySpoolmanUrl = async () => {
   if (!spoolmanUrlInput.value.trim()) {
     return;
   }
-  setSpoolmanUrl(spoolmanUrlInput.value);
-  urlDialogOpen.value = false;
-  refresh();
+  
+  // Check connection before saving
+  await checkConnection(spoolmanUrlInput.value);
+  
+  // Only save if connection is healthy
+  if (connectionStatus.value?.healthy) {
+    setSpoolmanUrl(spoolmanUrlInput.value);
+    urlDialogOpen.value = false;
+    refresh();
+  }
 };
 
 const resetUrlToDefault = () => {
@@ -494,10 +570,12 @@ useSeo(
   () => locale.value,
 );
 
-onMounted(() => {
+onMounted(async () => {
   if (!hasUrl.value) {
     urlDialogOpen.value = true;
   } else {
+    // Check connection status on mount
+    await checkConnection(spoolmanUrl.value);
     refresh();
   }
   

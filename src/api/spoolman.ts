@@ -8,6 +8,41 @@ const fetchJson = async <T>(baseUrl: string, path: string): Promise<T> => {
   return (await res.json()) as T;
 };
 
+export type SpoolmanHealth = {
+  status: "healthy" | string;
+};
+
+export type SpoolmanInfo = {
+  version: string;
+  debug_mode: boolean;
+  automatic_backups: boolean;
+  data_dir: string;
+  logs_dir: string;
+  backups_dir: string;
+  db_type: string;
+  git_commit?: string;
+  build_date?: string;
+};
+
+export const checkSpoolmanConnection = async (baseUrl: string): Promise<{ healthy: boolean; info?: SpoolmanInfo; error?: string }> => {
+  if (!baseUrl || baseUrl.trim().length === 0) {
+    return { healthy: false, error: "No URL provided" };
+  }
+  
+  try {
+    const health = await fetchJson<SpoolmanHealth>(baseUrl, "/api/v1/health");
+    if (health.status !== "healthy") {
+      return { healthy: false, error: `Unhealthy status: ${health.status}` };
+    }
+    
+    const info = await fetchJson<SpoolmanInfo>(baseUrl, "/api/v1/info");
+    return { healthy: true, info };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return { healthy: false, error: message };
+  }
+};
+
 export type SpoolmanFilament = {
   id: number;
   name: string;
