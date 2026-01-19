@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Spool Swatch - MakerWorld Importer",
+  "version": "1.0.0",
+  "description": "Import 3MF projects to Spool Swatch directly from MakerWorld",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://www.makerworld.com/*",
+    "https://makerworld.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.makerworld.com/*/models/*",
+        "https://makerworld.com/*/models/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Spool Swatch"
+  }
+}
