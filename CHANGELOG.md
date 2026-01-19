@@ -1,3 +1,27 @@
+## [1.14.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.13.1...v1.14.0) (2026-01-19)
+
+### ✨ Features
+
+* **🎨 ui:** redesign color chips as grid cards with glasmorph effect ([2ada6cf](https://github.com/Disane87/spoolman-filament-swatch/commit/2ada6cf3024224f6e7c85b28ca2b3c3db014730c)) by [@Disane87](https://github.com/Disane87)
+
+### 🐛 Bug Fixes
+
+* add connection checking for Spoolman URL with status indicators and localization updates ([08c526b](https://github.com/Disane87/spoolman-filament-swatch/commit/08c526b4acf4367addf95203f314f4eccb4c7f4f)) by [@Disane87](https://github.com/Disane87)
+* add word breaking to CORS configuration label for better readability ([6774c65](https://github.com/Disane87/spoolman-filament-swatch/commit/6774c65e1bbfc260788ad5aa3b9abbbcf72d63ca)) by [@Disane87](https://github.com/Disane87)
+* improve error handling in checkSpoolmanConnection function ([24dd620](https://github.com/Disane87/spoolman-filament-swatch/commit/24dd6207a5ec971a6bab462eddf914eb6cb6f325)) by [@Disane87](https://github.com/Disane87)
+* update landing navigation links and remove ThemeSwitch component ([7bdcf6e](https://github.com/Disane87/spoolman-filament-swatch/commit/7bdcf6e5fb2925565b329cff4e0b2da2fd5e02f9)) by [@Disane87](https://github.com/Disane87)
+
+### ♻️ Code Refactoring
+
+* adjust card layout and styling for improved responsiveness in FilamentBoard component ([2579cb6](https://github.com/Disane87/spoolman-filament-swatch/commit/2579cb6c7e03499b5d3923bb2da91beeedc88439)) by [@Disane87](https://github.com/Disane87)
+* improve navigation layout and mobile menu functionality in MainApp component ([da23de5](https://github.com/Disane87/spoolman-filament-swatch/commit/da23de57e6fa6b7cddf5dd5c86467c99f76568e5)) by [@Disane87](https://github.com/Disane87)
+* simplify rendering logic and improve performance in FilamentBoard component ([0a2691c](https://github.com/Disane87/spoolman-filament-swatch/commit/0a2691c1bb9c2176fbc8b35e5f9f1b709fae2751)) by [@Disane87](https://github.com/Disane87)
+
+### 🔧 Maintenance
+
+* add FilamentDetailPanel.vue to tracking ([d4ee445](https://github.com/Disane87/spoolman-filament-swatch/commit/d4ee4457710d885ccf9cfe24b11b6b7683e32dfa)) by [@Disane87](https://github.com/Disane87)
+* update code structure for improved readability and maintainability ([d2f731e](https://github.com/Disane87/spoolman-filament-swatch/commit/d2f731ecc5487e01aab6746b8269735595cb5408)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.13.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.13.0...v1.13.1) (2026-01-19)
 
 ### ♻️ Code Refactoring
