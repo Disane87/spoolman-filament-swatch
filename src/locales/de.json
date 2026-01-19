@@ -2,7 +2,14 @@
   "app": {
     "title": "Spool Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
-    "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches."
+    "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches.",
+    "footer": {
+      "tagline": "Visueller Filament-Farbbrowser",
+      "handCrafted": "Hand crafted with",
+      "by": "by",
+      "feedback": "Feedback",
+      "bugs": "Bug melden"
+    }
   },
   "actions": {
     "refresh": "Neu laden",
@@ -347,6 +354,16 @@
       "benefit3": "Neue Features & Verbesserungen ermöglichen",
       "button": "Jetzt Sponsor werden",
       "note": "Jeder Beitrag hilft, egal wie klein. Danke für deine Unterstützung! ❤️"
+    },
+    "feedback": {
+      "title": "Dein Feedback zählt!",
+      "description": "Hast du Ideen, Wünsche oder Verbesserungsvorschläge? Teile sie mit der Community in unseren GitHub Discussions!",
+      "button": "Zur Diskussion beitragen"
+    },
+    "bugs": {
+      "title": "Bug gefunden?",
+      "description": "Hilf uns, Spool Swatch besser zu machen! Melde Fehler oder Probleme direkt auf GitHub Issues.",
+      "button": "Bug melden"
     },
     "footer": {
       "description": "Wunderschöner, interaktiver Filament-Farbbrowser für deine 3D-Druck-Bedürfnisse. Kostenlos und Open Source.",

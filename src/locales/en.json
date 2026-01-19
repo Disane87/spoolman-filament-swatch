@@ -2,7 +2,14 @@
   "app": {
     "title": "Spool Swatch",
     "subtitle": "Local color picker for filaments and spools",
-    "tagline": "Swipe through colors, filter materials, and pick perfect matches."
+    "tagline": "Swipe through colors, find materials, and remember perfect matches.",
+    "footer": {
+      "tagline": "Visual filament color browser",
+      "handCrafted": "Hand crafted with",
+      "by": "by",
+      "feedback": "Feedback",
+      "bugs": "Report Bug"
+    }
   },
   "actions": {
     "refresh": "Refresh",
@@ -347,6 +354,16 @@
       "benefit3": "Enable new features & improvements",
       "button": "Become a Sponsor",
       "note": "Every contribution helps, no matter how small. Thank you for your support! ❤️"
+    },
+    "feedback": {
+      "title": "Your Feedback Matters!",
+      "description": "Got ideas, feature requests, or suggestions? Share them with the community in our GitHub Discussions!",
+      "button": "Join the Discussion"
+    },
+    "bugs": {
+      "title": "Found a Bug?",
+      "description": "Help us make Spool Swatch better! Report bugs or issues directly on GitHub Issues.",
+      "button": "Report a Bug"
     },
     "footer": {
       "description": "Beautiful, interactive filament color browser for your 3D printing needs. Free and open source.",

@@ -113,6 +113,72 @@
       <div class="router-content px-3 sm:px-6 py-1 sm:py-2">
         <RouterView class="flex-1 min-h-0" />
       </div>
+
+      <!-- App Footer -->
+      <footer class="flex-shrink-0 border-t border-border/40 bg-[rgb(var(--background))]/80 backdrop-blur-sm">
+        <div class="px-3 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[rgb(var(--text-muted))]">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5">
+              <Icon icon="lucide:palette" class="w-3.5 h-3.5 text-blue-400" />
+              <span class="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Spool Swatch</span>
+            </span>
+            <span class="hidden sm:inline">•</span>
+            <span class="hidden sm:inline">{{ t('app.footer.tagline') }}</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <a 
+              href="https://github.com/Disane87/spoolman-filament-swatch" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 hover:text-blue-400 transition-colors"
+            >
+              <Icon icon="lucide:github" class="w-3.5 h-3.5" />
+              <span class="hidden sm:inline">GitHub</span>
+            </a>
+            <a 
+              href="https://github.com/Disane87/spoolman-filament-swatch/discussions" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              <Icon icon="lucide:message-circle" class="w-3.5 h-3.5" />
+              <span class="hidden sm:inline">{{ t('app.footer.feedback') }}</span>
+            </a>
+            <a 
+              href="https://github.com/Disane87/spoolman-filament-swatch/issues" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-orange-400 hover:text-orange-300 transition-colors"
+            >
+              <Icon icon="lucide:bug" class="w-3.5 h-3.5" />
+              <span class="hidden sm:inline">{{ t('app.footer.bugs') }}</span>
+            </a>
+            <a 
+              href="https://github.com/sponsors/Disane87" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-pink-400 hover:text-pink-300 transition-colors"
+            >
+              <Icon icon="lucide:heart" class="w-3.5 h-3.5" />
+              <span class="hidden sm:inline">Sponsor</span>
+            </a>
+            <span class="hidden sm:inline text-[rgb(var(--text-muted))]/50">•</span>
+            <span class="flex items-center gap-1.5">
+              <span>{{ t('app.footer.handCrafted') }}</span>
+              <Icon icon="lucide:heart" class="w-3.5 h-3.5 text-red-400" />
+              <span>{{ t('app.footer.by') }}</span>
+              <a 
+                href="https://disane.dev" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="font-semibold hover:text-blue-400 hover:underline transition-colors"
+              >
+                Disane
+              </a>
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <!-- Palette Drawer -->

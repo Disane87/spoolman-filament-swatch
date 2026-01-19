@@ -883,6 +883,92 @@ const scrollToSection = (id: string) => {
       </div>
     </section>
 
+    <!-- Feedback Section -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative" id="feedback">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="group relative">
+          <!-- Glow effect -->
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-3xl blur-3xl opacity-15 group-hover:opacity-25 transition-opacity duration-200"></div>
+          
+          <div class="relative bg-gradient-to-br from-blue-500/5 via-cyan-500/8 to-teal-500/5 backdrop-blur-md rounded-3xl p-10 border border-cyan-400/30 group-hover:border-cyan-400/50 transition-all duration-200 hover:shadow-2xl hover:shadow-cyan-500/20">
+            <div class="flex justify-center mb-5">
+              <div class="relative">
+                <div class="absolute inset-0 bg-cyan-500 blur-xl opacity-50 rounded-full"></div>
+                <Icon icon="lucide:message-circle" class="w-14 h-14 text-cyan-400 relative z-10" />
+              </div>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-3 relative">
+              <span class="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
+                {{ t('landing.feedback.title') }}
+              </span>
+            </h2>
+            <p class="text-base text-[rgb(var(--foreground))]/70 mb-6 max-w-xl mx-auto leading-relaxed">
+              {{ t('landing.feedback.description') }}
+            </p>
+            <a 
+              href="https://github.com/Disane87/spoolman-filament-swatch/discussions" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="lg"
+                variant="outline"
+                class="group/btn relative overflow-hidden border-2 border-cyan-400/50 hover:border-cyan-400 hover:bg-cyan-500/10 px-8 py-6 text-base font-semibold transition-all duration-200 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/20"
+              >
+                <span class="relative z-10 flex items-center gap-2">
+                  <Icon icon="lucide:message-circle" class="w-5 h-5 text-cyan-400 group-hover/btn:scale-110 transition-transform duration-150" />
+                  {{ t('landing.feedback.button') }}
+                </span>
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bug Report Section -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative" id="bugs">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="group relative">
+          <!-- Glow effect -->
+          <div class="absolute inset-0 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-3xl blur-3xl opacity-15 group-hover:opacity-25 transition-opacity duration-200"></div>
+          
+          <div class="relative bg-gradient-to-br from-amber-500/5 via-orange-500/8 to-red-500/5 backdrop-blur-md rounded-3xl p-10 border border-orange-400/30 group-hover:border-orange-400/50 transition-all duration-200 hover:shadow-2xl hover:shadow-orange-500/20">
+            <div class="flex justify-center mb-5">
+              <div class="relative">
+                <div class="absolute inset-0 bg-orange-500 blur-xl opacity-50 rounded-full"></div>
+                <Icon icon="lucide:bug" class="w-14 h-14 text-orange-400 relative z-10" />
+              </div>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-3 relative">
+              <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+                {{ t('landing.bugs.title') }}
+              </span>
+            </h2>
+            <p class="text-base text-[rgb(var(--foreground))]/70 mb-6 max-w-xl mx-auto leading-relaxed">
+              {{ t('landing.bugs.description') }}
+            </p>
+            <a 
+              href="https://github.com/Disane87/spoolman-filament-swatch/issues" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="lg"
+                variant="outline"
+                class="group/btn relative overflow-hidden border-2 border-orange-400/50 hover:border-orange-400 hover:bg-orange-500/10 px-8 py-6 text-base font-semibold transition-all duration-200 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20"
+              >
+                <span class="relative z-10 flex items-center gap-2">
+                  <Icon icon="lucide:bug" class="w-5 h-5 text-orange-400 group-hover/btn:scale-110 transition-transform duration-150" />
+                  {{ t('landing.bugs.button') }}
+                </span>
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="relative py-12 px-4 sm:px-6 lg:px-8 border-t border-border">
       <div class="max-w-7xl mx-auto">
@@ -893,7 +979,7 @@ const scrollToSection = (id: string) => {
               Spool Swatch
             </h3>
             <p class="text-[rgb(var(--foreground))]/60 text-sm mb-4">
-              Beautiful, interactive filament color browser for your 3D printing needs. Free and open source.
+              {{ t('landing.footer.description') }}
             </p>
             <div class="flex gap-3">
               <a href="https://github.com/Disane87/spoolman-filament-swatch" target="_blank" class="hover:text-blue-400 transition-colors">
@@ -903,24 +989,24 @@ const scrollToSection = (id: string) => {
           </div>
           
           <div>
-            <h3 class="font-bold text-lg mb-4">Links</h3>
+            <h3 class="font-bold text-lg mb-4">{{ t('landing.footer.links.title') }}</h3>
             <ul class="space-y-2 text-sm text-[rgb(var(--foreground))]/60">
-              <li><a href="https://github.com/Disane87/spoolman-filament-swatch" target="_blank" class="hover:text-blue-400 transition-colors">GitHub Repository</a></li>
-              <li><a href="https://github.com/Donkie/Spoolman/" target="_blank" class="hover:text-blue-400 transition-colors">Spoolman Project</a></li>
-              <li><a href="https://github.com/Disane87/spoolman-filament-swatch/issues" target="_blank" class="hover:text-blue-400 transition-colors">Report Issues</a></li>
-              <li><a href="https://github.com/Disane87/spoolman-filament-swatch/blob/main/CONTRIBUTING.md" target="_blank" class="hover:text-blue-400 transition-colors">Contributing</a></li>
+              <li><a href="https://github.com/Disane87/spoolman-filament-swatch" target="_blank" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.links.items.github') }}</a></li>
+              <li><a href="https://github.com/Donkie/Spoolman/" target="_blank" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.links.items.spoolman') }}</a></li>
+              <li><a href="https://github.com/Disane87/spoolman-filament-swatch/issues" target="_blank" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.links.items.issues') }}</a></li>
+              <li><a href="https://github.com/Disane87/spoolman-filament-swatch/blob/main/CONTRIBUTING.md" target="_blank" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.links.items.contributing') }}</a></li>
             </ul>
           </div>
           
           <div>
-            <h3 class="font-bold text-lg mb-4">Resources</h3>
+            <h3 class="font-bold text-lg mb-4">{{ t('landing.footer.resources.title') }}</h3>
             <ul class="space-y-2 text-sm text-[rgb(var(--foreground))]/60">
-              <li><a href="#features" class="hover:text-blue-400 transition-colors">Features</a></li>
-              <li><a href="/app" class="hover:text-blue-400 transition-colors">Launch App</a></li>
-              <li><a href="https://github.com/Disane87/spoolman-filament-swatch#readme" target="_blank" class="hover:text-blue-400 transition-colors">Documentation</a></li>
+              <li><a href="#features" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.resources.items.features') }}</a></li>
+              <li><a href="/app" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.resources.items.launchApp') }}</a></li>
+              <li><a href="https://github.com/Disane87/spoolman-filament-swatch#readme" target="_blank" class="hover:text-blue-400 transition-colors">{{ t('landing.footer.resources.items.documentation') }}</a></li>
               <li><a href="https://github.com/Donkie/Spoolman/" target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1">
                 <Icon icon="lucide:star" class="w-3 h-3" />
-                Spoolman Project
+                {{ t('landing.footer.resources.items.spoolmanProject') }}
               </a></li>
             </ul>
           </div>
