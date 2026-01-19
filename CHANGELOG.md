@@ -1,3 +1,14 @@
+## [1.13.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.12.0...v1.13.0) (2026-01-19)
+
+### ✨ Features
+
+* add feedback and bug report sections with localization support ([629eca9](https://github.com/Disane87/spoolman-filament-swatch/commit/629eca98b63f9a0b4f5be1080ac23dfcaf35995c)) by [@Disane87](https://github.com/Disane87)
+* **sponsor:** add sponsor section and related translations for support ([0ac4625](https://github.com/Disane87/spoolman-filament-swatch/commit/0ac46255ad9f3b925074a314a5a326e46a2f2bae)) by [@Disane87](https://github.com/Disane87)
+
+### 🔧 Maintenance
+
+* **workspace:** add folders configuration to workspace settings ([2aea0f1](https://github.com/Disane87/spoolman-filament-swatch/commit/2aea0f1250451d492e65ec73e6764ba476bfc4f8)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.12.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.11.0...v1.12.0) (2026-01-19)
 
 ### ✨ Features
