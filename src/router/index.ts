@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '@/components/LandingPage.vue';
+import { LandingPage } from '@/components/landing';
 import MainApp from '@/views/MainApp.vue';
 import ProjectsView from '@/views/ProjectsView.vue';
 import ProjectDetailView from '@/views/ProjectDetailView.vue';

@@ -14,7 +14,7 @@
         <Badge 
           :variant="filament.source === 'spoolman' ? 'accent' : 'neutral'" 
           class="text-[10px] sm:text-xs whitespace-nowrap"
-          :class="getBadgeClass(filament.source)"
+          :class="getSourceBadgeClass(filament.source)"
         >
           <Icon :icon="getSourceIcon(filament.source)" class="w-3 h-3 mr-1" />
           {{ getSourceLabel(filament.source) }}
@@ -78,6 +78,8 @@ import type { FilamentCard as FilamentCardType } from "../composables/useFilamen
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
+import { getSourceIcon, getSourceLabel, getSourceBadgeClass } from '@/lib/sourceUtils';
+import { getSwatchStyle } from '@/lib/swatchUtils';
 
 const props = defineProps<{
   filament: FilamentCardType;
@@ -103,96 +105,14 @@ defineEmits<{
 
 const copied = ref(false);
 
-const getSourceIcon = (source: string): string => {
-  switch (source) {
-    case 'spoolman': return 'lucide:server';
-    case 'external': return 'lucide:link';
-    default: return 'lucide:help-circle';
-  }
-};
-
-const getSourceLabel = (source: string): string => {
-  switch (source) {
-    case 'spoolman': return 'Spoolman';
-    case 'external': return 'Extern';
-    default: return 'Unbekannt';
-  }
-};
-
-const getBadgeClass = (source: string): string => {
-  switch (source) {
-    case 'spoolman': return 'badge-spoolman';
-    case 'external': return 'badge-external';
-    default: return '';
-  }
-};
-
 const swatchStyle = computed(() => {
   const filament = props.filament;
-  const mat = filament.material.toLowerCase();
-
-  // Multi-color gradient logic
-  if (filament.multiColorHexes && filament.multiColorHexes.length > 1) {
-    const colors = filament.multiColorHexes;
-    let colorGradient: string;
-    
-    if (filament.multiColorDirection === "coaxial") {
-      // Coaxial: circular gradient from center
-      const stops = colors.map((c, i) => {
-        const center = (i / (colors.length - 1)) * 100;
-        const spread = 15; // Sanfter Übergang
-        if (i === 0) return `${c} 0%, ${c} ${center + spread}%`;
-        if (i === colors.length - 1) return `${c} ${center - spread}%, ${c} 100%`;
-        return `${c} ${center - spread}%, ${c} ${center + spread}%`;
-      }).join(", ");
-      colorGradient = `radial-gradient(circle, ${stops})`;
-    } else {
-      // Longitudinal (default): linear gradient
-      const stops = colors.map((c, i) => {
-        const percent = (i / (colors.length - 1)) * 100;
-        return `${c} ${percent}%`;
-      }).join(", ");
-      colorGradient = `linear-gradient(135deg, ${stops})`;
-    }
-
-    // Material overlay
-    const plaSheen =
-      "linear-gradient(110deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,0.08) 70%)";
-    const petgRings =
-      "radial-gradient(circle at 40% 40%, rgba(255,255,255,0.10) 0 26%, rgba(255,255,255,0) 40%), radial-gradient(circle at 60% 58%, rgba(0,0,0,0.12) 0 24%, rgba(0,0,0,0) 42%)";
-    const absTexture =
-      "linear-gradient(125deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 24%, rgba(0,0,0,0.08) 44%, rgba(0,0,0,0) 60%)";
-
-    let materialLayer = plaSheen;
-    if (mat.includes("petg")) materialLayer = petgRings;
-    else if (mat.includes("abs")) materialLayer = absTexture;
-
-    const highlight = "radial-gradient(circle at 36% 26%, rgba(255,255,255,0.35), transparent 48%)";
-
-    return {
-      background: [highlight, materialLayer, colorGradient].join(", "),
-    };
-  }
-
-  // Single color logic (original)
-  const color = filament.colorHex;
-  const baseShade = `radial-gradient(circle at 36% 26%, rgba(255,255,255,0.35), transparent 48%), linear-gradient(145deg, ${color} 0%, rgba(0,0,0,0.22) 115%)`;
-
-  // Subtle material-specific overlays for a tactile feel
-  const plaSheen =
-    "linear-gradient(110deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,0.08) 70%)";
-  const petgRings =
-    "radial-gradient(circle at 40% 40%, rgba(255,255,255,0.10) 0 26%, rgba(255,255,255,0) 40%), radial-gradient(circle at 60% 58%, rgba(0,0,0,0.12) 0 24%, rgba(0,0,0,0) 42%)";
-  const absTexture =
-    "linear-gradient(125deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 24%, rgba(0,0,0,0.08) 44%, rgba(0,0,0,0) 60%)";
-
-  let materialLayer = plaSheen;
-  if (mat.includes("petg")) materialLayer = petgRings;
-  else if (mat.includes("abs")) materialLayer = absTexture;
-
-  return {
-    background: [materialLayer, baseShade].join(", "),
-  };
+  return getSwatchStyle(
+    filament.colorHex,
+    filament.material,
+    filament.multiColorHexes,
+    filament.multiColorDirection
+  );
 });
 
 const copyHex = async () => {

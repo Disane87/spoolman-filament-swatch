@@ -21,6 +21,7 @@ import {
   type SpoolmanDBMaterial,
 } from "../api/spoolmandb";
 import { useSpoolmanUrl } from "./useSpoolmanUrl";
+import { ensureHex, getColorMetrics } from "@/lib/colorUtils";
 
 export type FilamentCard = {
   id: string;
@@ -66,45 +67,6 @@ const normalizeMaterial = (value: SpoolmanFilament["material"]) => {
   return value;
 };
 
-const ensureHex = (value: string | null | undefined): string => {
-  if (!value) return "#888888";
-  const trimmed = value.trim().replace(/^#/, "");
-  const short = /^[0-9a-fA-F]{3}$/;
-  const full = /^[0-9a-fA-F]{6}$/;
-  if (full.test(trimmed)) return `#${trimmed.toLowerCase()}`;
-  if (short.test(trimmed)) {
-    const [a, b, c] = trimmed;
-    return `#${a}${a}${b}${b}${c}${c}`.toLowerCase();
-  }
-  return "#888888";
-};
-
-const hexToRgb = (hex: string) => {
-  const cleaned = hex.replace(/^#/, "");
-  const r = parseInt(cleaned.slice(0, 2), 16);
-  const g = parseInt(cleaned.slice(2, 4), 16);
-  const b = parseInt(cleaned.slice(4, 6), 16);
-  return { r, g, b };
-};
-
-const getColorMetrics = (hex: string) => {
-  const { r, g, b } = hexToRgb(hex);
-  // relative luminance (WCAG)
-  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-  // lightness as (max+min)/2 normalized
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const lightness = (max + min) / 510; // 0-1
-  // hue in degrees (0-360), fallback 0 for grayscale
-  let hue = 0;
-  if (max !== min) {
-    if (max === r) hue = ((g - b) / (max - min)) * 60;
-    else if (max === g) hue = ((b - r) / (max - min)) * 60 + 120;
-    else hue = ((r - g) / (max - min)) * 60 + 240;
-    if (hue < 0) hue += 360;
-  }
-  return { luminance, lightness, hue };
-};
 
 const normalizeSpoolmanFilament = (
   filament: SpoolmanFilament,

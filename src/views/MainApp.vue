@@ -316,7 +316,7 @@ import LocaleSwitch from "../components/LocaleSwitch.vue";
 import ThemeSwitch from "../components/ThemeSwitch.vue";
 import ChangelogModal from "../components/ChangelogModal.vue";
 import ProjectImportDialog from "../components/ProjectImportDialog.vue";
-import FilamentDetailPanel from "../components/FilamentDetailPanel.vue";
+import { FilamentDetailPanel } from "@/components/filament-detail";
 import type { FilamentCard } from "../composables/useFilaments";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
