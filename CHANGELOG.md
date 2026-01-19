@@ -1,3 +1,9 @@
+## [1.13.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.13.0...v1.13.1) (2026-01-19)
+
+### ♻️ Code Refactoring
+
+* :art: reafactoring of the entire app structure ([f3ed54d](https://github.com/Disane87/spoolman-filament-swatch/commit/f3ed54d450aba38820b52d7206d1d674deef44f1)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.13.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.12.0...v1.13.0) (2026-01-19)
 
 ### ✨ Features
