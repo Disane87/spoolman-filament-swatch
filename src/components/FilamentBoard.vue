@@ -371,13 +371,13 @@ const ensureHex = (value: string | null | undefined): string => {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
+  justify-content: center;
   gap: 8px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 2px;
   padding-top: 4px;
   flex: 1;
-  justify-content: flex-start;
   min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--accent), 0.5) rgba(var(--surface-alt), 0.4);
@@ -421,38 +421,26 @@ const ensureHex = (value: string | null | undefined): string => {
   background: rgba(var(--surface-alt), 0.9);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-  flex: 1 1 calc(50% - 4px);
-  min-width: 140px;
-  max-width: calc(50% - 4px);
+  /* Fixed width based on viewport */
+  flex: 0 0 160px;
   /* Performance optimizations */
   content-visibility: auto;
-  contain-intrinsic-size: 140px 200px;
+  contain-intrinsic-size: 160px 200px;
   contain: layout style paint;
   will-change: transform;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 641px) {
   .board-card {
+    flex: 0 0 180px;
     border-radius: 16px;
-    flex: 1 1 calc((100% - 24px) / 3);
-    min-width: 180px;
-    max-width: calc((100% - 24px) / 3);
     contain-intrinsic-size: 180px 220px;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
   .board-card {
-    flex: 1 1 calc((100% - 24px) / 3);
-    min-width: 200px;
-    max-width: calc((100% - 24px) / 3);
-  }
-}
-
-@media (min-width: 1400px) {
-  .board-card {
-    flex: 1 1 calc((100% - 36px) / 4);
-    max-width: calc((100% - 36px) / 4);
+    flex: 0 0 200px;
   }
 }
 
