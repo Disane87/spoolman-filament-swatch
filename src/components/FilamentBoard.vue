@@ -62,7 +62,7 @@
 
       <div class="board-grid" ref="gridRef">
         <div
-          v-for="filament in visibleItems"
+          v-for="filament in filaments"
           :key="filament.id"
           class="board-card"
           :id="cardId(filament.id)"
@@ -102,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import type { FilamentCard as FilamentCardType } from "../composables/useFilaments";
 import { Icon } from '@iconify/vue';
 import { Button } from "@/components/ui/button";
@@ -151,38 +151,8 @@ defineEmits<{
 const gridRef = ref<HTMLElement | null>(null);
 const minimapRef = ref<HTMLElement | null>(null);
 const activeCardId = ref<string | null>(null);
-const scrollTop = ref(0);
-const cols = ref(2);
 let scrollTimeout: number | null = null;
-
-const CARD_HEIGHT = 240; // Approximate card height
-const BUFFER = 3; // Number of rows to render above/below viewport
-
-// Update column count based on window width
-const updateCols = () => {
-  if (typeof window === 'undefined') return;
-  if (window.innerWidth >= 1400) cols.value = 4;
-  else if (window.innerWidth >= 1000) cols.value = 3;
-  else if (window.innerWidth >= 640) cols.value = 3;
-  else cols.value = 2;
-};
-
-// Calculate which items should be rendered
-const visibleItems = computed(() => {
-  if (!gridRef.value) return props.filaments.slice(0, 20);
-  
-  const viewportHeight = gridRef.value.clientHeight;
-  const rowsInView = Math.ceil(viewportHeight / CARD_HEIGHT);
-  const startRow = Math.max(0, Math.floor(scrollTop.value / CARD_HEIGHT) - BUFFER);
-  const endRow = Math.ceil((scrollTop.value + viewportHeight) / CARD_HEIGHT) + BUFFER;
-  const startIdx = startRow * cols.value;
-  const endIdx = Math.min(props.filaments.length, endRow * cols.value);
-  
-  return props.filaments.slice(startIdx, endIdx).map((filament, idx) => ({
-    ...filament,
-    virtualIndex: startIdx + idx
-  }));
-});
+let rafId: number | null = null;
 
 const updateActiveCard = () => {
   if (!gridRef.value) return;
@@ -190,18 +160,20 @@ const updateActiveCard = () => {
   const gridRect = gridRef.value.getBoundingClientRect();
   const centerY = gridRect.top + gridRect.height / 2;
   
+  // Only check visible cards using getBoundingClientRect
+  const cards = gridRef.value.querySelectorAll('.board-card');
   let closestCard: { id: string; distance: number } | null = null;
   
-  props.filaments.forEach((filament) => {
-    const el = document.getElementById(cardId(filament.id));
-    if (!el) return;
+  cards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    // Skip cards not in viewport
+    if (rect.bottom < gridRect.top || rect.top > gridRect.bottom) return;
     
-    const rect = el.getBoundingClientRect();
     const cardCenterY = rect.top + rect.height / 2;
     const distance = Math.abs(cardCenterY - centerY);
     
     if (!closestCard || distance < closestCard.distance) {
-      closestCard = { id: filament.id, distance };
+      closestCard = { id: card.id.replace('board-card-', ''), distance };
     }
   });
   
@@ -211,22 +183,18 @@ const updateActiveCard = () => {
 };
 
 const onScroll = () => {
-  if (gridRef.value) {
-    scrollTop.value = gridRef.value.scrollTop;
-  }
+  // Debounce active card update
   if (scrollTimeout) {
     window.clearTimeout(scrollTimeout);
   }
-  scrollTimeout = window.setTimeout(updateActiveCard, 50);
+  scrollTimeout = window.setTimeout(updateActiveCard, 100);
 };
 
 onMounted(() => {
-  updateCols();
   if (gridRef.value) {
-    gridRef.value.addEventListener('scroll', onScroll);
+    gridRef.value.addEventListener('scroll', onScroll, { passive: true });
     updateActiveCard();
   }
-  window.addEventListener('resize', updateCols);
 });
 
 onUnmounted(() => {
@@ -236,7 +204,9 @@ onUnmounted(() => {
   if (scrollTimeout) {
     window.clearTimeout(scrollTimeout);
   }
-  window.removeEventListener('resize', updateCols);
+  if (rafId) {
+    window.cancelAnimationFrame(rafId);
+  }
 });
 
 const isPinned = (id: string) => {
@@ -454,6 +424,11 @@ const ensureHex = (value: string | null | undefined): string => {
   flex: 1 1 calc(50% - 4px);
   min-width: 140px;
   max-width: calc(50% - 4px);
+  /* Performance optimizations */
+  content-visibility: auto;
+  contain-intrinsic-size: 140px 200px;
+  contain: layout style paint;
+  will-change: transform;
 }
 
 @media (min-width: 640px) {
@@ -462,6 +437,7 @@ const ensureHex = (value: string | null | undefined): string => {
     flex: 1 1 calc((100% - 24px) / 3);
     min-width: 180px;
     max-width: calc((100% - 24px) / 3);
+    contain-intrinsic-size: 180px 220px;
   }
 }
 
