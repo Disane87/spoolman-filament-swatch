@@ -4,7 +4,11 @@
             "src/locales"
         ],
         "chat.tools.terminal.autoApprove": {
-            "git stash": true
+            "git stash": true,
+            "/^node -e \"const sharp = require\\('sharp'\\); const fs = require\\('fs'\\); const svg = fs\\.readFileSync\\('\\./public/og-image\\.svg'\\); sharp\\(svg\\)\\.resize\\(1200, 630\\)\\.png\\(\\)\\.toFile\\('\\./public/og-image\\.png'\\)\\.then\\(\\(\\) => console\\.log\\('PNG erstellt!'\\)\\)\\.catch\\(e => console\\.error\\(e\\)\\);\"$/": {
+                "approve": true,
+                "matchCommandLine": true
+            }
         }
     },
     "folders": [
