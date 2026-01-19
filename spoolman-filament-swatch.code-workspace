@@ -6,5 +6,10 @@
         "chat.tools.terminal.autoApprove": {
             "git stash": true
         }
-    }
+    },
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }
