@@ -54,7 +54,7 @@
     "tailwind-merge": "^3.4.0",
     "three": "^0.182.0",
     "vue": "^3.5.12",
-    "vue-i18n": "^9.10.2",
+    "vue-i18n": "^11.0.0",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
