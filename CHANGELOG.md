@@ -1,3 +1,9 @@
+## [1.14.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.0...v1.14.1) (2026-03-22)
+
+### 📚 Documentation
+
+* expand related Spoolman ecosystem projects section (#22) ([828ef5a](https://github.com/Disane87/spoolman-filament-swatch/commit/828ef5af8fcbd95998002f4a8541a498b789695f)) by [@Marco Franke](https://github.com/Marco Franke)
+
 ## [1.14.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.13.1...v1.14.0) (2026-01-19)
 
 ### ✨ Features
