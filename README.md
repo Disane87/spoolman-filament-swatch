@@ -234,10 +234,17 @@ We'd love to have you on board! Here's how:
 
 Don't be shy - we're all learning together! If you have questions, just open an issue and let's chat! 💬
 
-## 🔗 Related Projects
+## 🔗 Related Spoolman Projects
 
-- **[Spoolman](https://github.com/Donkie/Spoolman/)** - The awesome filament manager this app connects to
-- **[Spoolman Home Assistant](https://github.com/Disane87/spoolman-homeassistant)** - Integrate Spoolman with Home Assistant
+Check out these other projects from the Spoolman ecosystem:
+
+| Project | Description |
+|---------|-------------|
+| [🧵 Spoolman MCP](https://github.com/Disane87/spoolman-mcp) | MCP Server for Spoolman — manage your filament inventory through AI assistants like Claude. Available on [npm](https://www.npmjs.com/package/@disane-dev/spoolman-mcp). |
+| [🏠 Spoolman Home Assistant](https://github.com/Disane87/spoolman-homeassistant) | Integrate Spoolman with Home Assistant — track spools, get notifications, automate your printing workflow |
+| [📦 Spoolman Filament Extractor](https://github.com/Disane87/Spoolman-filament-extractor) | Extract your filaments from Spoolman to SpoolmanDB format |
+| [🗄️ SpoolmanDB](https://github.com/Donkie/SpoolmanDB) | Centralized community filament database used by Spoolman |
+| [🖨️ Spoolman](https://github.com/Donkie/Spoolman/) | The awesome filament manager this app connects to |
 
 ## 📝 License
 
