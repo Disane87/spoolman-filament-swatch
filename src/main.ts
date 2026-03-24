@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
-import router from "./router";
+import { createAppRouter } from "./router";
 import App from "./App.vue";
 import "./styles.css";
 import de from "./locales/de.json";
@@ -66,6 +66,7 @@ const bootstrap = async () => {
   });
 
   setupTheme();
+  const router = createAppRouter();
 
   // Hosted mode relies on the Spoolman shell for analytics and server discovery.
   if (import.meta.env.MODE !== "development" && !hostedConfig) {

@@ -13,7 +13,7 @@ type HostedWindow = Window & {
 
 export const getHostedConfig = () => (window as HostedWindow).__SPOOLMAN_HOSTED__ ?? null;
 
-export const isHostedMode = () => Boolean(getHostedConfig() || new URLSearchParams(window.location.search).get("spoolman_hosted"));
+export const isHostedMode = () => Boolean(getHostedConfig());
 
 export const getHostedTheme = () => {
   const hostedTheme = (window as HostedWindow).__SPOOLMAN_HOSTED_THEME__;
