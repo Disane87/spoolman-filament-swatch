@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto flex h-screen flex-col overflow-hidden">
     <!-- Main Content Wrapper (gets blurred when panels are open) -->
-    <div class="main-content-wrapper" :class="{ blurred: paletteOpen || selectedFilament }">
+    <div class="main-content-wrapper flex min-h-0 flex-1 flex-col" :class="{ blurred: paletteOpen || selectedFilament }">
       <!-- Top Navigation Bar -->
       <AppNavbar
         :projects-count="projectsCount"
@@ -16,7 +16,10 @@
       />
 
       <!-- Router Outlet -->
-      <div class="router-content px-3 sm:px-6 py-1 sm:py-2">
+      <div
+        class="router-content flex-1 min-h-0 overflow-y-auto"
+        :class="isHosted ? 'px-3 sm:px-4 py-1 sm:py-1.5' : 'px-3 sm:px-6 py-1 sm:py-2'"
+      >
         <RouterView class="flex-1 min-h-0" />
       </div>
 
