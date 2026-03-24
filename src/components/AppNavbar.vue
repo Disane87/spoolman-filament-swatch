@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
@@ -12,6 +12,7 @@ const props = defineProps<{
   pinnedCount: number;
   isConnected: boolean;
   hasUrl: boolean;
+  isHosted?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -26,6 +27,7 @@ const route = useRoute();
 const router = useRouter();
 
 const mobileMenuOpen = ref(false);
+const appTitle = computed(() => (props.isHosted ? t('app.hostedTitle') : t('app.title')));
 
 const handleOpenUrlDialog = () => {
   emit('openUrlDialog');
@@ -41,7 +43,7 @@ const handleOpenChangelog = () => {
 <template>
   <nav class="sticky top-0 z-40 bg-[rgb(var(--background))] flex items-center justify-between gap-2 sm:gap-4 px-2 sm:px-6 py-2 sm:py-4 pb-3 shrink-0 border-b">
     <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-      <h1 class="text-base sm:text-xl font-semibold truncate">{{ t("app.title") }}</h1>
+      <h1 class="text-base sm:text-xl font-semibold truncate">{{ appTitle }}</h1>
     </div>
     
     <div class="flex items-center gap-1 sm:gap-2 shrink-0">
@@ -89,6 +91,7 @@ const handleOpenChangelog = () => {
       
       <!-- Desktop: Server button -->
       <Button
+        v-if="!props.isHosted"
         size="sm"
         variant="outline"
         @click="emit('openUrlDialog')"
@@ -115,7 +118,7 @@ const handleOpenChangelog = () => {
       <!-- Desktop: Show all buttons -->
       <div class="hidden sm:flex items-center gap-2">
         <LocaleSwitch />
-        <ThemeSwitch />
+        <ThemeSwitch v-if="!props.isHosted" />
       </div>
       
       <Button
@@ -186,6 +189,7 @@ const handleOpenChangelog = () => {
             >
               <div class="p-2 flex flex-col gap-1">
                 <button 
+                  v-if="!props.isHosted"
                   class="flex items-center gap-2 px-3 py-2 text-sm hover:bg-[rgb(var(--surface-alt))] rounded-md transition-colors"
                   @click="handleOpenUrlDialog"
                 >
@@ -207,7 +211,7 @@ const handleOpenChangelog = () => {
                   Spoolman Server
                 </button>
                 <hr class="border-border/50 my-1" />
-                <div class="flex items-center justify-between px-3 py-2">
+                <div v-if="!props.isHosted" class="flex items-center justify-between px-3 py-2">
                   <span class="text-xs text-[rgb(var(--text-muted))]">Theme</span>
                   <ThemeSwitch />
                 </div>

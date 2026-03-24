@@ -3,29 +3,41 @@ import { LandingPage } from '@/components/landing';
 import MainApp from '@/views/MainApp.vue';
 import ProjectsView from '@/views/ProjectsView.vue';
 import ProjectDetailView from '@/views/ProjectDetailView.vue';
+import { isHostedMode } from '@/composables/useHostedMode';
+
+const hostedMode = isHostedMode();
+const hostedRoot = '/app/swatch';
+const hostedTitle = 'Filament Swatch';
+const standaloneTitle = 'Spool Swatch';
+const titlePrefix = hostedMode ? hostedTitle : standaloneTitle;
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'landing',
-      component: LandingPage,
-      meta: {
-        title: 'Spool Swatch - Your 3D Printing Filament Color Browser'
-      }
-    },
+    hostedMode
+      ? {
+          path: '/',
+          redirect: hostedRoot,
+        }
+      : {
+          path: '/',
+          name: 'landing',
+          component: LandingPage,
+          meta: {
+            title: `${titlePrefix} - Your 3D Printing Filament Color Browser`
+          }
+        },
     {
       path: '/app',
       component: MainApp,
-      redirect: '/app/swatch',
+      redirect: hostedRoot,
       children: [
         {
           path: 'swatch',
           name: 'swatch',
           component: () => import('@/views/FilamentsView.vue'),
           meta: {
-            title: 'Spool Swatch - Browse Your Collection'
+            title: `${titlePrefix} - Browse Your Collection`
           }
         },
         {
@@ -33,7 +45,7 @@ const router = createRouter({
           name: 'projects',
           component: ProjectsView,
           meta: {
-            title: 'Spool Swatch - Projects'
+            title: `${titlePrefix} - Projects`
           }
         },
         {
@@ -41,7 +53,7 @@ const router = createRouter({
           name: 'project-detail',
           component: ProjectDetailView,
           meta: {
-            title: 'Spool Swatch - Project Details'
+            title: `${titlePrefix} - Project Details`
           }
         }
       ]
@@ -49,7 +61,7 @@ const router = createRouter({
     // Catch-all redirect for unknown routes
     {
       path: '/:pathMatch(.*)*',
-      redirect: '/'
+      redirect: hostedMode ? hostedRoot : '/'
     }
   ],
   scrollBehavior(to, from, savedPosition) {
@@ -63,7 +75,7 @@ const router = createRouter({
 
 // Update document title on route change
 router.beforeEach((to, from, next) => {
-  document.title = (to.meta.title as string) || 'Spool Swatch';
+  document.title = (to.meta.title as string) || titlePrefix;
   next();
 });
 

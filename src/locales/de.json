@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Spool Swatch",
+    "hostedTitle": "Filament Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
     "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches.",
     "footer": {
