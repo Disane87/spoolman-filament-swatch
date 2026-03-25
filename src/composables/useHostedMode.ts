@@ -6,7 +6,7 @@ export type HostedConfig = {
   app_base_path: string;
 };
 
-type HostedWindow = Window & {
+export type HostedWindow = Window & {
   __SPOOLMAN_HOSTED__?: HostedConfig;
   __SPOOLMAN_HOSTED_THEME__?: "light" | "dark";
 };

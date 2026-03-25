@@ -1,6 +1,6 @@
 import { computed, ref, watch } from "vue";
 import { DEFAULT_SPOOLMAN_URL } from "../api/spoolman";
-import { getHostedConfig, isHostedMode } from "./useHostedMode";
+import { getHostedConfig, isHostedMode, type HostedConfig } from "./useHostedMode";
 
 const STORAGE_KEY = "spoolman-url";
 const hasWindow = typeof window !== "undefined";
@@ -77,6 +77,11 @@ const setSpoolmanUrl = (value: string) => {
 const resetSpoolmanUrl = () => {
     if (isHostedMode()) return;
     setSpoolmanUrl(DEFAULT_SPOOLMAN_URL);
+};
+
+export const rehydrateFromHostedConfig = (hostedConfig: HostedConfig | null) => {
+    if (!hostedConfig) return;
+    spoolmanUrl.value = hostedConfig.spoolman_base_url;
 };
 
 const resolvedBaseUrl = computed(() => {

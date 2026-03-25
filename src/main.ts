@@ -5,20 +5,9 @@ import App from "./App.vue";
 import "./styles.css";
 import de from "./locales/de.json";
 import en from "./locales/en.json";
+import { type HostedConfig, type HostedWindow } from "./composables/useHostedMode";
+import { rehydrateFromHostedConfig } from "./composables/useSpoolmanUrl";
 import { setupTheme } from "./composables/useTheme";
-
-type HostedConfig = {
-  contract_version: number;
-  mode: "hosted";
-  app_key: string;
-  spoolman_base_url: string;
-  app_base_path: string;
-};
-
-type HostedWindow = Window & {
-  __SPOOLMAN_HOSTED__?: HostedConfig;
-  __SPOOLMAN_HOSTED_THEME__?: "light" | "dark";
-};
 
 const getQueryParam = (name: string) => new URLSearchParams(window.location.search).get(name);
 
@@ -47,6 +36,7 @@ const bootstrap = async () => {
     console.warn("Could not load Spoolman hosted config", error);
     return null;
   });
+  rehydrateFromHostedConfig(hostedConfig);
 
   const hostedTheme = getQueryParam("spoolman_theme");
   if (hostedTheme === "light" || hostedTheme === "dark") {
