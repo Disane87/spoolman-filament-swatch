@@ -15,7 +15,7 @@
 import { ref, computed } from 'vue';
 import { getLogoUrl, getLogoAlt } from '@/lib/logoUtils';
 
-defineProps<{
+const props = defineProps<{
   vendorName: string;
 }>();
 
@@ -23,7 +23,7 @@ const logoFailed = ref(false);
 
 const logoUrl = computed(() => {
   if (logoFailed.value) return null;
-  return getLogoUrl(vendorName);
+  return getLogoUrl(props.vendorName);
 });
 </script>
 
