@@ -1,3 +1,9 @@
+## [1.14.4](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.3...v1.14.4) (2026-08-15)
+
+### 📚 Documentation
+
+* refresh README banner ([7252c55](https://github.com/Disane87/spoolman-filament-swatch/commit/7252c55cab6503b2a86a218d41a6ae7bc63c4265)) by [@Marco Thiel](https://github.com/Marco Thiel)
+
 ## [1.14.3](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.2...v1.14.3) (2026-08-15)
 
 ### 📚 Documentation
