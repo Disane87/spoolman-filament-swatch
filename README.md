@@ -1,6 +1,6 @@
 <div align="center">
 
-![Spoolman Filament Swatch Banner](public/readme-banner.svg)
+![Spoolman Filament Swatch Banner](public/readme-banner.png)
 
 # 🎨 Spoolman Filament Swatch
 
