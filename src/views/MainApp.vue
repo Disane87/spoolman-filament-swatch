@@ -312,6 +312,7 @@ provide('pinnedIds', pinnedIds);
 provide('selectedFilament', selectedFilament);
 provide('togglePin', togglePin);
 provide('selectFilament', selectFilament);
+provide('filterModalOpen', filterModalOpen);
 
 // Detail panel labels
 const detailLabels = computed(() => ({

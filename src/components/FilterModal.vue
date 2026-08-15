@@ -28,16 +28,29 @@
               {{ t('filters.vendor') }}
             </h3>
             <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="vendor"
+                  value="all"
+                  v-model="filters.vendor"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.all') }}
+                </span>
+              </label>
               <label
                 v-for="vendor in vendorOptions"
                 :key="vendor"
                 class="flex items-center gap-2 cursor-pointer group"
               >
                 <input
-                  type="checkbox"
-                  :checked="filters.vendor.includes(vendor)"
-                  @change="toggleFilter('vendor', vendor)"
-                  class="rounded border-[rgb(var(--border))] text-[rgb(var(--accent))]"
+                  type="radio"
+                  name="vendor"
+                  :value="vendor"
+                  v-model="filters.vendor"
+                  class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
                   {{ vendor }}
@@ -52,16 +65,29 @@
               {{ t('filters.material') }}
             </h3>
             <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="material"
+                  value="all"
+                  v-model="filters.material"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.all') }}
+                </span>
+              </label>
               <label
                 v-for="material in materialOptions"
                 :key="material"
                 class="flex items-center gap-2 cursor-pointer group"
               >
                 <input
-                  type="checkbox"
-                  :checked="filters.material.includes(material)"
-                  @change="toggleFilter('material', material)"
-                  class="rounded border-[rgb(var(--border))] text-[rgb(var(--accent))]"
+                  type="radio"
+                  name="material"
+                  :value="material"
+                  v-model="filters.material"
+                  class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
                   {{ material }}
@@ -76,16 +102,29 @@
               {{ t('filters.location') }}
             </h3>
             <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="location"
+                  value="all"
+                  v-model="filters.location"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.all') }}
+                </span>
+              </label>
               <label
                 v-for="location in locationOptions"
                 :key="location"
                 class="flex items-center gap-2 cursor-pointer group"
               >
                 <input
-                  type="checkbox"
-                  :checked="filters.location.includes(location)"
-                  @change="toggleFilter('location', location)"
-                  class="rounded border-[rgb(var(--border))] text-[rgb(var(--accent))]"
+                  type="radio"
+                  name="location"
+                  :value="location"
+                  v-model="filters.location"
+                  class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
                   {{ location }}
@@ -105,8 +144,7 @@
                   type="radio"
                   name="source"
                   value="all"
-                  :checked="filters.source === 'all'"
-                  @change="filters.source = 'all'"
+                  v-model="filters.source"
                   class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
@@ -118,8 +156,7 @@
                   type="radio"
                   name="source"
                   value="spoolman"
-                  :checked="filters.source === 'spoolman'"
-                  @change="filters.source = 'spoolman'"
+                  v-model="filters.source"
                   class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
@@ -131,12 +168,56 @@
                   type="radio"
                   name="source"
                   value="external"
-                  :checked="filters.source === 'external'"
-                  @change="filters.source = 'external'"
+                  v-model="filters.source"
                   class="rounded-full text-[rgb(var(--accent))]"
                 />
                 <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
                   {{ t('filters.onlyExternal') }}
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <!-- Color Type Filter -->
+          <section>
+            <h3 class="text-sm font-semibold text-[rgb(var(--text))] mb-3 uppercase tracking-wider">
+              {{ t('filters.colorType') }}
+            </h3>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="colorType"
+                  value="all"
+                  v-model="filters.colorType"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.all') }}
+                </span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="colorType"
+                  value="single"
+                  v-model="filters.colorType"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.singleColor') }}
+                </span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="colorType"
+                  value="multi"
+                  v-model="filters.colorType"
+                  class="rounded-full text-[rgb(var(--accent))]"
+                />
+                <span class="text-sm text-[rgb(var(--text))] group-hover:text-[rgb(var(--accent))]">
+                  {{ t('filters.multiColor') }}
                 </span>
               </label>
             </div>
@@ -169,10 +250,11 @@ import { useI18n } from 'vue-i18n';
 import { Icon } from '@iconify/vue';
 
 interface FilterState {
-  vendor: string[];
-  material: string[];
-  location: string[];
+  vendor: string;
+  material: string;
+  location: string;
   source: 'all' | 'spoolman' | 'external';
+  colorType: 'all' | 'single' | 'multi';
 }
 
 const props = defineProps<{
@@ -196,22 +278,13 @@ watch(() => props.initialFilters, (newFilters) => {
   filters.value = { ...newFilters };
 }, { deep: true });
 
-const toggleFilter = (type: keyof Omit<FilterState, 'source'>, value: string) => {
-  const arr = filters.value[type];
-  const idx = arr.indexOf(value);
-  if (idx > -1) {
-    arr.splice(idx, 1);
-  } else {
-    arr.push(value);
-  }
-};
-
 const resetFilters = () => {
   filters.value = {
-    vendor: [],
-    material: [],
-    location: [],
+    vendor: 'all',
+    material: 'all',
+    location: 'all',
     source: 'all',
+    colorType: 'all',
   };
 };
 
@@ -222,7 +295,6 @@ const applyFilters = () => {
 </script>
 
 <style scoped>
-input[type='checkbox'],
 input[type='radio'] {
   cursor: pointer;
 }
