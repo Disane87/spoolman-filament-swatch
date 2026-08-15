@@ -189,7 +189,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
           variant="outline"
           @click="emit('openChangelog')"
           class="h-8 sm:h-9 w-8 sm:w-9 p-0 hidden sm:flex"
-          :aria-label="'What\\'s New'"
+          aria-label="What's New"
         >
           <Icon icon="lucide:sparkles" class="w-4 h-4" />
         </Button>
