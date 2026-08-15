@@ -18,6 +18,19 @@ Think of it as your personal filament showroom - browse colors, filter by materi
 
 > **Note:** This is a companion app for Spoolman. You'll need a running [Spoolman](https://github.com/Donkie/Spoolman/) instance to manage your filaments, or you can browse the external community database without Spoolman.
 
+<p align="center">
+  <a href="https://subthiel.eu">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/branding/subthiel-logo-dark-bg.svg">
+      <source media="(prefers-color-scheme: light)" srcset="public/branding/subthiel-logo-light-bg.svg">
+      <img src="public/branding/subthiel-logo-light-bg.svg" alt="Subthiel" height="40">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  Sponsored by <a href="https://subthiel.eu">Subthiel</a> — 3D-Druck &amp; Softwareentwicklung. Check out the <a href="https://shop.subthiel.eu">shop</a> for prints, filament, and maker gear.
+</p>
+
 ## 🌐 Live Demo
 
 Want to see it in action? Check out the live demo:
@@ -265,6 +278,20 @@ This project wouldn't exist without:
 - All contributors who help make this project better
 
 If you're using this app, you should definitely be using Spoolman too. It's the backbone that makes filament tracking actually useful!
+
+---
+
+<p align="center">
+  <a href="https://subthiel.eu">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/branding/subthiel-logo-dark-bg.svg">
+      <source media="(prefers-color-scheme: light)" srcset="public/branding/subthiel-logo-light-bg.svg">
+      <img src="public/branding/subthiel-logo-light-bg.svg" alt="Subthiel" height="32">
+    </picture>
+  </a>
+  <br>
+  Built with ❤️ and support from <a href="https://subthiel.eu">Subthiel</a> — 3D-Druck &amp; Softwareentwicklung · <a href="https://shop.subthiel.eu">Shop besuchen</a>
+</p>
 
 ---
 
