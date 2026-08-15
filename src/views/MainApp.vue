@@ -1,13 +1,14 @@
 <template>
   <div class="mx-auto flex h-screen flex-col overflow-hidden">
     <!-- Main Content Wrapper (gets blurred when panels are open) -->
-    <div class="main-content-wrapper" :class="{ blurred: paletteOpen || selectedFilament }">
+    <div class="main-content-wrapper flex min-h-0 flex-1 flex-col" :class="{ blurred: paletteOpen || selectedFilament }">
       <!-- Top Navigation Bar -->
       <AppNavbar
         :projects-count="projectsCount"
         :pinned-count="pinnedItems.length"
         :is-connected="isConnected"
         :has-url="hasUrl"
+        :is-hosted="isHosted"
         :view-mode="viewMode"
         @open-url-dialog="openUrlDialog"
         @open-palette="paletteOpen = true"
@@ -19,12 +20,15 @@
       />
 
       <!-- Router Outlet -->
-      <div class="router-content px-3 sm:px-6 py-1 sm:py-2">
+      <div
+        class="router-content flex-1 min-h-0 overflow-y-auto"
+        :class="isHosted ? 'px-3 sm:px-4 py-1 sm:py-1.5' : 'px-3 sm:px-6 py-1 sm:py-2'"
+      >
         <RouterView class="flex-1 min-h-0" />
       </div>
 
       <!-- App Footer -->
-      <footer class="flex-shrink-0 border-t border-border/40 bg-[rgb(var(--background))]/80 backdrop-blur-sm">
+      <footer v-if="!isHosted" class="flex-shrink-0 border-t border-border/40 bg-[rgb(var(--background))]/80 backdrop-blur-sm">
         <div class="px-3 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[rgb(var(--text-muted))]">
           <div class="flex items-center gap-4">
             <span class="flex items-center gap-1.5">
@@ -101,7 +105,7 @@
     />
 
     <!-- URL Dialog -->
-    <Dialog v-model:open="urlDialogOpen">
+    <Dialog v-if="!isHosted" v-model:open="urlDialogOpen">
       <DialogContent class="sm:max-w-md" :onInteractOutside="(e) => { if (!hasUrl) e.preventDefault(); }">
         <DialogHeader>
           <DialogTitle>{{ t("dialog.spoolmanUrlTitle") }}</DialogTitle>
@@ -215,6 +219,7 @@ import { useI18n } from "vue-i18n";
 import { useRouter, RouterView } from "vue-router";
 import { useSeo } from "../composables/useSeo";
 import { useSpoolmanUrl } from "../composables/useSpoolmanUrl";
+import { isHostedMode } from "../composables/useHostedMode";
 import { getProjects } from "../api/projects";
 import { useFilaments } from "../composables/useFilaments";
 import AppNavbar from "../components/AppNavbar.vue";
@@ -351,6 +356,7 @@ const scrollToPinned = (id: string) => {
 };
 
 const { spoolmanUrl, setSpoolmanUrl, resetSpoolmanUrl, hasUrl } = useSpoolmanUrl();
+const isHosted = isHostedMode();
 const urlDialogOpen = ref(false);
 const spoolmanUrlInput = ref(spoolmanUrl.value);
 const connectionChecking = ref(false);
@@ -366,6 +372,10 @@ const currentDomain = computed(() => {
 });
 
 const openUrlDialog = async () => {
+  if (isHosted) {
+    return;
+  }
+
   spoolmanUrlInput.value = spoolmanUrl.value;
   connectionStatus.value = null;
   urlDialogOpen.value = true;
@@ -409,6 +419,10 @@ const applySpoolmanUrl = async () => {
 };
 
 const resetUrlToDefault = () => {
+  if (isHosted) {
+    return;
+  }
+
   resetSpoolmanUrl();
   spoolmanUrlInput.value = spoolmanUrl.value;
   urlDialogOpen.value = false;
@@ -443,10 +457,10 @@ useSeo(
 );
 
 onMounted(async () => {
-  if (!hasUrl.value) {
+  if (!hasUrl.value && !isHosted) {
     urlDialogOpen.value = true;
   } else {
-    // Check connection status on mount
+    // Hosted mode bypasses the server-picker flow and refreshes directly against the injected API base.
     await checkConnection(spoolmanUrl.value);
     refresh();
   }
@@ -457,4 +471,3 @@ onMounted(async () => {
   }
 });
 </script>
-

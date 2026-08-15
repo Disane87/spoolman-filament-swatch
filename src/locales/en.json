@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Spool Swatch",
+    "hostedTitle": "Filament Swatch",
     "subtitle": "Local color picker for filaments and spools",
     "tagline": "Swipe through colors, find materials, and remember perfect matches.",
     "filaments": "Filaments",

@@ -195,7 +195,7 @@ const createFilamentsComposable = () => {
   const spoolmanMaterials = ref<SpoolmanMaterial[]>([]);
   const spoolmanVendors = ref<SpoolmanVendor[]>([]);
   const spoolmanLocations = ref<string[]>([]);
-  const { resolvedBaseUrl, hasUrl } = useSpoolmanUrl();
+  const { resolvedBaseUrl, hasUrl, isHosted } = useSpoolmanUrl();
 
   // Read query parameters from URL (case-insensitive)
   const urlParams = new URLSearchParams(window.location.search);
@@ -226,8 +226,9 @@ const createFilamentsComposable = () => {
     try {
       const baseUrl = resolvedBaseUrl.value;
 
-      // Only load Spoolman data if a URL is configured
-      const shouldLoadSpoolman = hasUrl.value && baseUrl.trim().length > 0;
+      // Hosted shells can legitimately provide an empty root base path, so use
+      // the hosted flag instead of treating an empty string as "not configured."
+      const shouldLoadSpoolman = hasUrl.value && (isHosted.value || baseUrl.trim().length > 0);
       // Only load external data sources if not filtering for spoolman only
       const shouldLoadExternal = filters.source !== "spoolman";
 

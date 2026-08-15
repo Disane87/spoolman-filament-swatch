@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
@@ -12,6 +12,7 @@ const props = defineProps<{
   pinnedCount: number;
   isConnected: boolean;
   hasUrl: boolean;
+  isHosted?: boolean;
   viewMode?: 'board' | 'carousel';
 }>();
 
@@ -30,6 +31,7 @@ const route = useRoute();
 const router = useRouter();
 
 const mobileMenuOpen = ref(false);
+const appTitle = computed(() => (props.isHosted ? t('app.hostedTitle') : t('app.title')));
 const searchQuery = ref('');
 
 const handleOpenUrlDialog = () => {
@@ -58,7 +60,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
       <div class="flex items-center gap-2 sm:gap-4 min-w-fit flex-shrink-0">
         <div class="flex items-center gap-2">
           <Icon icon="lucide:palette" class="w-5 h-5 text-[rgb(var(--accent))]" />
-          <span class="hidden sm:inline font-semibold text-[rgb(var(--text))] text-base">Spool Swatch</span>
+          <span class="hidden sm:inline font-semibold text-[rgb(var(--text))] text-base">{{ appTitle }}</span>
         </div>
 
         <!-- View/Page Toggle -->
@@ -205,7 +207,6 @@ const isFilamentsView = () => route.path.includes('/swatch');
           >
             <Icon icon="lucide:more-vertical" class="w-4 h-4" />
           </Button>
-
           <!-- Mobile Menu Dropdown -->
           <Transition name="fade">
             <div v-if="mobileMenuOpen">
@@ -213,6 +214,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
               <div class="absolute right-0 top-full mt-2 w-48 rounded-lg border bg-[rgb(var(--surface))] shadow-lg z-50">
                 <div class="p-2 flex flex-col gap-1">
                   <button
+                    v-if="!props.isHosted"
                     class="flex items-center gap-2 px-3 py-2 text-sm hover:bg-[rgb(var(--border))] rounded-md transition-colors"
                     @click="handleOpenUrlDialog"
                   >
@@ -227,8 +229,8 @@ const isFilamentsView = () => route.path.includes('/swatch');
                     </div>
                     {{ t('info.spoolmanUrl') || 'Spoolman Server' }}
                   </button>
-                  <hr class="border-[rgb(var(--border))]/50 my-1" />
-                  <div class="flex items-center justify-between px-3 py-2">
+                  <hr v-if="!props.isHosted" class="border-[rgb(var(--border))]/50 my-1" />
+                  <div v-if="!props.isHosted" class="flex items-center justify-between px-3 py-2">
                     <span class="text-xs text-[rgb(var(--text-muted))]">{{ t('theme.theme') || 'Theme' }}</span>
                     <ThemeSwitch />
                   </div>
