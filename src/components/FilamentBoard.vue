@@ -93,9 +93,14 @@
                 <span class="card-hex">{{ filament.colorHex.toUpperCase() }}</span>
                 <span class="card-rgb">RGB: {{ hexToRgbString(filament.colorHex) }}</span>
               </div>
-              <span class="card-source" :data-kind="filament.source">
+              <Badge
+                :variant="filament.source === 'spoolman' ? 'accent' : 'neutral'"
+                class="text-[10px] sm:text-xs whitespace-nowrap"
+                :class="getSourceBadgeClass(filament.source)"
+              >
+                <Icon :icon="getSourceIcon(filament.source)" class="w-3 h-3 mr-1" />
                 {{ filament.source === 'spoolman' ? labels.sourceSpoolman : labels.sourceExternal }}
-              </span>
+              </Badge>
             </div>
           </div>
         </div>
@@ -109,7 +114,9 @@ import { ref, onMounted, onUnmounted } from "vue";
 import type { FilamentCard as FilamentCardType } from "../composables/useFilaments";
 import { Icon } from '@iconify/vue';
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { hexToRgbString } from '@/lib/colorUtils';
+import { getSourceIcon, getSourceLabel, getSourceBadgeClass } from '@/lib/sourceUtils';
 import {
   Select,
   SelectContent,
@@ -538,18 +545,9 @@ const ensureHex = (value: string | null | undefined): string => {
   font-size: 11px;
 }
 
-.card-source {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(var(--border), 0.6);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 700;
-}
-
-.card-source[data-kind="spoolman"] {
-  background: rgba(var(--accent), 0.16);
-  border-color: rgba(var(--accent), 0.6);
+.badge-spoolman {
+  background: rgba(100, 200, 100, 0.15);
+  color: rgb(80, 180, 80);
 }
 
 .card-source[data-kind="external"] {
