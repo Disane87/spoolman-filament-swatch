@@ -1,3 +1,26 @@
+## [1.15.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.4...v1.15.0) (2026-08-15)
+
+### ✨ Features
+
+* add spool-backed inventory scope filtering (#28) ([bc6b67a](https://github.com/Disane87/spoolman-filament-swatch/commit/bc6b67a6261fb0b366206dd504344e0984179c43)) by [@akira69](https://github.com/akira69)
+
+### 🐛 Bug Fixes
+
+* **📦 deps:** update dependency @iconify/vue to v5 ([c603f96](https://github.com/Disane87/spoolman-filament-swatch/commit/c603f967f49794c744a0786418b6d9c9b457d1c0)) by [@renovate[bot]](https://github.com/renovate[bot])
+* keep search visible on narrow widths (#27) ([64f675d](https://github.com/Disane87/spoolman-filament-swatch/commit/64f675d4f0068a7a4d15ee702cebd3e38b82efcb)) by [@akira69](https://github.com/akira69)
+
+### 🔧 Maintenance
+
+* **📦 deps:** update dependency @octokit/rest to v22 (#11) ([fef00c2](https://github.com/Disane87/spoolman-filament-swatch/commit/fef00c2bf7efefce9a6bf9c817ca4e82df990343)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency @types/node to v25.9.5 (#43) ([e9e8b9e](https://github.com/Disane87/spoolman-filament-swatch/commit/e9e8b9e1732734109cde217ed75a3ec195bc82d8)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency @vitejs/plugin-vue to v6.0.8 (#38) ([bd2e309](https://github.com/Disane87/spoolman-filament-swatch/commit/bd2e309ba5b7d6d7ba5367488dec29c250d01093)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency dompurify to v3.4.13 [security] (#21) ([717a7bb](https://github.com/Disane87/spoolman-filament-swatch/commit/717a7bbfe148f27113e3ba492526fd676e0a04ce)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency node to v24 (#7) ([7f4f1bb](https://github.com/Disane87/spoolman-filament-swatch/commit/7f4f1bb117148d85ffbd9ec063113b03c9266614)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency sharp to ^0.35.0 [security] (#40) ([7ddf7a6](https://github.com/Disane87/spoolman-filament-swatch/commit/7ddf7a6ea9404731c94dfc72ecea0ef3b5e55144)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vite to v7.3.5 [security] (#34) ([351a8b2](https://github.com/Disane87/spoolman-filament-swatch/commit/351a8b243f8da3f317cc74ef4ae0b3dec08db8f9)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vite to v7.3.6 (#42) ([0cbe218](https://github.com/Disane87/spoolman-filament-swatch/commit/0cbe2189d9bb326b10f21888907fd224cbfce960)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vue to v3.5.41 (#39) ([d60b0a4](https://github.com/Disane87/spoolman-filament-swatch/commit/d60b0a48befc6080d74fb9e3345ec0aedba2bb54)) by [@renovate[bot]](https://github.com/renovate[bot])
+
 ## [1.14.4](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.3...v1.14.4) (2026-08-15)
 
 ### 📚 Documentation
