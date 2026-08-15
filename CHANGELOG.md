@@ -1,3 +1,31 @@
+## [1.16.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.15.0...v1.16.0) (2026-08-15)
+
+### ✨ Features
+
+* add logo directories structure ([ad13a3d](https://github.com/Disane87/spoolman-filament-swatch/commit/ad13a3d14d71a00393802a2b87fda6dbdc95530a)) by [@Disane87](https://github.com/Disane87)
+* add logo upload dialog with PR generator and localization ([2ca5d6e](https://github.com/Disane87/spoolman-filament-swatch/commit/2ca5d6e8dede580bd720c928bf89e5415ee699d7)) by [@Disane87](https://github.com/Disane87)
+* add logo utilities and vendor name normalization ([4b885e2](https://github.com/Disane87/spoolman-filament-swatch/commit/4b885e2eefa63e00fa0f714f2a9cea3d64ba4536)) by [@Disane87](https://github.com/Disane87)
+* add vendor logo badge component to filament cards ([238ad81](https://github.com/Disane87/spoolman-filament-swatch/commit/238ad81cdf68229f2aa5d4a209db1b28391937ce)) by [@Disane87](https://github.com/Disane87)
+* always display RGB values in carousel, board, and detail views ([3fe0b62](https://github.com/Disane87/spoolman-filament-swatch/commit/3fe0b62b17fe8e47e5f8366ba8a729068f44eefe)) by [@Disane87](https://github.com/Disane87)
+* always display RGB values on filament cards ([356bc22](https://github.com/Disane87/spoolman-filament-swatch/commit/356bc228d8639a3940587fa77057b1d98e00e116)) by [@Disane87](https://github.com/Disane87)
+* integrate filter modal into FilamentsView and wire navbar events ([ba4aa41](https://github.com/Disane87/spoolman-filament-swatch/commit/ba4aa41a5162127487d0ac14a41b70824237590c)) by [@Disane87](https://github.com/Disane87)
+* redesign palette drawer with improved mobile UX and styling ([c019ac7](https://github.com/Disane87/spoolman-filament-swatch/commit/c019ac798b3ac7e2635a420adffbea03a5b97cf6)) by [@Disane87](https://github.com/Disane87)
+* redesign top bar navigation with search and filter button ([5f7991c](https://github.com/Disane87/spoolman-filament-swatch/commit/5f7991c198579b205cb1d0fb2f7dde81109586b4)) by [@Disane87](https://github.com/Disane87)
+* update layout for full-width cards with improved spacing ([adb9b6c](https://github.com/Disane87/spoolman-filament-swatch/commit/adb9b6c42e524020c29f85da1673d681e83cdd96)) by [@Disane87](https://github.com/Disane87)
+* use Badge component for source display in board view ([0b0b06c](https://github.com/Disane87/spoolman-filament-swatch/commit/0b0b06c1705c1efa26e277edaa078a060ac01073)) by [@Disane87](https://github.com/Disane87)
+
+### 🐛 Bug Fixes
+
+* add missing hexToRgbString export and fix aria-label syntax in navbar ([a08128c](https://github.com/Disane87/spoolman-filament-swatch/commit/a08128ca98b9495caa2bca5156ed044de2b94835)) by [@Disane87](https://github.com/Disane87)
+* add proper CSS for RGB display formatting in board and detail views ([db6c967](https://github.com/Disane87/spoolman-filament-swatch/commit/db6c9679fb414cb25ac05751ddad7f8aee32d420)) by [@Disane87](https://github.com/Disane87)
+* use props correctly in VendorLogoBadge computed property ([dce5070](https://github.com/Disane87/spoolman-filament-swatch/commit/dce5070ff72cee15168356f7a0d783fca15cfefc)) by [@Disane87](https://github.com/Disane87)
+
+### 📚 Documentation
+
+* add GitHub templates, contributing guide, and README updates ([787076f](https://github.com/Disane87/spoolman-filament-swatch/commit/787076f7d34fc7ad27ebecb76c5d062d513faa9e)) by [@Disane87](https://github.com/Disane87)
+* add top bar UI redesign implementation plan ([2da1d38](https://github.com/Disane87/spoolman-filament-swatch/commit/2da1d3867a899626fa5ca4369e8bb9d1ff4bc790)) by [@Disane87](https://github.com/Disane87)
+* add top bar UI redesign specification ([544fa59](https://github.com/Disane87/spoolman-filament-swatch/commit/544fa59968f66b6e990d63fdd95ab227c8267177)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.15.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.4...v1.15.0) (2026-08-15)
 
 ### ✨ Features
