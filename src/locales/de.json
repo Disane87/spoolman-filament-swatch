@@ -135,6 +135,10 @@
     "dark": "Dunkel",
     "system": "System"
   },
+  "settings": {
+    "showRgb": "RGB anzeigen",
+    "hideRgb": "RGB ausblenden"
+  },
   "seo": {
     "title": "Spoolman Filament Swatch",
     "description": "Lokaler Farbpicker fuer Spoolman mit Spulen- und Filamentkarussell."
@@ -475,5 +479,19 @@
       "editProject": "Projekt bearbeiten",
       "deleteProject": "Projekt löschen"
     }
+  },
+  "upload": {
+    "title": "Logo hochladen",
+    "instruction": "Laden Sie ein transparentes PNG- oder SVG-Logo für diesen Hersteller hoch. Die Datei wird über GitHub zum Projekt hinzugefügt.",
+    "dragDrop": "Logo hier ablegen",
+    "formats": "Unterstützt: PNG, SVG (transparenter Hintergrund)",
+    "selectFile": "Datei auswählen",
+    "invalidFormat": "Bitte laden Sie eine PNG- oder SVG-Datei hoch",
+    "prReady": "Bereit beizutragen!",
+    "createPr": "Pull Request auf GitHub erstellen"
+  },
+  "settings": {
+    "showRgb": "RGB anzeigen",
+    "hideRgb": "RGB ausblenden"
   }
 }
