@@ -10,46 +10,16 @@
       </p>
     </header>
 
-    <div class="control-grid">
-      <div class="control-card glass">
-        <FiltersBar
-          :filters="filters"
-          :vendor-options="vendorOptions"
-          :material-options="materialOptions"
-          :color-options="colorOptions"
-          :location-options="locationOptions"
-          :search-placeholder="t('search.placeholder')"
-          :labels="{
-            vendor: t('filters.vendor'),
-            material: t('filters.material'),
-            location: t('filters.location'),
-            all: t('filters.all'),
-            onlySpoolman: t('filters.onlySpoolman'),
-            onlyExternal: t('filters.onlyExternal'),
-            inventoryScope: t('filters.inventoryScope'),
-            everything: t('filters.everything'),
-            filamentsOnly: t('filters.filamentsOnly'),
-            allSpoolsOnly: t('filters.allSpoolsOnly'),
-            onHandSpoolsOnly: t('filters.onHandSpoolsOnly'),
-            color: t('filters.color'),
-            colorType: t('filters.colorType'),
-            singleColor: t('filters.singleColor'),
-            multiColor: t('filters.multiColor'),
-            source: t('filters.source'),
-            sort: t('filters.sort'),
-            sortAsc: t('filters.sortAsc'),
-            sortDesc: t('filters.sortDesc'),
-            sortNameAsc: t('filters.sortNameAsc'),
-            sortVendorAsc: t('filters.sortVendorAsc'),
-            sortMaterialAsc: t('filters.sortMaterialAsc'),
-            sortSourceAsc: t('filters.sortSourceAsc'),
-            sortHueAsc: t('filters.sortHueAsc'),
-            sortLuminanceAsc: t('filters.sortLuminanceAsc'),
-            sortLightnessAsc: t('filters.sortLightnessAsc')
-          }"
-        />
-      </div>
-    </div>
+    <!-- Filter Modal (opened via navbar) -->
+    <FilterModal
+      :is-open="filterModalOpen?.value ?? false"
+      :initial-filters="filters"
+      :vendor-options="vendorOptions"
+      :material-options="materialOptions"
+      :location-options="locationOptions"
+      @close="filterModalOpen && (filterModalOpen.value = false)"
+      @apply="applyFilters"
+    />
 
     <section class="flex flex-1 flex-col gap-3 sm:gap-6 min-h-0">
       <div v-if="loading" class="text-sm text-[rgb(var(--text-muted))]">
@@ -95,10 +65,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useFilaments } from "../composables/useFilaments";
-import FiltersBar from "../components/FiltersBar.vue";
+import FilterModal from "../components/FilterModal.vue";
 import FilamentCarousel from "../components/FilamentCarousel.vue";
 import FilamentBoard from "../components/FilamentBoard.vue";
 import type { FilamentCard } from "../composables/useFilaments";
@@ -121,9 +91,19 @@ const {
 const viewMode = inject<Ref<"carousel" | "board">>("viewMode");
 const pinnedIds = inject<Ref<Set<string>>>("pinnedIds");
 const selectedFilament = inject<Ref<FilamentCard | null>>("selectedFilament");
+const filterModalOpen = inject<Ref<boolean>>("filterModalOpen");
 
 const togglePin = inject<(filament: { id: string }) => void>("togglePin");
 const selectFilament = inject<(filament: FilamentCard) => void>("selectFilament");
+
+// Handle filter apply
+const applyFilters = (newFilters: typeof filters) => {
+  filters.vendor = newFilters.vendor;
+  filters.material = newFilters.material;
+  filters.location = newFilters.location;
+  filters.source = newFilters.source;
+  filters.colorType = newFilters.colorType;
+};
 
 // Debug logging
 console.log('FilamentsView mounted', {
