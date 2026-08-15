@@ -6,9 +6,11 @@
     <div class="flex items-start justify-between gap-2 sm:gap-3">
       <div>
         <p class="text-base sm:text-lg font-semibold">{{ filament.name }}</p>
-        <p class="text-xs sm:text-sm text-[rgb(var(--text-muted))]">
-          {{ filament.vendor }} · {{ filament.material }}
-        </p>
+        <div class="flex items-center gap-2 text-xs sm:text-sm">
+          <VendorLogoBadge :vendor-name="filament.vendor" />
+          <span class="text-[rgb(var(--text-muted))]">·</span>
+          <span class="text-[rgb(var(--text-muted))]">{{ filament.material }}</span>
+        </div>
       </div>
       <div class="flex flex-col items-end gap-1.5 sm:gap-2">
         <Badge 
@@ -86,6 +88,7 @@ import { Icon } from '@iconify/vue';
 import { getSourceIcon, getSourceLabel, getSourceBadgeClass } from '@/lib/sourceUtils';
 import { getSwatchStyle } from '@/lib/swatchUtils';
 import { hexToRgbString } from '@/lib/colorUtils';
+import VendorLogoBadge from './VendorLogoBadge.vue';
 
 const props = defineProps<{
   filament: FilamentCardType;
