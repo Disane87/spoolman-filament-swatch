@@ -3,6 +3,8 @@
     "title": "Spool Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
     "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches.",
+    "filaments": "Filamente",
+    "projects": "Projekte",
     "footer": {
       "tagline": "Visueller Filament-Farbbrowser",
       "handCrafted": "Hand crafted with",
@@ -33,6 +35,7 @@
     "placeholder": "Suche nach Name, Hersteller, Material, Farbe..."
   },
   "filters": {
+    "filter": "Filter",
     "vendor": "Hersteller",
     "material": "Material",
     "source": "Quelle",
@@ -133,11 +136,13 @@
   "theme": {
     "light": "Hell",
     "dark": "Dunkel",
-    "system": "System"
+    "system": "System",
+    "theme": "Design"
   },
   "settings": {
     "showRgb": "RGB anzeigen",
-    "hideRgb": "RGB ausblenden"
+    "hideRgb": "RGB ausblenden",
+    "language": "Sprache"
   },
   "seo": {
     "title": "Spoolman Filament Swatch",
