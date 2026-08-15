@@ -1,3 +1,9 @@
+## [1.14.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.1...v1.14.2) (2026-08-15)
+
+### 📚 Documentation
+
+* add Subthiel sponsor branding to README ([62d785a](https://github.com/Disane87/spoolman-filament-swatch/commit/62d785af06e2d6d1806cc252525b41840a5a116c)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.14.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.0...v1.14.1) (2026-03-22)
 
 ### 📚 Documentation
