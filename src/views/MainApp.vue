@@ -8,10 +8,14 @@
         :pinned-count="pinnedItems.length"
         :is-connected="isConnected"
         :has-url="hasUrl"
+        :view-mode="viewMode"
         @open-url-dialog="openUrlDialog"
         @open-palette="paletteOpen = true"
         @open-changelog="openChangelog"
         @open-import-dialog="showImportDialog = true"
+        @changeView="viewMode = $event"
+        @openFilterModal="filterModalOpen = true"
+        @search="handleSearch"
       />
 
       <!-- Router Outlet -->
@@ -275,10 +279,17 @@ const paletteOpen = ref(false);
 const selectedFilament = ref<FilamentCard | null>(null);
 const changelogModal = ref<InstanceType<typeof ChangelogModal> | null>(null);
 const showImportDialog = ref(false);
+const filterModalOpen = ref(false);
 
 const projectsCount = computed(() => getProjects().length);
 
 // RGB is now always displayed (no toggle needed)
+
+// Handle search input from navbar
+const handleSearch = (query: string) => {
+  // Search is handled by useFilaments composable in FilamentsView
+  // This handler can be extended if needed for navbar-level search
+};
 
 // Define functions before providing them
 const selectFilament = (filament: FilamentCard) => {
