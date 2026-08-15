@@ -1,6 +1,6 @@
 <div align="center">
 
-![Spoolman Filament Swatch Banner](public/readme-banner.svg)
+![Spoolman Filament Swatch Banner](public/readme-banner.png)
 
 # 🎨 Spoolman Filament Swatch
 
@@ -18,6 +18,19 @@ Think of it as your personal filament showroom - browse colors, filter by materi
 
 > **Note:** This is a companion app for Spoolman. You'll need a running [Spoolman](https://github.com/Donkie/Spoolman/) instance to manage your filaments, or you can browse the external community database without Spoolman.
 
+<p align="center">
+  <a href="https://subthiel.eu">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/branding/subthiel-logo-dark-bg.svg">
+      <source media="(prefers-color-scheme: light)" srcset="public/branding/subthiel-logo-light-bg.svg">
+      <img src="public/branding/subthiel-logo-light-bg.svg" alt="Subthiel" height="40">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  This project grew out of <a href="https://subthiel.eu">Subthiel</a>, my own company for 3D printing &amp; software development.
+</p>
+
 ## 🌐 Live Demo
 
 Want to see it in action? Check out the live demo:
@@ -32,6 +45,7 @@ Want to see it in action? Check out the live demo:
 Glad you asked! Here's the good stuff:
 
 - 🎨 **Beautiful Color Display**: See your filaments with their actual colors in a stunning grid or carousel view
+- 🎨 **Color Values**: View HEX and RGB values for easy color matching across tools
 - 🔍 **Smart Filtering**: Filter by vendor, material, color type (single/multi-color), location, and source
 - 📍 **Location Tracking**: See exactly where your spools are stored
 - ⚖️ **Remaining Weight**: Track how much filament you have left on each spool
@@ -186,6 +200,15 @@ https://spoolswatch.disane.dev/?surl=http://spoolman.local:7912&v=prusament&m=pe
 > [!TIP]
 > Use the `surl` parameter to share direct links to your Spoolman instance with specific filters!
 
+## 🎨 Vendor Logos & Contributions
+
+Missing a logo for your favorite filament brand? You can help!
+
+- **Contribute via the App**: Click the "Add Logo" button on any filament card
+- **Direct GitHub PR**: See our [Logo Contributing Guide](docs/CONTRIBUTING_LOGOS.md)
+
+Logos should be transparent PNG or SVG format. We appreciate contributions that help make the app more visual!
+
 ## 🛠️ Technology Stack
 
 Built with modern web technologies:
@@ -265,6 +288,20 @@ This project wouldn't exist without:
 - All contributors who help make this project better
 
 If you're using this app, you should definitely be using Spoolman too. It's the backbone that makes filament tracking actually useful!
+
+---
+
+<p align="center">
+  <a href="https://subthiel.eu">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/branding/subthiel-logo-dark-bg.svg">
+      <source media="(prefers-color-scheme: light)" srcset="public/branding/subthiel-logo-light-bg.svg">
+      <img src="public/branding/subthiel-logo-light-bg.svg" alt="Subthiel" height="32">
+    </picture>
+  </a>
+  <br>
+  Made by me at <a href="https://subthiel.eu">Subthiel</a> — my company for 3D printing &amp; software development
+</p>
 
 ---
 

@@ -117,15 +117,9 @@ body {
 }
 
 .control-grid {
-  display: none;
+  display: flex;
   gap: 14px;
   align-items: start;
-}
-
-@media (min-width: 768px) {
-  .control-grid {
-    display: flex;
-  }
 }
 
 .mobile-menu {

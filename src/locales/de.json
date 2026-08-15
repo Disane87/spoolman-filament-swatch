@@ -4,6 +4,8 @@
     "hostedTitle": "Filament Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
     "tagline": "Wische durch Farben, finde Materialien und merke dir perfekte Matches.",
+    "filaments": "Filamente",
+    "projects": "Projekte",
     "footer": {
       "tagline": "Visueller Filament-Farbbrowser",
       "handCrafted": "Hand crafted with",
@@ -34,12 +36,18 @@
     "placeholder": "Suche nach Name, Hersteller, Material, Farbe..."
   },
   "filters": {
+    "filter": "Filter",
     "vendor": "Hersteller",
     "material": "Material",
     "source": "Quelle",
     "all": "Alle",
     "onlySpoolman": "Nur Spoolman",
     "onlyExternal": "Nur externe DB",
+    "inventoryScope": "Inventarbereich",
+    "everything": "Alles",
+    "filamentsOnly": "Filamente",
+    "allSpoolsOnly": "Nur alle Spulen",
+    "onHandSpoolsOnly": "Nur vorhandene Spulen",
     "color": "Farbe",
     "colorType": "Farbtyp",
     "singleColor": "Einfarbig",
@@ -129,7 +137,13 @@
   "theme": {
     "light": "Hell",
     "dark": "Dunkel",
-    "system": "System"
+    "system": "System",
+    "theme": "Design"
+  },
+  "settings": {
+    "showRgb": "RGB anzeigen",
+    "hideRgb": "RGB ausblenden",
+    "language": "Sprache"
   },
   "seo": {
     "title": "Spoolman Filament Swatch",
@@ -471,5 +485,19 @@
       "editProject": "Projekt bearbeiten",
       "deleteProject": "Projekt löschen"
     }
+  },
+  "upload": {
+    "title": "Logo hochladen",
+    "instruction": "Laden Sie ein transparentes PNG- oder SVG-Logo für diesen Hersteller hoch. Die Datei wird über GitHub zum Projekt hinzugefügt.",
+    "dragDrop": "Logo hier ablegen",
+    "formats": "Unterstützt: PNG, SVG (transparenter Hintergrund)",
+    "selectFile": "Datei auswählen",
+    "invalidFormat": "Bitte laden Sie eine PNG- oder SVG-Datei hoch",
+    "prReady": "Bereit beizutragen!",
+    "createPr": "Pull Request auf GitHub erstellen"
+  },
+  "settings": {
+    "showRgb": "RGB anzeigen",
+    "hideRgb": "RGB ausblenden"
   }
 }

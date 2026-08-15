@@ -1,3 +1,72 @@
+## [1.16.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.15.0...v1.16.0) (2026-08-15)
+
+### ✨ Features
+
+* add logo directories structure ([ad13a3d](https://github.com/Disane87/spoolman-filament-swatch/commit/ad13a3d14d71a00393802a2b87fda6dbdc95530a)) by [@Disane87](https://github.com/Disane87)
+* add logo upload dialog with PR generator and localization ([2ca5d6e](https://github.com/Disane87/spoolman-filament-swatch/commit/2ca5d6e8dede580bd720c928bf89e5415ee699d7)) by [@Disane87](https://github.com/Disane87)
+* add logo utilities and vendor name normalization ([4b885e2](https://github.com/Disane87/spoolman-filament-swatch/commit/4b885e2eefa63e00fa0f714f2a9cea3d64ba4536)) by [@Disane87](https://github.com/Disane87)
+* add vendor logo badge component to filament cards ([238ad81](https://github.com/Disane87/spoolman-filament-swatch/commit/238ad81cdf68229f2aa5d4a209db1b28391937ce)) by [@Disane87](https://github.com/Disane87)
+* always display RGB values in carousel, board, and detail views ([3fe0b62](https://github.com/Disane87/spoolman-filament-swatch/commit/3fe0b62b17fe8e47e5f8366ba8a729068f44eefe)) by [@Disane87](https://github.com/Disane87)
+* always display RGB values on filament cards ([356bc22](https://github.com/Disane87/spoolman-filament-swatch/commit/356bc228d8639a3940587fa77057b1d98e00e116)) by [@Disane87](https://github.com/Disane87)
+* integrate filter modal into FilamentsView and wire navbar events ([ba4aa41](https://github.com/Disane87/spoolman-filament-swatch/commit/ba4aa41a5162127487d0ac14a41b70824237590c)) by [@Disane87](https://github.com/Disane87)
+* redesign palette drawer with improved mobile UX and styling ([c019ac7](https://github.com/Disane87/spoolman-filament-swatch/commit/c019ac798b3ac7e2635a420adffbea03a5b97cf6)) by [@Disane87](https://github.com/Disane87)
+* redesign top bar navigation with search and filter button ([5f7991c](https://github.com/Disane87/spoolman-filament-swatch/commit/5f7991c198579b205cb1d0fb2f7dde81109586b4)) by [@Disane87](https://github.com/Disane87)
+* update layout for full-width cards with improved spacing ([adb9b6c](https://github.com/Disane87/spoolman-filament-swatch/commit/adb9b6c42e524020c29f85da1673d681e83cdd96)) by [@Disane87](https://github.com/Disane87)
+* use Badge component for source display in board view ([0b0b06c](https://github.com/Disane87/spoolman-filament-swatch/commit/0b0b06c1705c1efa26e277edaa078a060ac01073)) by [@Disane87](https://github.com/Disane87)
+
+### 🐛 Bug Fixes
+
+* add missing hexToRgbString export and fix aria-label syntax in navbar ([a08128c](https://github.com/Disane87/spoolman-filament-swatch/commit/a08128ca98b9495caa2bca5156ed044de2b94835)) by [@Disane87](https://github.com/Disane87)
+* add proper CSS for RGB display formatting in board and detail views ([db6c967](https://github.com/Disane87/spoolman-filament-swatch/commit/db6c9679fb414cb25ac05751ddad7f8aee32d420)) by [@Disane87](https://github.com/Disane87)
+* use props correctly in VendorLogoBadge computed property ([dce5070](https://github.com/Disane87/spoolman-filament-swatch/commit/dce5070ff72cee15168356f7a0d783fca15cfefc)) by [@Disane87](https://github.com/Disane87)
+
+### 📚 Documentation
+
+* add GitHub templates, contributing guide, and README updates ([787076f](https://github.com/Disane87/spoolman-filament-swatch/commit/787076f7d34fc7ad27ebecb76c5d062d513faa9e)) by [@Disane87](https://github.com/Disane87)
+* add top bar UI redesign implementation plan ([2da1d38](https://github.com/Disane87/spoolman-filament-swatch/commit/2da1d3867a899626fa5ca4369e8bb9d1ff4bc790)) by [@Disane87](https://github.com/Disane87)
+* add top bar UI redesign specification ([544fa59](https://github.com/Disane87/spoolman-filament-swatch/commit/544fa59968f66b6e990d63fdd95ab227c8267177)) by [@Disane87](https://github.com/Disane87)
+
+## [1.15.0](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.4...v1.15.0) (2026-08-15)
+
+### ✨ Features
+
+* add spool-backed inventory scope filtering (#28) ([bc6b67a](https://github.com/Disane87/spoolman-filament-swatch/commit/bc6b67a6261fb0b366206dd504344e0984179c43)) by [@akira69](https://github.com/akira69)
+
+### 🐛 Bug Fixes
+
+* **📦 deps:** update dependency @iconify/vue to v5 ([c603f96](https://github.com/Disane87/spoolman-filament-swatch/commit/c603f967f49794c744a0786418b6d9c9b457d1c0)) by [@renovate[bot]](https://github.com/renovate[bot])
+* keep search visible on narrow widths (#27) ([64f675d](https://github.com/Disane87/spoolman-filament-swatch/commit/64f675d4f0068a7a4d15ee702cebd3e38b82efcb)) by [@akira69](https://github.com/akira69)
+
+### 🔧 Maintenance
+
+* **📦 deps:** update dependency @octokit/rest to v22 (#11) ([fef00c2](https://github.com/Disane87/spoolman-filament-swatch/commit/fef00c2bf7efefce9a6bf9c817ca4e82df990343)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency @types/node to v25.9.5 (#43) ([e9e8b9e](https://github.com/Disane87/spoolman-filament-swatch/commit/e9e8b9e1732734109cde217ed75a3ec195bc82d8)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency @vitejs/plugin-vue to v6.0.8 (#38) ([bd2e309](https://github.com/Disane87/spoolman-filament-swatch/commit/bd2e309ba5b7d6d7ba5367488dec29c250d01093)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency dompurify to v3.4.13 [security] (#21) ([717a7bb](https://github.com/Disane87/spoolman-filament-swatch/commit/717a7bbfe148f27113e3ba492526fd676e0a04ce)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency node to v24 (#7) ([7f4f1bb](https://github.com/Disane87/spoolman-filament-swatch/commit/7f4f1bb117148d85ffbd9ec063113b03c9266614)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency sharp to ^0.35.0 [security] (#40) ([7ddf7a6](https://github.com/Disane87/spoolman-filament-swatch/commit/7ddf7a6ea9404731c94dfc72ecea0ef3b5e55144)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vite to v7.3.5 [security] (#34) ([351a8b2](https://github.com/Disane87/spoolman-filament-swatch/commit/351a8b243f8da3f317cc74ef4ae0b3dec08db8f9)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vite to v7.3.6 (#42) ([0cbe218](https://github.com/Disane87/spoolman-filament-swatch/commit/0cbe2189d9bb326b10f21888907fd224cbfce960)) by [@renovate[bot]](https://github.com/renovate[bot])
+* **📦 deps:** update dependency vue to v3.5.41 (#39) ([d60b0a4](https://github.com/Disane87/spoolman-filament-swatch/commit/d60b0a48befc6080d74fb9e3345ec0aedba2bb54)) by [@renovate[bot]](https://github.com/renovate[bot])
+
+## [1.14.4](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.3...v1.14.4) (2026-08-15)
+
+### 📚 Documentation
+
+* refresh README banner ([7252c55](https://github.com/Disane87/spoolman-filament-swatch/commit/7252c55cab6503b2a86a218d41a6ae7bc63c4265)) by [@Marco Thiel](https://github.com/Marco Thiel)
+
+## [1.14.3](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.2...v1.14.3) (2026-08-15)
+
+### 📚 Documentation
+
+* rephrase Subthiel note in English, drop product references ([9187b55](https://github.com/Disane87/spoolman-filament-swatch/commit/9187b5527b457c4edcadfa90219d4523a7ace37c)) by [@Disane87](https://github.com/Disane87)
+
+## [1.14.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.1...v1.14.2) (2026-08-15)
+
+### 📚 Documentation
+
+* add Subthiel sponsor branding to README ([62d785a](https://github.com/Disane87/spoolman-filament-swatch/commit/62d785af06e2d6d1806cc252525b41840a5a116c)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.14.1](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.0...v1.14.1) (2026-03-22)
 
 ### 📚 Documentation

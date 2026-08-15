@@ -6,9 +6,11 @@
     <div class="flex items-start justify-between gap-2 sm:gap-3">
       <div>
         <p class="text-base sm:text-lg font-semibold">{{ filament.name }}</p>
-        <p class="text-xs sm:text-sm text-[rgb(var(--text-muted))]">
-          {{ filament.vendor }} · {{ filament.material }}
-        </p>
+        <div class="flex items-center gap-2 text-xs sm:text-sm">
+          <VendorLogoBadge :vendor-name="filament.vendor" />
+          <span class="text-[rgb(var(--text-muted))]">·</span>
+          <span class="text-[rgb(var(--text-muted))]">{{ filament.material }}</span>
+        </div>
       </div>
       <div class="flex flex-col items-end gap-1.5 sm:gap-2">
         <Badge 
@@ -61,9 +63,14 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-between">
-      <div class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
-        {{ filament.colorHex.toUpperCase() }}
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex min-w-0 flex-col gap-0.5 text-left">
+        <span class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
+          HEX: {{ filament.colorHex.toUpperCase() }}
+        </span>
+        <span class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
+          RGB: {{ hexToRgbString(filament.colorHex) }}
+        </span>
       </div>
       <Button size="sm" variant="secondary" @click.stop="copyHex" class="h-8 w-8 sm:h-9 sm:w-9 p-0">
         <Icon :icon="copied ? 'lucide:check' : 'lucide:copy'" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -80,6 +87,8 @@ import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
 import { getSourceIcon, getSourceLabel, getSourceBadgeClass } from '@/lib/sourceUtils';
 import { getSwatchStyle } from '@/lib/swatchUtils';
+import { hexToRgbString } from '@/lib/colorUtils';
+import VendorLogoBadge from './VendorLogoBadge.vue';
 
 const props = defineProps<{
   filament: FilamentCardType;

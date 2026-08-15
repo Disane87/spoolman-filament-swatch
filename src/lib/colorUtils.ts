@@ -22,6 +22,14 @@ export function hexToRgb(hex: string): RGB {
 }
 
 /**
+ * Converts a hex color to RGB string (e.g., "255, 128, 64")
+ */
+export function hexToRgbString(hex: string): string {
+  const { r, g, b } = hexToRgb(hex);
+  return `${r}, ${g}, ${b}`;
+}
+
+/**
  * Converts a hex color to rgba string
  */
 export function hexToRgba(hex: string, alpha: number): string {

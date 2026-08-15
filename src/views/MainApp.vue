@@ -9,10 +9,14 @@
         :is-connected="isConnected"
         :has-url="hasUrl"
         :is-hosted="isHosted"
+        :view-mode="viewMode"
         @open-url-dialog="openUrlDialog"
         @open-palette="paletteOpen = true"
         @open-changelog="openChangelog"
         @open-import-dialog="showImportDialog = true"
+        @changeView="viewMode = $event"
+        @openFilterModal="filterModalOpen = true"
+        @search="handleSearch"
       />
 
       <!-- Router Outlet -->
@@ -91,48 +95,14 @@
     </div>
 
     <!-- Palette Drawer -->
-    <div class="palette-drawer" :class="{ open: paletteOpen }">
-      <div class="palette-overlay" @click="paletteOpen = false" />
-      <div class="palette-panel">
-        <div class="palette-panel__header">
-          <div>
-            <p class="label text-[10px] sm:text-xs">{{ t('info.palette') }}</p>
-            <p class="mono text-sm sm:text-base text-[rgb(var(--text))]">{{ pinnedItems.length }} {{ pinnedItems.length === 1 ? t('info.item') : t('info.items') }}</p>
-          </div>
-          <div class="flex gap-1 sm:gap-2">
-            <Button v-if="pinnedItems.length" size="sm" variant="ghost" @click="clearPalette" class="h-9 px-2 sm:px-3">
-              <Icon icon="lucide:trash-2" class="w-4 h-4 sm:mr-1" />
-              <span class="hidden sm:inline">{{ t('actions.clearPalette') }}</span>
-            </Button>
-            <Button size="sm" variant="secondary" @click="paletteOpen = false" class="h-9 w-9 p-0">
-              <Icon icon="lucide:x" class="w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-        <div class="palette-panel__body">
-          <div v-if="pinnedItems.length" class="summary-palette">
-            <button
-              v-for="item in pinnedItems"
-              :key="item.id"
-              class="summary-chip"
-              :style="{ background: item.colorHex }"
-              @click="scrollToPinned(item.id)"
-            >
-              <span>{{ item.name }}</span>
-              <span class="mono">{{ item.colorHex.toUpperCase() }}</span>
-            </button>
-          </div>
-          <div v-else class="flex flex-col items-center justify-center gap-3 py-12 text-center">
-            <p class="text-sm text-[rgb(var(--text-muted))]">
-              {{ t('info.paletteEmpty') }}
-            </p>
-            <p class="text-xs text-[rgb(var(--text-muted))]">
-              {{ t('info.paletteHint') }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <PaletteDrawer
+      :is-open="paletteOpen"
+      :pinned-items="pinnedItems"
+      @close="paletteOpen = false"
+      @removePin="togglePin({ id: $event })"
+      @clearPalette="clearPalette"
+      @scrollTo="scrollToPinned"
+    />
 
     <!-- URL Dialog -->
     <Dialog v-if="!isHosted" v-model:open="urlDialogOpen">
@@ -253,6 +223,7 @@ import { isHostedMode } from "../composables/useHostedMode";
 import { getProjects } from "../api/projects";
 import { useFilaments } from "../composables/useFilaments";
 import AppNavbar from "../components/AppNavbar.vue";
+import PaletteDrawer from "../components/PaletteDrawer.vue";
 import ChangelogModal from "../components/ChangelogModal.vue";
 import ProjectImportDialog from "../components/ProjectImportDialog.vue";
 import { FilamentDetailPanel } from "@/components/filament-detail";
@@ -280,8 +251,17 @@ const paletteOpen = ref(false);
 const selectedFilament = ref<FilamentCard | null>(null);
 const changelogModal = ref<InstanceType<typeof ChangelogModal> | null>(null);
 const showImportDialog = ref(false);
+const filterModalOpen = ref(false);
 
 const projectsCount = computed(() => getProjects().length);
+
+// RGB is now always displayed (no toggle needed)
+
+// Handle search input from navbar
+const handleSearch = (query: string) => {
+  // Search is handled by useFilaments composable in FilamentsView
+  // This handler can be extended if needed for navbar-level search
+};
 
 // Define functions before providing them
 const selectFilament = (filament: FilamentCard) => {
@@ -304,6 +284,7 @@ provide('pinnedIds', pinnedIds);
 provide('selectedFilament', selectedFilament);
 provide('togglePin', togglePin);
 provide('selectFilament', selectFilament);
+provide('filterModalOpen', filterModalOpen);
 
 // Detail panel labels
 const detailLabels = computed(() => ({

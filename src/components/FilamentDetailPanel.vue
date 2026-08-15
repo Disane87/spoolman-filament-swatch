@@ -31,7 +31,8 @@
           <h3 class="section-title">{{ labels.color }}</h3>
           <div class="color-swatch-large" :style="swatchStyle">
             <div class="color-info">
-              <span class="color-hex">{{ filament.colorHex.toUpperCase() }}</span>
+              <span class="color-hex">HEX: {{ filament.colorHex.toUpperCase() }}</span>
+              <span class="color-rgb">RGB: {{ hexToRgbString(filament.colorHex) }}</span>
             </div>
           </div>
         </div>
@@ -360,6 +361,7 @@ import { computed, ref } from 'vue';
 import { Button } from '@/components/ui/button';
 import type { FilamentCard } from '../composables/useFilaments';
 import { Icon } from '@iconify/vue';
+import { hexToRgbString } from '@/lib/colorUtils';
 
 const props = defineProps<{
   filament: FilamentCard | null;
@@ -826,6 +828,15 @@ const isTriadic = (item: typeof props.allFilaments[0]) => {
   font-size: 16px;
   font-weight: 700;
   color: white;
+  display: block;
+}
+
+.color-rgb {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-top: 4px;
 }
 
 .color-name {
