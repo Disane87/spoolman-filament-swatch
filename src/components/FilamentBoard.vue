@@ -89,7 +89,10 @@
               </button>
             </div>
             <div class="card-bottom">
-              <span class="card-hex">{{ filament.colorHex.toUpperCase() }}</span>
+              <div class="card-color-readout">
+                <span class="card-hex">{{ filament.colorHex.toUpperCase() }}</span>
+                <span class="card-rgb">RGB: {{ hexToRgbString(filament.colorHex) }}</span>
+              </div>
               <span class="card-source" :data-kind="filament.source">
                 {{ filament.source === 'spoolman' ? labels.sourceSpoolman : labels.sourceExternal }}
               </span>
@@ -106,6 +109,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import type { FilamentCard as FilamentCardType } from "../composables/useFilaments";
 import { Icon } from '@iconify/vue';
 import { Button } from "@/components/ui/button";
+import { hexToRgbString } from '@/lib/colorUtils';
 import {
   Select,
   SelectContent,
