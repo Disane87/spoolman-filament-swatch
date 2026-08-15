@@ -383,11 +383,12 @@ const ensureHex = (value: string | null | undefined): string => {
   flex-wrap: wrap;
   align-content: flex-start;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 2px;
-  padding-top: 4px;
+  padding-right: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   flex: 1;
   min-height: 0;
   scrollbar-width: thin;
@@ -396,8 +397,9 @@ const ensureHex = (value: string | null | undefined): string => {
 
 @media (min-width: 640px) {
   .board-grid {
-    gap: 12px;
-    padding-right: 4px;
+    gap: 16px;
+    padding-right: 8px;
+    padding-bottom: 12px;
   }
 }
 
@@ -433,25 +435,25 @@ const ensureHex = (value: string | null | undefined): string => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
   /* Fixed width based on viewport */
-  flex: 0 0 160px;
+  flex: 0 0 180px;
   /* Performance optimizations */
   content-visibility: auto;
-  contain-intrinsic-size: 160px 200px;
+  contain-intrinsic-size: 180px 220px;
   contain: layout style paint;
   will-change: transform;
 }
 
 @media (min-width: 641px) {
   .board-card {
-    flex: 0 0 180px;
+    flex: 0 0 200px;
     border-radius: 16px;
-    contain-intrinsic-size: 180px 220px;
+    contain-intrinsic-size: 200px 240px;
   }
 }
 
 @media (min-width: 1200px) {
   .board-card {
-    flex: 0 0 200px;
+    flex: 0 0 220px;
   }
 }
 
@@ -463,13 +465,13 @@ const ensureHex = (value: string | null | undefined): string => {
 
 .swatch {
   width: 100%;
-  height: 90px;
+  height: 110px;
   flex-shrink: 0;
 }
 
 @media (min-width: 640px) {
   .swatch {
-    height: 110px;
+    height: 130px;
   }
 }
 
