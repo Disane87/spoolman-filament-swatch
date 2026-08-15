@@ -278,6 +278,8 @@ const showImportDialog = ref(false);
 
 const projectsCount = computed(() => getProjects().length);
 
+// RGB is now always displayed (no toggle needed)
+
 // Define functions before providing them
 const selectFilament = (filament: FilamentCard) => {
   selectedFilament.value = filament;
