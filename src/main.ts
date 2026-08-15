@@ -11,6 +11,25 @@ import { setupTheme } from "./composables/useTheme";
 
 const getQueryParam = (name: string) => new URLSearchParams(window.location.search).get(name);
 
+const parseHostedConfig = (value: unknown): HostedConfig => {
+  if (typeof value !== "object" || value === null) {
+    throw new Error("Hosted config must be an object");
+  }
+
+  const config = value as Record<string, unknown>;
+  if (
+    typeof config.contract_version !== "number" ||
+    config.mode !== "hosted" ||
+    typeof config.app_key !== "string" ||
+    typeof config.spoolman_base_url !== "string" ||
+    typeof config.app_base_path !== "string"
+  ) {
+    throw new Error("Hosted config has an invalid shape");
+  }
+
+  return config as HostedConfig;
+};
+
 const loadFilamanConfig = async () => {
   const configUrl = getQueryParam("filaman_hosted_config");
   const hosted = getQueryParam("filaman_hosted");
@@ -26,7 +45,7 @@ const loadFilamanConfig = async () => {
     throw new Error(`Could not load Filaman hosted config: ${response.status}`);
   }
 
-  const config = (await response.json()) as HostedConfig;
+  const config = parseHostedConfig(await response.json());
   (window as HostedWindow).__FILAMAN_HOSTED__ = config;
   return config;
 };
@@ -46,7 +65,7 @@ const loadHostedConfig = async () => {
     throw new Error(`Could not load hosted config: ${response.status}`);
   }
 
-  const config = (await response.json()) as HostedConfig;
+  const config = parseHostedConfig(await response.json());
   (window as HostedWindow).__SPOOLMAN_HOSTED__ = config;
   return config;
 };

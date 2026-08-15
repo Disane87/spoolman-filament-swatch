@@ -8,13 +8,6 @@ const hasWindow = typeof window !== "undefined";
 const readStored = () => {
     if (!hasWindow) return DEFAULT_SPOOLMAN_URL;
 
-    const hostedConfig = getHostedConfig();
-    if (hostedConfig) {
-        // Hosted mode always follows the parent Spoolman instance instead of any
-        // remembered standalone URL, which avoids cross-instance drift.
-        return hostedConfig.spoolman_base_url;
-    }
-
     // Check for URL in query string first (surl parameter)
     try {
         const urlParams = new URLSearchParams(window.location.search);
