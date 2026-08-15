@@ -10,7 +10,7 @@
       </p>
     </header>
 
-    <div class="control-grid hidden md:flex">
+    <div class="control-grid">
       <div class="control-card glass">
         <FiltersBar
           :filters="filters"

@@ -1,7 +1,6 @@
 <template>
   <div class="filters-container">
-    <!-- Search bar - only visible on desktop (md+) -->
-    <div class="hidden md:flex gap-2 items-center">
+    <div class="flex gap-2 items-center">
       <Input v-model="props.filters.search" type="search" :placeholder="searchPlaceholder" class="flex-1 h-10" />
       <Button variant="ghost" size="icon" @click="filtersVisible = !filtersVisible" aria-label="Toggle filters"
         class="h-10 w-10 shrink-0" :class="{ 'bg-[rgb(var(--accent))]': filtersVisible }">
