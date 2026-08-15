@@ -45,6 +45,9 @@ export type FilamentCard = {
   locations?: string[];
   totalRemainingWeight?: number | null;
   spoolCount?: number;
+  hasSpools: boolean;
+  hasOnHandSpools: boolean;
+  onHandSpoolCount: number;
   spools?: Array<{
     id: number;
     location?: string | null;
@@ -54,8 +57,41 @@ export type FilamentCard = {
   }>;
 };
 
+export type InventoryScope = "filaments" | "all_spools" | "on_hand_spools" | "everything";
+type SourceFilter = "all" | "spoolman" | "external";
 type SortField = "name" | "vendor" | "material" | "source" | "hue" | "luminance" | "lightness";
 type SortDir = "asc" | "desc";
+
+const parseSourceFilter = (value: string | null): SourceFilter => {
+  switch (value?.toLowerCase()) {
+    case "all":
+    case "external":
+    case "spoolman":
+      return value.toLowerCase() as SourceFilter;
+    default:
+      return "spoolman";
+  }
+};
+
+const getDefaultInventoryScope = (source: SourceFilter): InventoryScope =>
+  source === "all" ? "everything" : "filaments";
+
+const normalizeInventoryScope = (value: string | null, source: SourceFilter): InventoryScope => {
+  if (source === "external") {
+    return getDefaultInventoryScope(source);
+  }
+
+  switch (value) {
+    case "all_spools":
+    case "on_hand_spools":
+    case "filaments":
+      return value;
+    case "everything":
+      return source === "all" ? value : getDefaultInventoryScope(source);
+    default:
+      return getDefaultInventoryScope(source);
+  }
+};
 
 const normalizeVendor = (value: SpoolmanFilament["vendor"]) => {
   if (!value) return "Unknown";
@@ -97,6 +133,9 @@ const normalizeSpoolmanFilament = (
     bedTemp: filament.settings_bed_temp ?? null,
     articleNumber: filament.article_number ?? null,
     comment: filament.comment ?? null,
+    hasSpools: false,
+    hasOnHandSpools: false,
+    onHandSpoolCount: 0,
   };
 };
 
@@ -110,6 +149,9 @@ const normalizeExternal = (filament: ExternalFilament): FilamentCard => ({
   colorHex: ensureHex(filament.colorHex),
   colorName: filament.colorName,
   source: "external",
+  hasSpools: false,
+  hasOnHandSpools: false,
+  onHandSpoolCount: 0,
 });
 
 const normalizeSpoolmanDB = (filament: SpoolmanDBFilament, index: number): FilamentCard => {
@@ -130,6 +172,9 @@ const normalizeSpoolmanDB = (filament: SpoolmanDBFilament, index: number): Filam
     diameter: filament.diameters?.[0] ?? null,
     extruderTemp: filament.extruder_temp ?? null,
     bedTemp: filament.bed_temp ?? null,
+    hasSpools: false,
+    hasOnHandSpools: false,
+    onHandSpoolCount: 0,
   };
 };
 
@@ -159,13 +204,15 @@ const createFilamentsComposable = () => {
   const initialMaterial = urlParams.get('m')?.toLowerCase() || 'all';
   const initialColor = urlParams.get('c')?.toLowerCase() || 'all';
   const initialLocation = urlParams.get('l')?.toLowerCase() || 'all';
-  const initialSource = urlParams.get('s')?.toLowerCase() || 'spoolman';
+  const initialSource = parseSourceFilter(urlParams.get('s'));
+  const initialInventoryScope = normalizeInventoryScope(urlParams.get('i'), initialSource);
 
   const filters = reactive({
     search: initialSearch,
     vendor: initialVendor,
     material: initialMaterial,
     source: initialSource,
+    inventoryScope: initialInventoryScope,
     sortField: "name" as SortField,
     sortDir: "asc" as SortDir,
     color: initialColor as string,
@@ -204,6 +251,7 @@ const createFilamentsComposable = () => {
         locations: string[],
         totalWeight: number,
         count: number,
+        onHandCount: number,
         spools: Array<{
           id: number;
           location?: string | null;
@@ -220,6 +268,7 @@ const createFilamentsComposable = () => {
             locations: [],
             totalWeight: 0,
             count: 0,
+            onHandCount: 0,
             spools: []
           };
 
@@ -230,6 +279,9 @@ const createFilamentsComposable = () => {
             existing.totalWeight += spool.remaining_weight;
           }
           existing.count += 1;
+          if (!spool.archived) {
+            existing.onHandCount += 1;
+          }
 
           // Add full spool data
           existing.spools.push({
@@ -252,6 +304,9 @@ const createFilamentsComposable = () => {
             card.locations = spoolData.locations;
             card.totalRemainingWeight = spoolData.totalWeight > 0 ? spoolData.totalWeight : null;
             card.spoolCount = spoolData.count;
+            card.hasSpools = spoolData.count > 0;
+            card.hasOnHandSpools = spoolData.onHandCount > 0;
+            card.onHandSpoolCount = spoolData.onHandCount;
             card.spools = spoolData.spools;
           }
           return card;
@@ -288,10 +343,38 @@ const createFilamentsComposable = () => {
     if (newFilters.source && newFilters.source !== 'all') {
       params.set('s', newFilters.source);
     }
+    const defaultInventoryScope = getDefaultInventoryScope(newFilters.source as SourceFilter);
+    if (
+      newFilters.source !== "external" &&
+      newFilters.inventoryScope &&
+      newFilters.inventoryScope !== defaultInventoryScope
+    ) {
+      params.set("i", newFilters.inventoryScope);
+    }
 
     const newUrl = params.toString() ? `?${params.toString()}` : window.location.pathname;
     window.history.replaceState({}, '', newUrl);
   });
+
+  watch(
+    () => filters.source,
+    (source, previousSource) => {
+      const nextSource = source as SourceFilter;
+      const previous = (previousSource ?? "spoolman") as SourceFilter;
+      const normalized = normalizeInventoryScope(filters.inventoryScope, nextSource);
+
+      if (normalized !== filters.inventoryScope) {
+        filters.inventoryScope = normalized;
+      } else if (filters.inventoryScope === getDefaultInventoryScope(previous)) {
+        const nextDefault = getDefaultInventoryScope(nextSource);
+        if (nextDefault !== filters.inventoryScope) {
+          filters.inventoryScope = nextDefault;
+        }
+      }
+
+      void load();
+    },
+  );
 
   const filtered = computed(() => {
     const search = filters.search.toLowerCase();
@@ -317,6 +400,19 @@ const createFilamentsComposable = () => {
         const isMultiColor = item.multiColorHexes && item.multiColorHexes.length > 1;
         if (filters.colorType === "multi" && !isMultiColor) return false;
         if (filters.colorType === "single" && isMultiColor) return false;
+      }
+      if (filters.source !== "external") {
+        if (filters.inventoryScope !== "everything") {
+          if (item.source !== "spoolman") {
+            return false;
+          }
+          if (filters.inventoryScope === "all_spools" && !item.hasSpools) {
+            return false;
+          }
+          if (filters.inventoryScope === "on_hand_spools" && !item.hasOnHandSpools) {
+            return false;
+          }
+        }
       }
       if (!search) return true;
       return (

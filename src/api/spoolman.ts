@@ -96,7 +96,8 @@ export type SpoolmanVendor = {
 };
 
 export const fetchSpoolmanSpools = (baseUrl: string) =>
-  fetchJson<SpoolmanSpool[]>(baseUrl, "/api/v1/spool");
+  // Inventory-scope filtering needs archived rows too so "All spools" can differ from "On-hand spools".
+  fetchJson<SpoolmanSpool[]>(baseUrl, "/api/v1/spool?allow_archived=true");
 
 export const fetchSpoolmanFilaments = (baseUrl: string) =>
   fetchJson<SpoolmanFilament[]>(baseUrl, "/api/v1/filament");

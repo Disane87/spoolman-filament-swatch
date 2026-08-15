@@ -12,7 +12,10 @@
     <!-- Collapsible filters section -->
     <div v-if="filtersVisible" class="filters-section">
       <!-- Row 1: Select filters -->
-      <div class="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div
+        class="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+        :class="showInventoryScope ? 'lg:grid-cols-6' : 'lg:grid-cols-5'"
+      >
         <!-- Vendors -->
         <div class="filter-group">
           <label class="filter-label">{{ labels.vendor }}</label>
@@ -90,6 +93,25 @@
             </SelectContent>
           </Select>
         </div>
+
+        <!-- Inventory Scope -->
+        <div v-if="showInventoryScope" class="filter-group">
+          <label class="filter-label">{{ labels.inventoryScope }}</label>
+          <Select v-model="props.filters.inventoryScope">
+            <SelectTrigger class="h-10 w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                v-for="option in inventoryScopeOptions"
+                :key="option.value"
+                :value="option.value"
+              >
+                {{ option.label }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <!-- Row 2: Color Palette -->
@@ -123,6 +145,7 @@ const props = defineProps<{
     vendor: string;
     material: string;
     source: string;
+    inventoryScope: string;
     sortField: string;
     sortDir: string;
     color: string;
@@ -141,6 +164,11 @@ const props = defineProps<{
     all: string;
     onlySpoolman: string;
     onlyExternal: string;
+    inventoryScope: string;
+    everything: string;
+    filamentsOnly: string;
+    allSpoolsOnly: string;
+    onHandSpoolsOnly: string;
     color: string;
     colorType: string;
     singleColor: string;
@@ -158,6 +186,22 @@ const props = defineProps<{
     sortLightnessAsc: string;
   };
 }>();
+
+const showInventoryScope = computed(() => props.filters.source !== "external");
+
+const inventoryScopeOptions = computed(() => {
+  const baseOptions = [
+    { value: "filaments", label: props.labels.filamentsOnly },
+    { value: "all_spools", label: props.labels.allSpoolsOnly },
+    { value: "on_hand_spools", label: props.labels.onHandSpoolsOnly },
+  ];
+
+  if (props.filters.source === "all") {
+    return [{ value: "everything", label: props.labels.everything }, ...baseOptions];
+  }
+
+  return baseOptions;
+});
 
 const sortOptions = computed(() => [
   { value: "name", label: props.labels.sortNameAsc },
