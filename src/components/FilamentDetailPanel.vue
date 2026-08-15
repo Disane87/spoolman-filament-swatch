@@ -828,6 +828,15 @@ const isTriadic = (item: typeof props.allFilaments[0]) => {
   font-size: 16px;
   font-weight: 700;
   color: white;
+  display: block;
+}
+
+.color-rgb {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-top: 4px;
 }
 
 .color-name {
