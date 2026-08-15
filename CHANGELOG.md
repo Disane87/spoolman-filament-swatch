@@ -1,3 +1,9 @@
+## [1.14.3](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.2...v1.14.3) (2026-08-15)
+
+### 📚 Documentation
+
+* rephrase Subthiel note in English, drop product references ([9187b55](https://github.com/Disane87/spoolman-filament-swatch/commit/9187b5527b457c4edcadfa90219d4523a7ace37c)) by [@Disane87](https://github.com/Disane87)
+
 ## [1.14.2](https://github.com/Disane87/spoolman-filament-swatch/compare/v1.14.1...v1.14.2) (2026-08-15)
 
 ### 📚 Documentation
