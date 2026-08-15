@@ -520,9 +520,22 @@ const ensureHex = (value: string | null | undefined): string => {
   font-size: 12px;
 }
 
+.card-color-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 .card-hex {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   color: rgb(var(--text));
+  font-size: 11px;
+}
+
+.card-rgb {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgb(var(--text-muted));
+  font-size: 11px;
 }
 
 .card-source {
