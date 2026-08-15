@@ -31,7 +31,8 @@
           <h3 class="section-title">{{ labels.color }}</h3>
           <div class="color-swatch-large" :style="swatchStyle">
             <div class="color-info">
-              <span class="color-hex">{{ filament.colorHex.toUpperCase() }}</span>
+              <span class="color-hex">HEX: {{ filament.colorHex.toUpperCase() }}</span>
+              <span class="color-rgb">RGB: {{ hexToRgbString(filament.colorHex) }}</span>
             </div>
           </div>
         </div>
@@ -360,6 +361,7 @@ import { computed, ref } from 'vue';
 import { Button } from '@/components/ui/button';
 import type { FilamentCard } from '../composables/useFilaments';
 import { Icon } from '@iconify/vue';
+import { hexToRgbString } from '@/lib/colorUtils';
 
 const props = defineProps<{
   filament: FilamentCard | null;

@@ -207,6 +207,13 @@ const handleOpenChangelog = () => {
                   Spoolman Server
                 </button>
                 <hr class="border-border/50 my-1" />
+                <button
+                  class="flex w-full items-center justify-between px-3 py-2 text-sm hover:bg-[rgb(var(--surface-alt))] rounded-md transition-colors"
+                  @click="emit('toggleColorReadout')"
+                >
+                  <span class="text-[rgb(var(--text-muted))]">RGB</span>
+                  <span class="text-xs font-medium">{{ props.showRgb ? 'An' : 'Aus' }}</span>
+                </button>
                 <div class="flex items-center justify-between px-3 py-2">
                   <span class="text-xs text-[rgb(var(--text-muted))]">Theme</span>
                   <ThemeSwitch />
