@@ -28,7 +28,7 @@ Think of it as your personal filament showroom - browse colors, filter by materi
   </a>
 </p>
 <p align="center">
-  Sponsored by <a href="https://subthiel.eu">Subthiel</a> — 3D-Druck &amp; Softwareentwicklung. Check out the <a href="https://shop.subthiel.eu">shop</a> for prints, filament, and maker gear.
+  This project grew out of <a href="https://subthiel.eu">Subthiel</a>, my own company for 3D printing &amp; software development.
 </p>
 
 ## 🌐 Live Demo
@@ -290,7 +290,7 @@ If you're using this app, you should definitely be using Spoolman too. It's the 
     </picture>
   </a>
   <br>
-  Built with ❤️ and support from <a href="https://subthiel.eu">Subthiel</a> — 3D-Druck &amp; Softwareentwicklung · <a href="https://shop.subthiel.eu">Shop besuchen</a>
+  Made by me at <a href="https://subthiel.eu">Subthiel</a> — my company for 3D printing &amp; software development
 </p>
 
 ---
