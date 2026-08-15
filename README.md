@@ -45,6 +45,7 @@ Want to see it in action? Check out the live demo:
 Glad you asked! Here's the good stuff:
 
 - 🎨 **Beautiful Color Display**: See your filaments with their actual colors in a stunning grid or carousel view
+- 🎨 **Color Values**: View HEX and RGB values for easy color matching across tools
 - 🔍 **Smart Filtering**: Filter by vendor, material, color type (single/multi-color), location, and source
 - 📍 **Location Tracking**: See exactly where your spools are stored
 - ⚖️ **Remaining Weight**: Track how much filament you have left on each spool
@@ -198,6 +199,15 @@ https://spoolswatch.disane.dev/?surl=http://spoolman.local:7912&v=prusament&m=pe
 
 > [!TIP]
 > Use the `surl` parameter to share direct links to your Spoolman instance with specific filters!
+
+## 🎨 Vendor Logos & Contributions
+
+Missing a logo for your favorite filament brand? You can help!
+
+- **Contribute via the App**: Click the "Add Logo" button on any filament card
+- **Direct GitHub PR**: See our [Logo Contributing Guide](docs/CONTRIBUTING_LOGOS.md)
+
+Logos should be transparent PNG or SVG format. We appreciate contributions that help make the app more visual!
 
 ## 🛠️ Technology Stack
 
