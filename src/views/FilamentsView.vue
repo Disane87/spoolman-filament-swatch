@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useFilaments } from "../composables/useFilaments";
 import FiltersBar from "../components/FiltersBar.vue";

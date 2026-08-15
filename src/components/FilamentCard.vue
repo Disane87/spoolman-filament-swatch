@@ -61,9 +61,14 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-between">
-      <div class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
-        {{ filament.colorHex.toUpperCase() }}
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex min-w-0 flex-col gap-0.5 text-left">
+        <span class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
+          HEX: {{ filament.colorHex.toUpperCase() }}
+        </span>
+        <span class="mono text-[10px] sm:text-xs text-[rgb(var(--text-muted))]">
+          RGB: {{ hexToRgbString(filament.colorHex) }}
+        </span>
       </div>
       <Button size="sm" variant="secondary" @click.stop="copyHex" class="h-8 w-8 sm:h-9 sm:w-9 p-0">
         <Icon :icon="copied ? 'lucide:check' : 'lucide:copy'" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -80,6 +85,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/vue';
 import { getSourceIcon, getSourceLabel, getSourceBadgeClass } from '@/lib/sourceUtils';
 import { getSwatchStyle } from '@/lib/swatchUtils';
+import { hexToRgbString } from '@/lib/colorUtils';
 
 const props = defineProps<{
   filament: FilamentCardType;
