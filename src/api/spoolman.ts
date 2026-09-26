@@ -1,7 +1,9 @@
 export const DEFAULT_SPOOLMAN_URL = "";
 
 const fetchJson = async <T>(baseUrl: string, path: string): Promise<T> => {
-  const res = await fetch(`${baseUrl}${path}`);
+  // Drop trailing slashes so "https://host/" doesn't become "https://host//api/v1/...",
+  // which Spoolman answers with its web UI instead of the API.
+  const res = await fetch(`${baseUrl.replace(/\/+$/, "")}${path}`);
   if (!res.ok) {
     throw new Error(`Spoolman error ${res.status}`);
   }
