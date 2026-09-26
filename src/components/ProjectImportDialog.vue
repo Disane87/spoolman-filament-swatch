@@ -447,7 +447,7 @@ async function handleCreate() {
 
                 <!-- Spoolman Filament Selection -->
                 <div v-if="allFilaments.length > 0" class="space-y-2">
-                  <label class="text-xs font-medium text-muted-foreground">Spoolman Filament zuordnen:</label>
+                  <label class="text-xs font-medium text-muted-foreground">{{ t('projects.importDialog.mapFilament') }}</label>
                   <FilamentCombobox
                     :filaments="allFilaments"
                     :model-value="selectedSpoolmanIds.get(idx) || ''"
@@ -479,10 +479,10 @@ async function handleCreate() {
                     >
                       <Icon icon="lucide:alert-triangle" class="w-4 h-4 flex-shrink-0 mt-0.5" />
                       <div>
-                        <div class="font-medium">Warnung: Nicht genügend Filament</div>
+                        <div class="font-medium">{{ t('projects.importDialog.insufficientFilament') }}</div>
                         <div class="text-muted-foreground">
-                          Benötigt: {{ filament.weight?.toFixed(1) }}g · 
-                          Verfügbar: {{ (getSelectedFilament(idx, filament)?.totalRemainingWeight || 0).toFixed(1) }}g
+                          {{ t('projects.importDialog.filamentNeeded', { weight: filament.weight?.toFixed(1) }) }} ·
+                          {{ t('projects.importDialog.filamentAvailable', { weight: (getSelectedFilament(idx, filament)?.totalRemainingWeight || 0).toFixed(1) }) }}
                         </div>
                       </div>
                     </div>

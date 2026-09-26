@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Icon } from '@iconify/vue';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -13,6 +14,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
+
+const { t } = useI18n();
 
 const searchQuery = ref('');
 const isOpen = ref(false);
@@ -58,7 +61,7 @@ const handleClear = () => {
         :value="searchQuery"
         @input="(e: Event) => searchQuery = (e.target as HTMLInputElement).value"
         @focus="isOpen = true"
-        :placeholder="selectedFilament ? `${selectedFilament.vendor} · ${selectedFilament.material}` : 'Suchen nach Filament...'"
+        :placeholder="selectedFilament ? `${selectedFilament.vendor} · ${selectedFilament.material}` : t('projects.importDialog.searchFilament')"
         :class="selectedFilament ? 'pl-8' : ''"
       />
       <Button
@@ -99,7 +102,7 @@ const handleClear = () => {
       v-if="isOpen && filteredFilaments.length === 0 && searchQuery"
       class="absolute top-full left-0 right-0 z-50 mt-1 bg-background border border-border rounded-md shadow-md p-3 text-center text-sm text-muted-foreground"
     >
-      Keine Filamente gefunden
+      {{ t('projects.importDialog.noFilamentsFound') }}
     </div>
 
     <!-- Close dropdown when clicking outside -->
