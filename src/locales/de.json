@@ -474,7 +474,13 @@
       "descriptionPlaceholder": "Zusätzliche Notizen zum Projekt...",
       "nameRequired": "Projektname *",
       "descriptionOptional": "Beschreibung (optional)",
-      "preview": "Vorschau"
+      "preview": "Vorschau",
+      "mapFilament": "Spoolman Filament zuordnen:",
+      "searchFilament": "Suchen nach Filament...",
+      "noFilamentsFound": "Keine Filamente gefunden",
+      "insufficientFilament": "Warnung: Nicht genügend Filament",
+      "filamentNeeded": "Benötigt: {weight}g",
+      "filamentAvailable": "Verfügbar: {weight}g"
     },
     "detail": {
       "backToProjects": "Zurück zu Projekten",
