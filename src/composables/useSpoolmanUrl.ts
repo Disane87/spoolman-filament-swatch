@@ -33,7 +33,7 @@ const readStored = () => {
 };
 
 const normalizeUrl = (value: string) => {
-    const trimmed = value.trim();
+    const trimmed = value.trim().replace(/\/+$/, "");
     if (!trimmed) return "";
     // If no scheme provided, assume http.
     if (!/^https?:\/\//i.test(trimmed)) {
