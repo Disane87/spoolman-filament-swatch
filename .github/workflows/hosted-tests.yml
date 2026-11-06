@@ -21,4 +21,4 @@ jobs:
         env:
           VITE_HOSTED_MODE: '1'
           VITE_BASE_PATH: /plugins/filament-swatch/
-      - run: node --test scripts/hosted-mode.test.mjs scripts/hosted-query.test.mjs
+      - run: node --test scripts/hosted-mode.test.mjs scripts/hosted-query.test.mjs scripts/standalone-server.test.mjs
