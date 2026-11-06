@@ -12,6 +12,7 @@ const props = defineProps<{
   pinnedCount: number;
   isConnected: boolean;
   hasUrl: boolean;
+  searchQuery: string;
   isHosted?: boolean;
   viewMode?: 'board' | 'carousel';
 }>();
@@ -32,7 +33,6 @@ const router = useRouter();
 
 const mobileMenuOpen = ref(false);
 const appTitle = computed(() => (props.isHosted ? t('app.hostedTitle') : t('app.title')));
-const searchQuery = ref('');
 
 const handleOpenUrlDialog = () => {
   emit('openUrlDialog');
@@ -46,8 +46,7 @@ const handleOpenChangelog = () => {
 
 const handleSearch = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  searchQuery.value = target.value;
-  emit('search', searchQuery.value);
+  emit('search', target.value);
 };
 
 const isFilamentsView = () => route.path.includes('/swatch');
@@ -95,6 +94,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
           <Icon icon="lucide:search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-muted))]" />
           <input
             type="text"
+            :value="searchQuery"
             :placeholder="t('search.placeholder')"
             class="w-full bg-[rgb(var(--bg))] border border-[rgb(var(--border))] rounded-lg pl-9 pr-4 py-1.5 sm:py-2 text-sm text-[rgb(var(--text))] placeholder-[rgb(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]"
             @input="handleSearch"

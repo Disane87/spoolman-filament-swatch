@@ -10,13 +10,14 @@
         :has-url="hasUrl"
         :is-hosted="isHosted"
         :view-mode="viewMode"
+        :search-query="filters.search"
         @open-url-dialog="openUrlDialog"
         @open-palette="paletteOpen = true"
         @open-changelog="openChangelog"
         @open-import-dialog="showImportDialog = true"
         @changeView="viewMode = $event"
         @openFilterModal="filterModalOpen = true"
-        @search="handleSearch"
+        @search="filters.search = $event"
       />
 
       <!-- Router Outlet -->
@@ -242,7 +243,7 @@ import { DEFAULT_SPOOLMAN_URL, checkSpoolmanConnection, type SpoolmanInfo } from
 
 const { t, locale } = useI18n();
 const router = useRouter();
-const { refresh, allFilaments } = useFilaments();
+const { refresh, allFilaments, filters } = useFilaments();
 
 // Shared state for child views
 const viewMode = ref<"carousel" | "board">("board");
@@ -256,12 +257,6 @@ const filterModalOpen = ref(false);
 const projectsCount = computed(() => getProjects().length);
 
 // RGB is now always displayed (no toggle needed)
-
-// Handle search input from navbar
-const handleSearch = (query: string) => {
-  // Search is handled by useFilaments composable in FilamentsView
-  // This handler can be extended if needed for navbar-level search
-};
 
 // Define functions before providing them
 const selectFilament = (filament: FilamentCard) => {

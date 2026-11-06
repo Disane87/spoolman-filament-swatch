@@ -34,9 +34,8 @@ const loadFilamanConfig = async () => {
   const configUrl = getQueryParam("filaman_hosted_config");
   const hosted = getQueryParam("filaman_hosted");
 
-  if (!hosted || !configUrl) {
-    return null;
-  }
+  if (!hosted) return null;
+  if (!configUrl) throw new Error("Missing hosted configuration URL");
 
   // The Filaman host serves this JSON from the same origin so the standalone app
   // can switch into embedded mode without baking any Filaman instance details.
@@ -54,9 +53,8 @@ const loadHostedConfig = async () => {
   const configUrl = getQueryParam("spoolman_hosted_config");
   const hosted = getQueryParam("spoolman_hosted");
 
-  if (!hosted || !configUrl) {
-    return null;
-  }
+  if (!hosted) return null;
+  if (!configUrl) throw new Error("Missing hosted configuration URL");
 
   // The host runtime serves this JSON from the same origin so the standalone app
   // can switch into embedded mode without baking any Spoolman instance details.
@@ -70,17 +68,16 @@ const loadHostedConfig = async () => {
   return config;
 };
 
+const requestedLocale = getQueryParam("spoolman_locale") || localStorage.getItem("locale") || "de";
+const i18n = createI18n({
+  legacy: false,
+  locale: requestedLocale === "de" ? "de" : "en",
+  fallbackLocale: "en",
+  messages: { de, en },
+});
+
 const bootstrap = async () => {
-  // Try Filaman hosted config first, then fall back to Spoolman hosted config.
-  const hostedConfig =
-    (await loadFilamanConfig().catch((error) => {
-      console.warn("Could not load Filaman hosted config", error);
-      return null;
-    })) ??
-    (await loadHostedConfig().catch((error) => {
-      console.warn("Could not load Spoolman hosted config", error);
-      return null;
-    }));
+  const hostedConfig = (await loadFilamanConfig()) ?? (await loadHostedConfig());
   rehydrateFromHostedConfig(hostedConfig);
 
   const hostedTheme =
@@ -93,18 +90,6 @@ const bootstrap = async () => {
       win.__SPOOLMAN_HOSTED_THEME__ = hostedTheme;
     }
   }
-
-  const localeFromHost = getQueryParam("spoolman_locale");
-  const savedLocale = localeFromHost || localStorage.getItem("locale") || "de";
-
-  const i18n = createI18n({
-    legacy: false,
-    locale: savedLocale,
-    messages: {
-      de,
-      en,
-    },
-  });
 
   setupTheme();
   const router = createAppRouter();
@@ -121,4 +106,13 @@ const bootstrap = async () => {
   createApp(App).use(i18n).use(router).mount("#app");
 };
 
-void bootstrap();
+void bootstrap().catch((error) => {
+  console.error("Could not start Filament Swatch", error);
+  const alert = document.createElement("p");
+  alert.setAttribute("role", "alert");
+  alert.textContent = i18n.global.t("app.hostedConfigError");
+  const retry = document.createElement("button");
+  retry.textContent = i18n.global.t("app.retry");
+  retry.addEventListener("click", () => window.location.reload());
+  document.querySelector("#app")?.replaceChildren(alert, retry);
+});

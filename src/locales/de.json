@@ -1,5 +1,7 @@
 {
   "app": {
+    "hostedConfigError": "Filament Swatch konnte nicht geladen werden. Bitte die Host-Konfiguration prüfen und erneut versuchen.",
+    "retry": "Erneut versuchen",
     "title": "Spool Swatch",
     "hostedTitle": "Filament Swatch",
     "subtitle": "Lokaler Farbpicker fuer Filamente und Spulen",
