@@ -1,6 +1,9 @@
 {
   "app": {
+    "hostedConfigError": "Could not load Filament Swatch. Check the host configuration and retry.",
+    "retry": "Retry",
     "title": "Spool Swatch",
+    "hostedTitle": "Filament Swatch",
     "subtitle": "Local color picker for filaments and spools",
     "tagline": "Swipe through colors, find materials, and remember perfect matches.",
     "filaments": "Filaments",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
@@ -12,6 +12,8 @@ const props = defineProps<{
   pinnedCount: number;
   isConnected: boolean;
   hasUrl: boolean;
+  searchQuery: string;
+  isHosted?: boolean;
   viewMode?: 'board' | 'carousel';
 }>();
 
@@ -30,7 +32,7 @@ const route = useRoute();
 const router = useRouter();
 
 const mobileMenuOpen = ref(false);
-const searchQuery = ref('');
+const appTitle = computed(() => (props.isHosted ? t('app.hostedTitle') : t('app.title')));
 
 const handleOpenUrlDialog = () => {
   emit('openUrlDialog');
@@ -44,8 +46,7 @@ const handleOpenChangelog = () => {
 
 const handleSearch = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  searchQuery.value = target.value;
-  emit('search', searchQuery.value);
+  emit('search', target.value);
 };
 
 const isFilamentsView = () => route.path.includes('/swatch');
@@ -58,7 +59,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
       <div class="flex items-center gap-2 sm:gap-4 min-w-fit flex-shrink-0">
         <div class="flex items-center gap-2">
           <Icon icon="lucide:palette" class="w-5 h-5 text-[rgb(var(--accent))]" />
-          <span class="hidden sm:inline font-semibold text-[rgb(var(--text))] text-base">Spool Swatch</span>
+          <span class="hidden sm:inline font-semibold text-[rgb(var(--text))] text-base">{{ appTitle }}</span>
         </div>
 
         <!-- View/Page Toggle -->
@@ -93,6 +94,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
           <Icon icon="lucide:search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-muted))]" />
           <input
             type="text"
+            :value="searchQuery"
             :placeholder="t('search.placeholder')"
             class="w-full bg-[rgb(var(--bg))] border border-[rgb(var(--border))] rounded-lg pl-9 pr-4 py-1.5 sm:py-2 text-sm text-[rgb(var(--text))] placeholder-[rgb(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]"
             @input="handleSearch"
@@ -143,6 +145,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
 
         <!-- Server Status Button -->
         <Button
+          v-if="!props.isHosted"
           size="sm"
           variant="outline"
           @click="emit('openUrlDialog')"
@@ -180,7 +183,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
         <!-- Desktop: Theme & Locale -->
         <div class="hidden sm:flex items-center gap-1">
           <LocaleSwitch />
-          <ThemeSwitch />
+          <ThemeSwitch v-if="!props.isHosted" />
         </div>
 
         <!-- Desktop: Changelog -->
@@ -205,7 +208,6 @@ const isFilamentsView = () => route.path.includes('/swatch');
           >
             <Icon icon="lucide:more-vertical" class="w-4 h-4" />
           </Button>
-
           <!-- Mobile Menu Dropdown -->
           <Transition name="fade">
             <div v-if="mobileMenuOpen">
@@ -213,6 +215,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
               <div class="absolute right-0 top-full mt-2 w-48 rounded-lg border bg-[rgb(var(--surface))] shadow-lg z-50">
                 <div class="p-2 flex flex-col gap-1">
                   <button
+                    v-if="!props.isHosted"
                     class="flex items-center gap-2 px-3 py-2 text-sm hover:bg-[rgb(var(--border))] rounded-md transition-colors"
                     @click="handleOpenUrlDialog"
                   >
@@ -227,8 +230,8 @@ const isFilamentsView = () => route.path.includes('/swatch');
                     </div>
                     {{ t('info.spoolmanUrl') || 'Spoolman Server' }}
                   </button>
-                  <hr class="border-[rgb(var(--border))]/50 my-1" />
-                  <div class="flex items-center justify-between px-3 py-2">
+                  <hr v-if="!props.isHosted" class="border-[rgb(var(--border))]/50 my-1" />
+                  <div v-if="!props.isHosted" class="flex items-center justify-between px-3 py-2">
                     <span class="text-xs text-[rgb(var(--text-muted))]">{{ t('theme.theme') || 'Theme' }}</span>
                     <ThemeSwitch />
                   </div>

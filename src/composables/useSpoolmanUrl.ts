@@ -1,5 +1,6 @@
 import { computed, ref, watch } from "vue";
 import { DEFAULT_SPOOLMAN_URL } from "../api/spoolman";
+import { getHostedConfig, isHostedMode, type HostedConfig } from "./useHostedMode";
 
 const STORAGE_KEY = "spoolman-url";
 const hasWindow = typeof window !== "undefined";
@@ -50,6 +51,9 @@ watch(spoolmanUrl, (value) => {
 
 const persist = (value: string) => {
     if (!hasWindow) return;
+    // The embedded app should not overwrite local standalone preferences while it is
+    // running under the Spoolman shell.
+    if (isHostedMode()) return;
     try {
         window.localStorage.setItem(STORAGE_KEY, value);
     } catch (err) {
@@ -64,10 +68,21 @@ const setSpoolmanUrl = (value: string) => {
 };
 
 const resetSpoolmanUrl = () => {
+    if (isHostedMode()) return;
     setSpoolmanUrl(DEFAULT_SPOOLMAN_URL);
 };
 
+export const rehydrateFromHostedConfig = (hostedConfig: HostedConfig | null) => {
+    if (!hostedConfig) return;
+    spoolmanUrl.value = hostedConfig.spoolman_base_url;
+};
+
 const resolvedBaseUrl = computed(() => {
+    const hostedConfig = getHostedConfig();
+    if (hostedConfig) {
+        return hostedConfig.spoolman_base_url;
+    }
+
     // If the target is spoolman.disane.dev, use the local dev proxy to avoid CORS (only in development).
     if (import.meta.env.DEV) {
         try {
@@ -83,6 +98,12 @@ const resolvedBaseUrl = computed(() => {
 });
 
 const hasUrl = computed(() => {
+    const hostedConfig = getHostedConfig();
+    if (hostedConfig) {
+        // Embedded launches already proved the parent instance, even when it is
+        // mounted at the site root and the base path is the empty string.
+        return true;
+    }
     return spoolmanUrl.value.trim().length > 0;
 });
 
@@ -90,6 +111,7 @@ export const useSpoolmanUrl = () => ({
     spoolmanUrl,
     resolvedBaseUrl,
     hasUrl,
+    isHosted: computed(() => isHostedMode()),
     setSpoolmanUrl,
     resetSpoolmanUrl,
 });

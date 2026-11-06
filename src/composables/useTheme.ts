@@ -1,4 +1,5 @@
 import { ref, watch } from "vue";
+import { getHostedTheme, isHostedMode } from "./useHostedMode";
 
 const THEME_KEY = "theme";
 type ThemeMode = "light" | "dark" | "system";
@@ -12,11 +13,29 @@ const applyTheme = (mode: ThemeMode) => {
 };
 
 export const setupTheme = () => {
+  const hostedTheme = getHostedTheme();
+  if (isHostedMode() && (hostedTheme === "light" || hostedTheme === "dark")) {
+    applyTheme(hostedTheme);
+    return;
+  }
+
   const stored = (localStorage.getItem(THEME_KEY) as ThemeMode) ?? "system";
   applyTheme(stored);
 };
 
 export const useTheme = () => {
+  const hostedTheme = getHostedTheme();
+  if (isHostedMode() && (hostedTheme === "light" || hostedTheme === "dark")) {
+    const mode = ref<ThemeMode>(hostedTheme);
+    return {
+      mode,
+      setMode: () => {
+        // Hosted mode mirrors the parent Spoolman shell and does not expose
+        // an independent theme preference inside the embedded app.
+      },
+    };
+  }
+
   const stored = (localStorage.getItem(THEME_KEY) as ThemeMode) ?? "system";
   const mode = ref<ThemeMode>(stored);
 
