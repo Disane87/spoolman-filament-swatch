@@ -326,6 +326,7 @@ const createFilamentsComposable = () => {
   watch(() => ({ ...filters }), (newFilters) => {
     const params = new URLSearchParams(window.location.search);
     for (const key of ['q', 'v', 'm', 'c', 'l', 's', 'i']) params.delete(key);
+    if (!isHosted.value) params.delete('surl');
 
     if (newFilters.search) {
       params.set('q', newFilters.search);
