@@ -145,6 +145,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
 
         <!-- Server Status Button -->
         <Button
+          v-if="!props.isHosted"
           size="sm"
           variant="outline"
           @click="emit('openUrlDialog')"
@@ -182,7 +183,7 @@ const isFilamentsView = () => route.path.includes('/swatch');
         <!-- Desktop: Theme & Locale -->
         <div class="hidden sm:flex items-center gap-1">
           <LocaleSwitch />
-          <ThemeSwitch />
+          <ThemeSwitch v-if="!props.isHosted" />
         </div>
 
         <!-- Desktop: Changelog -->

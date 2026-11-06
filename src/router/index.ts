@@ -10,6 +10,11 @@ const hostedTitle = 'Filament Swatch';
 const standaloneTitle = 'Spool Swatch';
 export const createAppRouter = () => {
   const hostedMode = isHostedMode();
+  const hostedQuery = hostedMode ? Object.fromEntries(
+    [...new URLSearchParams(window.location.search)].filter(([key]) =>
+      key.startsWith('filaman_') || key.startsWith('spoolman_')
+    )
+  ) : {};
   const titlePrefix = hostedMode ? hostedTitle : standaloneTitle;
 
   const router = createRouter({
@@ -74,9 +79,11 @@ export const createAppRouter = () => {
     }
   });
 
-  router.beforeEach((to, from, next) => {
+  router.beforeEach((to) => {
+    if (Object.entries(hostedQuery).some(([key, value]) => to.query[key] !== value)) {
+      return { ...to, query: { ...to.query, ...hostedQuery } };
+    }
     document.title = (to.meta.title as string) || titlePrefix;
-    next();
   });
 
   return router;

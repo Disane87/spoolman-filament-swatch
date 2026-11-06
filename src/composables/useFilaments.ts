@@ -324,7 +324,8 @@ const createFilamentsComposable = () => {
 
   // Sync filters to URL query string
   watch(() => ({ ...filters }), (newFilters) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
+    for (const key of ['q', 'v', 'm', 'c', 'l', 's', 'i']) params.delete(key);
 
     if (newFilters.search) {
       params.set('q', newFilters.search);
